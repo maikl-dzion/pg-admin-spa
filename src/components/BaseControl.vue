@@ -41,7 +41,7 @@
                         <hr>
                         <template v-if="commonActionName == 'databases'">
                             <left-panel
-                                    :items="showDbList"
+                                    :items="getDbList"
                                     @delete_item="deleteDb"
                                     @select_item="commonForm"
                                     title="datname"
@@ -112,7 +112,7 @@
 
                         <template v-if="createObjPanelOpen" >
                             <CreateNewObject
-                               @btn_click="createResponse"
+                               @btn_click="getActionResponse"
                             ></CreateNewObject>
                         </template>
                         <template v-else >
@@ -240,36 +240,38 @@ export default {
   },
 
   computed: {
-    showDbList () {
-      return this.databaseList
+    getDbList () {
+      return this.$store.getters.getDbList
     }
   },
 
   created () {
     this.getDbUsersList() // usersList
     this.getCurrentDbUser() // currentDbUser
-    this.showDatabaseList() // databaseList
+    // this.showDatabaseList() // databaseList
     this.getCurrentDatabase() // currentDatabase
     this.getCurConfig() // получаем текущий конфиг
     this.getFileUsersConfig() // пользователи
     this.getTableList() // получаем таблицы
+
+    this.fetchDbList()
   },
 
   methods: {
 
-    createResponse (resp) {
-      let action = resp.action
+    fetchDbList () {
+      this.$store.dispatch('fetchDbList')
+    },
 
-      this.showDatabaseList()
-      this.getTableList() // получаем таблицы
-      this.getDbUsersList() // usersList
-
+    getActionResponse (response) {
+      // let action = response.action
+      // // debugger;
       // switch (action) {
       //   case 'create_db' :
-      //     this.showDatabaseList()
-      //     break
+      //       // this.fetchDbList()
+      //       break
       // }
-    }
+    },
 
   }
 }

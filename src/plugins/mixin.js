@@ -185,6 +185,11 @@ const BaseMixin = {
           this.sendEventBus('response_alert_message', item)
         },
 
+        alertShow (message = 'Успешное сохранение', type = 1) {
+          const item = { type, message }
+          this.sendEventBus('response_alert_message', item)
+        },
+
         alertOpen (message) {
           this.alertMessageShow = true
           this.alertMessage = message
@@ -367,7 +372,7 @@ const BaseMixin = {
             this.getTableFields(this.tableName, resp => {
               this.commonItem = resp
               this.alertStart('Тип поля изменен')
-              //this.alertMessageOpen('Успешное изменение поля')
+              // this.alertMessageOpen('Успешное изменение поля')
             })
           })
         },
@@ -571,8 +576,9 @@ const BaseMixin = {
           }
           var url = 'addNewDb/' + this.newDbName
           this.http(url).then(response => {
+            this.alertShow('Новая база создана')
+            this.$store.dispatch('fetchDbList')
             this.showDatabaseList()
-            this.alertStart('Новая база создана')
           })
         },
 
@@ -587,7 +593,8 @@ const BaseMixin = {
 
           var url = 'deleteDb/' + name
           this.http(url).then(resp => {
-            this.alertMessageOpen('Успешное удаление базы')
+            this.alertShow('База "' + dbName + '" удалена')
+            this.$store.dispatch('fetchDbList')
             this.showDatabaseList()
           })
         },
