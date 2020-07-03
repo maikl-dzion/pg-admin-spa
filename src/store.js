@@ -1,23 +1,39 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+Vue.use(Vuex)
 
-async function http(url) {
-    let data = []
-    let response = await fetch(url)
+// async function http1 (url) {
+//   let data = []
+//   let response = await fetch(url)
+//   if (response.ok) {
+//     data = await response.json()
+//   } else {
+//     alert('Ошибка HTTP: ' + response.status)
+//   }
+//   return data
+// }
+
+class HttpService {
+  constructor (apiUrl) {
+    this.apiUrl = apiUrl
+  }
+
+  async send (url, method = 'get', data = null) {
+    const apiUrl = this.apiUrl + url
+    let response = await fetch(apiUrl)
     if (response.ok) {
-      data = await response.json()
-    } else {
-      alert('Ошибка HTTP: ' + response.status)
+      const result = await response.json()
+      return result.data
     }
-    return data
+
+    alert('Ошибка HTTP: ' + response.status)
+  }
 }
 
-
-Vue.use(Vuex)
+const http = new HttpService(apiUrl)
 
 export default new Vuex.Store({
   state: {
-    apiUrl : apiUrl,
     dababaseList: [],
     userList: [],
     tableList: []
@@ -30,9 +46,9 @@ export default new Vuex.Store({
   actions: {
     async fetchDbList (context) {
       let data = []
-      var url = context.state.apiUrl + '/SHOW_DATABASE_LIST/'
-      data = await http(url)
-      context.commit('setDbList', data.data)
+      var url = '/SHOW_DATABASE_LIST'
+      data = await http.send(url)
+      context.commit('setDbList', data)
     }
   },
   getters: {
