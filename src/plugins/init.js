@@ -7,12 +7,13 @@ import Http from './services'
 *********/
 
 import AlertMessage from '../components/AlertMessage'
+import WarnMessage from '../components/WarnMessage'
 
 const InitApp = {
 
   install (Vue, options) {
     Vue.component('AlertMessage', AlertMessage)
-
+    Vue.component('WarnMessage', WarnMessage)
     // Vue.component('PersonsList', PersonsList)
 
     Vue.mixin({
@@ -350,7 +351,13 @@ const InitApp = {
         },
 
         warn (message, type = null) {
-          alert(message)
+            const item = { type, message }
+            this.sendEventBus('warn_message_event', item)
+        },
+
+        alertShow (message = 'Успешное сохранение', type = 1) {
+            const item = { type, message }
+            this.sendEventBus('response_alert_message', item)
         },
 
         tdDataBoxClick (className, index, param = null) {
@@ -652,9 +659,13 @@ const InitApp = {
             this.getTableListSheme()
             this.getTableFields(this.tableName)
           })
-        }
+        },
         // End App Service
         /// /////////////////////
+
+        test1() {
+            alert('Все работает')
+        }
 
       } // Methods
     }) // VueMixin

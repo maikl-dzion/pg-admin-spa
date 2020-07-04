@@ -36,30 +36,69 @@ export default new Vuex.Store({
   state: {
     dababaseList: [],
     userList: [],
-    tableList: []
+    tableList: [],
+    dbRoles: [],
+    tableFields: {}
   },
   mutations: {
     setDbList (state, data) {
       state.dababaseList = data
+    },
+    setUserList (state, data) {
+      state.userList = data
+    },
+    setTableList (state, data) {
+      state.tableList = data
+    },
+    setDbRoles (state, data) {
+      state.dbRoles = data
     }
   },
   actions: {
+
     async fetchDbList (context) {
-      let data = []
-      var url = '/SHOW_DATABASE_LIST'
-      data = await http.send(url)
+      let url = '/SHOW_DATABASE_LIST'
+      let data = await http.send(url)
       context.commit('setDbList', data)
+    },
+
+    async fetchUserList (context) {
+      let url = '/getDbUsersList'
+      let data = await http.send(url)
+      context.commit('setUserList', data)
+    },
+
+    async fetchTableList (context) {
+      let url = '/GET_TABLE_LIST'
+      let data = await http.send(url)
+      context.commit('setTableList', data)
+    },
+
+    async fetchDbRoles (context) {
+      let command = 'SELECT * FROM pg_roles'
+      let url = '/EXEC_SQL_COMMAND/' + command + '/query'
+      let data = await http.send(url)
+      context.commit('setDbRoles', data)
     }
+
   },
   getters: {
+
     getUserList: state => {
       return state.userList
     },
+
     getDbList: state => {
       return state.dababaseList
     },
+
     getTableList: state => {
       return state.tableList
+    },
+
+    getDbRoles: state => {
+      return state.dbRoles
     }
+
   }
 })

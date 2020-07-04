@@ -51,7 +51,7 @@
                         </template>
                         <template v-else-if="commonActionName == 'tables'">
                             <left-panel
-                                    :items="tableList"
+                                    :items="getDbTables"
                                     @delete_item="commonDeleteTable"
                                     @select_item="commonForm"
                                     title="table_name"
@@ -61,7 +61,7 @@
                         </template>
                         <template v-else-if="commonActionName == 'users'">
                             <left-panel
-                                    :items="usersList"
+                                    :items="getUserList"
                                     @delete_item="deleteDbUser"
                                     @select_item="commonForm"
                                     title="usename"
@@ -71,7 +71,7 @@
                         </template>
                         <template v-else-if="commonActionName == 'get_roles'">
                             <left-panel
-                                    :items="dbRoles"
+                                    :items="getDbRoles"
                                     @select_item="commonForm"
                                     title="rolname"
                                     icon="fas fa-address-card"
@@ -241,27 +241,45 @@ export default {
 
   computed: {
     getDbList () {
-      return this.$store.getters.getDbList
+      return this.storeGet().getDbList
+    },
+
+    getUserList () {
+      return this.storeGet().getUserList
+    },
+
+    getDbTables () {
+      return this.storeGet().getTableList
+    },
+
+    getDbRoles () {
+      return this.storeGet().getDbRoles
     }
+
   },
 
   created () {
-    this.getDbUsersList() // usersList
     this.getCurrentDbUser() // currentDbUser
-    // this.showDatabaseList() // databaseList
     this.getCurrentDatabase() // currentDatabase
     this.getCurConfig() // получаем текущий конфиг
-    this.getFileUsersConfig() // пользователи
-    this.getTableList() // получаем таблицы
+    this.getFileUsersConfig()
 
-    this.fetchDbList()
+    // this.showDatabaseList() // databaseList
+    // this.getDbUsersList() // usersList
+    // this.getTableList() // получаем таблицы
+
+    // this.fetchDbList()
+    // this.fetchUserList()
+    // this.fetchTableList()
+    // this.fetchDbRoles()
+
+    this.storeFetch('fetchDbList')
+    this.storeFetch('fetchUserList')
+    this.storeFetch('fetchTableList')
+    this.storeFetch('fetchDbRoles')
   },
 
   methods: {
-
-    fetchDbList () {
-      this.$store.dispatch('fetchDbList')
-    },
 
     getActionResponse (response) {
       // let action = response.action
@@ -271,7 +289,7 @@ export default {
       //       // this.fetchDbList()
       //       break
       // }
-    },
+    }
 
   }
 }

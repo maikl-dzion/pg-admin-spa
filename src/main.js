@@ -9,6 +9,7 @@ import DragMixin from './plugins/drag_mixin'
 import DataFormMixin from './plugins/data_form'
 import BaseMixin from './plugins/mixin'
 import Http from './plugins/services'
+import StoreFn from './plugins/store_fn'
 
 import InitApp from './plugins/init'
 
@@ -16,8 +17,8 @@ Vue.use(VueResource)
 Vue.use(DragMixin)
 Vue.use(DataFormMixin)
 Vue.use(BaseMixin)
+Vue.use(StoreFn)
 Vue.use(Http)
-
 Vue.use(InitApp)
 
 Vue.prototype.$eventBus = new Vue()

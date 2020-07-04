@@ -21,10 +21,22 @@ const Http = {
           return new Promise((resolve, reject) => {
             this.$http[method](uri, data).then(response => {
               var result = this.checkResponse(response)
-              var err = { result: result, body: response.body, response: response }
-              resolve(result)
-              // if(result) resolve(result);
-              // else       this.httpError(err);
+              var err = {
+                result: result,
+                body: response.body,
+                response: response
+              }
+              let bodyText = ''
+              if (response.bodyText) { bodyText = response.bodyText }
+
+              // resolve(result)
+              if (result) resolve(result)
+              else {
+                this.warn(`Ошибка на сервере <br>
+                             (Получена строка вместо массива) <br>
+                             ${bodyText} `)
+                lg(err)
+              }
             }, response => { // error callback
               this.responseError.push(response)
               console.log('Request Error')

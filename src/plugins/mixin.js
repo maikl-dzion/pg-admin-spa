@@ -185,11 +185,6 @@ const BaseMixin = {
           this.sendEventBus('response_alert_message', item)
         },
 
-        alertShow (message = 'Успешное сохранение', type = 1) {
-          const item = { type, message }
-          this.sendEventBus('response_alert_message', item)
-        },
-
         alertOpen (message) {
           this.alertMessageShow = true
           this.alertMessage = message
@@ -279,6 +274,8 @@ const BaseMixin = {
             case 'databases' : title = 'Базы'; break
             case 'get_roles' : title = 'Роли'
               this.sqlCommandRun(actionName)
+              // this.sqlCommand = 'SELECT * FROM pg_roles'
+              // this.execSqlCommand('dbRoles', response => {})
               break
           }
 
@@ -451,12 +448,19 @@ const BaseMixin = {
           var funcName = 'createUser'
           let name = this.newUser.name
           let password = this.newUser.password
+          if (!name || !password) {
+            this.warn('Нет обязательных полей')
+            return false
+          }
           let dbname = this.newUser.dbName
           let superState = this.newUser.superUser
           if (!dbname) dbname = this.currentDatabase
-          var url = funcName + '/' + name + '/' + password + '/' + dbname + '/' + superState
+          if (!dbname) dbname = 0
+          let url = funcName + '/' + name + '/' + password + '/' + dbname + '/' + superState
+
           this.http(url).then(resp => {
-            this.warn('Пользователь успешно создан')
+            this.storeFetch('fetchUserList')
+            this.alertShow('Пользователь успешно создан')
             this.getDbUsersList()
           })
         },
@@ -474,7 +478,8 @@ const BaseMixin = {
           var url = 'deleteDbUser/' + name
           this.http(url).then(resp => {
             this.userName = ''
-            this.alertMessageOpen('Успешное удаление пользователя')
+            this.fetchUserList()
+            this.alertShow('Пользователь удален')
             this.getDbUsersList()
           })
         },
@@ -571,11 +576,12 @@ const BaseMixin = {
 
         addNewDb () {
           if (!this.newDbName) {
-            alert('Нет имени базы')
+            this.warn('Нет имени базы')
             return false
           }
           var url = 'addNewDb/' + this.newDbName
           this.http(url).then(response => {
+            this.newDbName = ''
             this.alertShow('Новая база создана')
             this.$store.dispatch('fetchDbList')
             this.showDatabaseList()
