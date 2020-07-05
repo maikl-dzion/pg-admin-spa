@@ -8,12 +8,14 @@ import Http from './services'
 
 import AlertMessage from '../components/AlertMessage'
 import WarnMessage from '../components/WarnMessage'
+import CustomSelect from '../components/elements/CustomSelect'
 
 const InitApp = {
 
   install (Vue, options) {
     Vue.component('AlertMessage', AlertMessage)
     Vue.component('WarnMessage', WarnMessage)
+    Vue.component('CustomSelect', CustomSelect)
     // Vue.component('PersonsList', PersonsList)
 
     Vue.mixin({
@@ -101,7 +103,9 @@ const InitApp = {
           copyTableItem: {
             name: '',
             newName: ''
-          }
+          },
+
+          createTableList: []
 
         }
       },
@@ -137,12 +141,25 @@ const InitApp = {
             }
         });
 		*******/
-
         // this.pushFieldToArray(true);
 
       },
 
       methods: {
+
+        isAutoField (item) {
+          const compare = 'nextval'
+          const column = item.column_default
+          // console.log(column)
+          if (!column) { return false } else {
+            const index = column.indexOf(compare)
+            if (index != -1) {
+              return true
+            }
+          }
+
+          return false
+        },
 
         rulesDeleteItem (item, actionName) {
           let name = ''
@@ -205,19 +222,28 @@ const InitApp = {
         // Start App Service
 
         pushFieldToArray (type = false) {
-          if (!type) { this.newFieldsList.push({ name: '', type: 'varchar' }) } else { this.newFieldsListSecond.push({ name: '', type: 'varchar' }) }
+          if (!type) {
+            this.newFieldsList.push({ name: '', type: 'varchar' })
+          } else {
+            this.newFieldsListSecond.push({ name: '', type: 'varchar' })
+          }
         },
 
-        addNewFieldsForeach (fieldList = null) {
+        pushTableToArray () {
+          this.createTableList.push({ name: '', idName: 'id', fields: [] })
+        },
+
+        addNewFieldsForeach (fieldList = null, tableName = null) {
           if (!fieldList) { fieldList = this.newFieldsList }
 
-          let tableName = this.tableName
+          if (!tableName) { tableName = this.tableName }
+
           let addFieldFn = (tableName, name, type, end = false) => {
             if (!name) return false
             var url = 'ADD_FIELD/' + tableName + '/' + name + '/' + type
             this.http(url).then(resp => {
-              // this.tableName = tableName;
               if (end) {
+                this.alertShow('Новые поля добавлены')
                 this.getTableFields(tableName, resp => {
                   this.commonItem = resp
                 })
@@ -351,13 +377,13 @@ const InitApp = {
         },
 
         warn (message, type = null) {
-            const item = { type, message }
-            this.sendEventBus('warn_message_event', item)
+          const item = { type, message }
+          this.sendEventBus('warn_message_event', item)
         },
 
         alertShow (message = 'Успешное сохранение', type = 1) {
-            const item = { type, message }
-            this.sendEventBus('response_alert_message', item)
+          const item = { type, message }
+          this.sendEventBus('response_alert_message', item)
         },
 
         tdDataBoxClick (className, index, param = null) {
@@ -636,7 +662,18 @@ const InitApp = {
             this.getTableList()
             this.getTableFields(this.tableName)
             this.getTableListSheme()
-            this.alertSuccess('Новая таблица успешно создана')
+            this.alertShow('Новая таблица успешно создана')
+          })
+        },
+
+        createTableListFn (tableName, idName, addFieldsFn = null) {
+          if (!tableName) return false
+          var url = 'CREATE_TABLE/' + tableName + '/' + idName
+          this.http(url).then(resp => {
+            if (addFieldsFn) { addFieldsFn(tableName) }
+            this.fetchTableList()
+            this.alertShow('Новая таблица создана')
+            this.getTableList()
           })
         },
 
@@ -663,8 +700,8 @@ const InitApp = {
         // End App Service
         /// /////////////////////
 
-        test1() {
-            alert('Все работает')
+        test1 () {
+          alert('Все работает')
         }
 
       } // Methods

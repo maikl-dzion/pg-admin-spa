@@ -136,7 +136,7 @@
                                             <div style="">{{fname}}</div>
                                         </td>
 
-                                        <template v-if="!item['column_default']">
+                                        <template v-if="!isAutoField(item)">
 
                                             <td class="td-field-input"
                                                 style="width: 50% !important;"><div>

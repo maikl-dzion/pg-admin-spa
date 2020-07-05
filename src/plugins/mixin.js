@@ -322,7 +322,7 @@ const BaseMixin = {
           this.deleteField(fieldName, true).then(resp => {
             this.getTableFields(this.tableName, resp => {
               this.commonItem = resp
-              this.alertStart('Поле таблицы удалено')
+              this.alertShow('Поле таблицы удалено')
               // this.alertMessageOpen('Успешное удаление поля')
             })
           })
@@ -347,7 +347,7 @@ const BaseMixin = {
             this.http('GET_TABLE_LIST').then(resp => {
               this.tableList = resp
               this.commonItem = []
-              this.alertMessageOpen('Успешное удаление таблицы')
+              this.alertShow('Успешное удаление таблицы')
             })
           })
         },
@@ -357,7 +357,7 @@ const BaseMixin = {
           this.http(url).then(resp => {
             this.getTableFields(this.tableName, resp => {
               this.commonItem = resp
-              this.alertMessageOpen('Успешное изменение поля')
+              this.alertShow('Успешное изменение поля')
             })
           })
         },
@@ -368,7 +368,7 @@ const BaseMixin = {
           this.http(url).then(resp => {
             this.getTableFields(this.tableName, resp => {
               this.commonItem = resp
-              this.alertStart('Тип поля изменен')
+              this.alertShow('Тип поля изменен')
               // this.alertMessageOpen('Успешное изменение поля')
             })
           })

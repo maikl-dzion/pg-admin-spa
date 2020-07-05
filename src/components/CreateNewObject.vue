@@ -1,30 +1,9 @@
 <template>
 <div style="width:100%;" >
 
+  <!--<CustomSelect></CustomSelect>-->
+
   <div style="display: flex; width:100%;" >
-
-      <!--<div class="login-box" style="width:800px;-->
-                                    <!--height: 70px;-->
-                                    <!--padding:0px 5px 0px 5px;">-->
-          <!--<div class="div-row-flex" >-->
-              <!--<div class="user-box" style="width:7%;" >-->
-                  <!--<i class="fas fa-database" ></i>-->
-              <!--</div>-->
-              <!--<div class="user-box" style="width:50%;">-->
-                  <!--<input v-model="newDbName" type="text" required="">-->
-                  <!--<label style="padding-left:8px; padding-top:16px ">Имя базы</label>-->
-              <!--</div>-->
-
-              <!--<div class="user-box" style="width:43%; border-bottom: 0px" >-->
-                  <!--&lt;!&ndash;<SimpleButton></SimpleButton>&ndash;&gt;-->
-                  <!--<BlueBtn-->
-                      <!--title="Создать новую базу"-->
-                      <!--@btn_click="test1"-->
-                  <!--&gt;</BlueBtn>-->
-
-              <!--</div>-->
-          <!--</div>-->
-      <!--</div>-->
 
       <div class="login-box" style="width:300px; padding:0px 5px 0px 5px;">
           <div>
@@ -61,7 +40,7 @@
 
               <div class="div-row-flex" style="border:0px red solid;">
                   <div class="user-box" style="width:7%; border:0px red solid" >
-                      <i class="fab fa-sourcetree" ></i>
+                      <i class="fas fa-lock-open"></i>
                   </div>
                   <div class="user-box" style="width:93%; border:0px red solid">
                       <input v-model="newUser.password" type="text" required="">
@@ -77,9 +56,11 @@
                       <label style="font-style: italic; font-size: 13px;
                                     color:white; padding-left:7px; padding-top:6px;">Выбрать базу</label><br>
                       <select v-model="newUser.dbName"
-                              style="width:98%; background: transparent; border: 1px white solid" >
-                              <option v-for="(db) in getDbList" :name="db.datname">
-                                {{db.datname}}
+                              style="width:98%; background: transparent; height: 30px;
+                                     border: 1px white solid; color:white" >
+                              <option v-for="(db) in getDbList" :name="db.datname"
+                                      style="background: #63759d;" >
+                                     {{db.datname}}
                               </option>
                       </select>
 
@@ -107,104 +88,135 @@
           </div>
       </div>
 
-      <!--<div style="width:300px; margin:4px; border:0px orange solid">-->
+  </div><hr/>
 
-          <!--<div  style="width:180px; border:0px green solid" >-->
-              <!--<BlueBtn-->
-                  <!--title="Сохранить"-->
-                  <!--@btn_click="test1"-->
-              <!--&gt;</BlueBtn>-->
-          <!--</div>-->
+  <div style="display: flex; width: 100%" >
 
-      <!--</div>-->
+      <!---- Форма добавления новых полей --->
+      <div class="login-box" style="margin-left:0px; width:380px; padding:0px 5px 0px 5px;">
+          <div>
+              <div style="text-align: center; color:white; padding: 4px;" >
+                  Добавление новых полей
+              </div>
+              <hr style="background:#03e9f4; height: 1px; margin: 0px" >
 
-  </div> <hr>
+              <div class="div-row-flex" style="border:0px red solid; margin-top:2px;">
 
-  <div style="display: flex; width:100%;" >
+                  <div class="user-box1" style="width:70%; border:0px red solid">
+                      <label style="font-style: italic; font-size: 13px;
+                                    color:white; padding-left:7px; padding-top:6px;">
+                              Выбрать таблицу
+                      </label><br>
+                      <select v-model="selectTableName"
+                              style="width:98%; background: transparent; height: 30px;
+                                     border: 1px white solid; color:white" >
+                          <option v-for="(item) in getDbTables" :name="item.table_name"
+                                  style="background: #63759d;" >
+                                  {{item.table_name}}
+                          </option>
+                      </select>
+                  </div>
 
-        <div class="card" style="width: 50%" >
-            <div class="card-body" style="margin:0px; padding:10px;">
-                <p class="h6 text-center" style="margin-bottom:10px;">
-                    Создать новую таблицу</p><hr>
-                <div style="margin:0px; padding:0px;" >
+                  <div style="position:absolute; width:45px; height:45px;
+                          border: 0px red solid; margin-left:85%; margin-top:19px;">
+                      <button @click="pushFieldToArray(true)" class="custom-btn"
+                              style="height: 100%; width: 100%;">
+                          <i class="fa fa-plus-circle"></i>
+                      </button>
+                  </div>
 
-                    <div class="md-form" style="margin:0px; padding:0px;">
-                        <i class="far fa-credit-card prefix green-text" ></i>
-                        <input type="text"  class="form-control" >
-                        <label class="font-weight-light">Имя таблицы</label>
-                    </div>
+              </div>
 
-                    <div style="display: flex" >
+              <hr style="background:#03e9f4; height: 1px;" >
 
-                        <div class="md-form" style="width: 90%; margin:0px; padding:0px;">
-                            <i class="fab fa-buffer prefix green-text" ></i>
-                            <input type="text"  class="form-control" >
-                            <label class="font-weight-light">Имя id поля</label>
-                        </div>
+              <template v-for="(field, i) in newFieldsListSecond" >
 
-                        <div style="width: 10%;" >
-                            <a class="btn-floating btn-sm btn-mdb-color" style="width:100%">
-                                <i class="fas fa-plus-circle"
-                                   style="height:100%;width:75%;
-                                          text-align:center; color:white; " ></i>
-                            </a>
-                        </div>
-                    </div>
+                  <div class="div-row-flex" style="border:0px red solid;">
 
-                    <div class="text-center" style="margin:0px; padding:0px;">
-                        <button class="btn btn-mdb-color waves-effect"
-                                style="width:98%;" >Сохранить</button>
-                    </div>
-                </div>
-            </div></div>
+                      <div class="user-box" style="width:7%; border:0px red solid" >
+                          <i class="fab fa-microsoft"></i>
+                      </div>
 
-        <div class="card" style="width: 50%; height: 100%; margin-left:10px;" >
-            <div class="card-body" style="margin:0px; padding:10px;">
+                      <div class="user-box" style="width:50%; border:0px red solid">
+                          <input v-model="field.name" type="text" required="">
+                          <label style="padding-left:8px; padding-top:16px">Имя поля</label>
+                      </div>
 
-                <div style="width: 35px; position: absolute; top:5px; right:8px;" >
-                    <a @click="pushFieldToArray(true)"
-                        class="btn-floating btn-sm btn-mdb-color"
-                        style="width:100%; padding:9px 5px 5px 5px;">
-                        <i class="fas fa-plus-circle"
-                           style="width:100%;text-align:center;
-                                  color:white; font-size:20px;" ></i>
-                    </a>
-                </div>
+                      <div class="user-box1" style="width:43%; margin:20px 0px 0px 4px;
+                                                    border:0px red solid" >
+                          <label style="font-style: italic; font-size: 13px;
+                                    color:white; padding-left:7px; padding-top:6px;">
+                                 Тип поля
+                          </label><br>
+                          <select v-model="field.type"
+                                  style="width:98%; background: transparent; height: 30px;
+                                     border: 1px white solid; color:white" >
+                              <option v-for="(item) in tableFieldTypes" :name="item.name"
+                                      style="background: #63759d;" >
+                                  {{item.name}}
+                              </option>
+                          </select>
+                      </div>
+                  </div>
 
-                <p class="h6 text-center" style="margin-bottom:10px;">
-                    Создать новое поле</p><hr>
+              </template>
 
-                <div style="margin:0px; padding:0px;" >
+              <hr style="background:#03e9f4; height: 1px; margin: 20px 0px 20px 0px" >
 
-                    <template v-for="(list) in newFieldsListSecond" >
-                        <div  style="display: flex" :key="list.name" >
+              <a @click="btnClick('create_fields')"
+                 style="margin:0px 0px 0px 0px; padding:0px; width:100%;
+                         text-align:center; border:0px red solid; color:white" >
+                  <span></span><span></span><span></span><span></span>
+                  Сохранить
+              </a>
 
-                            <div class="md-form" style="width:67%; margin:0px; padding:0px;">
-                                <i class="fab fa-buffer prefix green-text" ></i>
-                                <input v-model="list.name" type="text" class="form-control" />
-                                <label class="font-weight-light">Имя поля</label>
-                            </div>
+          </div>
+      </div>
+      <!---- / Форма добавления новых полей --->
 
-                            <select v-model="list.type" placeholder="Тип поля"
-                                    class="browser-default custom-select"
-                                    style="margin-left:10px; border-radius:0px; cursor:pointer; width:30%;">
-                                    <option v-for="(item) in tableFieldTypes"
-                                        :value="item.name" class="form-control">
-                                        {{item.name}}
-                                    </option>
-                            </select>
+      <!---- Форма добавления таблиц --->
+      <div class="login-box" style="margin-left:20px; width:350px; padding:0px 5px 0px 5px;"><div>
 
-                        </div>
-                    </template>
+              <div style="position:absolute; width:45px; height:45px;
+                          border: 0px red solid; margin-left:98.7%;">
+                  <button @click="pushTableToArray()" class="custom-btn"
+                          style="height: 100%; width: 100%;">
+                          <i class="fa fa-plus-circle"></i>
+                  </button>
+              </div>
 
-                    <div class="text-right" style="margin:0px; padding:0px;">
-                        <button class="btn btn-mdb-color waves-effect"
-                                style="width:60%;" >Сохранить</button>
-                    </div>
-                </div>
-            </div></div>
+              <div style="text-align: center; color:white; padding: 4px;" >
+                  Добавление таблиц
+              </div>
+              <hr style="background:#03e9f4; height: 1px; margin: 0px" >
 
-    </div>
+              <div v-for="(item) in createTableList" class="div-row-flex" style="border:0px red solid;">
+                  <div class="user-box" style="width:7%; border:0px red solid" >
+                      <i class="fa fa-table" aria-hidden="true"></i>
+                  </div>
+                  <div class="user-box" style="width:55%; border:0px red solid">
+                      <input v-model="item.name" type="text" required="">
+                      <label style="padding-left:8px; padding-top:16px">Имя таблицы</label>
+                  </div>
+
+                  <div class="user-box" style="width:38%; border:0px red solid">
+                      <input v-model="item.idName" type="text" required="">
+                      <label style="padding-left:8px; padding-top:16px">Поле Id</label>
+                  </div>
+              </div>
+
+              <hr style="background:#03e9f4; height: 1px;">
+              <a @click="btnClick('create_table_list')"
+                 style="margin:0px 0px 0px 0px; padding:0px; width:60%;
+                        text-align:center; border:0px red solid; color:white" >
+                  <span></span><span></span><span></span><span></span>
+                  Сохранить
+              </a>
+
+      </div></div>
+      <!--- / Форма добавления таблиц -->
+
+  </div><hr/>
 
 </div>
 </template>
@@ -217,7 +229,13 @@ export default {
   name: 'CreateNewObjects',
   created () {
     this.pushFieldToArray(true)
+    this.pushTableToArray()
   },
+
+  data: () => ({
+    selectTableName: ''
+  }),
+
   components: {
     SimpleBlueForm,
     SimpleButton,
@@ -248,6 +266,16 @@ export default {
       switch (action) {
         case 'create_db' : this.addNewDb(); break
         case 'create_user' : this.createDbUser(); break
+        case 'create_fields' :
+          this.addNewFieldsForeach(this.newFieldsListSecond)
+          break
+        case 'create_table_list' :
+          let table = {}
+          for (let i in this.createTableList) {
+            table = this.createTableList[i]
+            this.createTableListFn(table.name, table.idName)
+          }
+          break
       }
       const param = { action }
       this.$emit('btn_click', param)
@@ -445,6 +473,8 @@ export default {
         }
     }
 
+    /* Кастомизация чекбокса */
+
     .checkbox input[type="checkbox"] {
         opacity: 0;
         cursor: pointer;
@@ -466,7 +496,6 @@ export default {
         display: inline-block;
     }
 
-    /*Outer box of the fake checkbox*/
     .checkbox label::before{
         height: 19px;
         width: 19px;
@@ -475,7 +504,6 @@ export default {
         top: 1px;
     }
 
-    /*Checkmark of the fake checkbox*/
     .checkbox label::after {
         height: 7px;
         width: 11px;
@@ -486,19 +514,37 @@ export default {
         top: 4px;
     }
 
-    /*Hide the checkmark by default*/
+
     .checkbox input[type="checkbox"] + label::after {
         content: none;
     }
 
-    /*Unhide on the checked state*/
     .checkbox input[type="checkbox"]:checked + label::after {
         content: "";
     }
 
-    /*Adding focus styles on the outer-box of the fake checkbox*/
     .checkbox input[type="checkbox"]:focus + label::before {
         outline: rgb(59, 153, 252) auto 5px;
+    }
+
+    /*Кастомизация select */
+
+    /* Кастомизация кнопки */
+    .custom-btn {
+        background-color: DodgerBlue;
+        border: none;
+        color: white;
+        padding: 8px 12px 6px 12px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .custom-btn i {
+        padding: 0px;
+    }
+
+    .custom-btn:hover {
+        border:2px  #0b51c5 solid;
     }
 
 </style>
