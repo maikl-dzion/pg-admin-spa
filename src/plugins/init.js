@@ -235,7 +235,6 @@ const InitApp = {
 
         addNewFieldsForeach (fieldList = null, tableName = null) {
           if (!fieldList) { fieldList = this.newFieldsList }
-
           if (!tableName) { tableName = this.tableName }
 
           let addFieldFn = (tableName, name, type, end = false) => {

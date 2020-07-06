@@ -330,7 +330,7 @@ const BaseMixin = {
 
         commonDeleteTable (tableName = '') {
           if (!tableName && !this.tableName) {
-            alert('Не выбрана таблица')
+            this.warn('Не выбрана таблица')
             return false
           }
 
@@ -343,6 +343,7 @@ const BaseMixin = {
           var url = 'DELETE_TABLE/' + tableName
           this.http(url).then(resp => {
             this.tableName = ''
+            this.fetchTableList ()
             this.getTableListSheme()
             this.http('GET_TABLE_LIST').then(resp => {
               this.tableList = resp

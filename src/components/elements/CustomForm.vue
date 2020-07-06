@@ -1,10 +1,11 @@
 <template>
     <div style="margin:100px 20px; width:350px;
                 border:2px lightslategrey solid; padding:4px;
-                -webkit-box-shadow: 5px 5px 5px -4px #000000;
-                box-shadow: 5px 5px 5px -4px #000000;" >
+                -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
+                -moz-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
+                box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);" >
 
-        <div class="my-form" style="background: ghostwhite;">
+        <div class="my-form" >
             <div class="my-form__label">Добавление полей</div>
 
             <hr class="my-form__delimiter">
@@ -52,13 +53,33 @@
                         <input class="form__inp-text" type="text" name="" required="">
                         <label class="form__inp-label" >Password</label>
                     </div>
-
+                    <div class="margin-box"></div>
                     <div class="my-form__elem-box">
                         <input class="form__inp-text" type="text" name="" required="">
                         <label class="form__inp-label" >Password</label>
                     </div>
                 </div>
-                <!----------- / flex -------------->
+                <!----------- / flex -->
+
+
+                <!------flex ------>
+                <div class="my-form__flex-box">
+                    <div class="my-form__elem-box">
+                        <input class="form__inp-text" type="text" name="" required="">
+                        <label class="form__inp-label" >Password</label>
+                    </div>
+                    <div class="margin-box"></div>
+
+                    <div class="my-form__select-box-flex" >
+                        <label class="select-label" > Выбор условий</label>
+                        <select class="custom-select-elem" >
+                            <option >111111</option>
+                            <option >22222</option>
+                        </select>
+                    </div>
+
+                </div>
+                <!----------- / flex -->
 
                 <!------------flex select ------------->
                 <div class="my-form__flex-box" >
@@ -67,8 +88,8 @@
                         <input class="form__inp-text" type="text" name="" required="">
                         <label class="form__inp-label" >Password</label>
                     </div>
-
-                    <div class="div-checkbox" style="width:40%" >
+                    <div class="margin-box"></div>
+                    <div class="div-checkbox" style="width:40%; margin-top: -0.1px !important;" >
                         <input type="checkbox" id="inp-for-id">
                         <label class="" for="inp-for-id" >
                             Права user </label>
@@ -94,7 +115,6 @@
             </div>
 
         </div>
-
     </div>
 </template>
 
@@ -118,7 +138,6 @@ export default {
         margin: 0px;
         width: 100%;
         padding: 1px;
-        background: white;
         box-sizing: border-box;
         border-radius: 1px;
         z-index:20;
@@ -148,6 +167,7 @@ export default {
         height: 41px;
         margin:2px 2px 5px 2px;
         border: 0px blue solid;
+        /*background: lightgray;*/
     }
 
     /* Кастомизация input.text */
@@ -196,7 +216,7 @@ export default {
     .my-form .div-checkbox {
         position: relative;
         height: 40px;
-        margin:0px 2px 2px 0;
+        margin:0px;
         border-bottom: 1px grey solid;
         width:100%;
     }
@@ -428,6 +448,13 @@ export default {
         50%,100% {
             bottom: 100%;
         }
+    }
+
+
+    .my-form__elem-box,
+    .div-checkbox,
+    .my-form__select-box {
+        /*border: 1px goldenrod solid !important;*/
     }
 
 </style>
