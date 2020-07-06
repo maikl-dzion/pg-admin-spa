@@ -14,7 +14,7 @@ const InitApp = {
 
   install (Vue, options) {
     Vue.component('AlertMessage', AlertMessage)
-    Vue.component('WarnMessage', WarnMessage)
+    Vue.component('WarnMessage' , WarnMessage)
     Vue.component('CustomSelect', CustomSelect)
     // Vue.component('PersonsList', PersonsList)
 
@@ -666,7 +666,10 @@ const InitApp = {
         },
 
         createTableListFn (tableName, idName, addFieldsFn = null) {
-          if (!tableName) return false
+          if (!tableName) {
+			  this.warn('Нет имени таблицы');
+			  return false
+		  } 
           var url = 'CREATE_TABLE/' + tableName + '/' + idName
           this.http(url).then(resp => {
             if (addFieldsFn) { addFieldsFn(tableName) }

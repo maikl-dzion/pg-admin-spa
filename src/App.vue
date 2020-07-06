@@ -14,11 +14,44 @@
 
                 <nav class="nav-menu float-right d-none d-lg-block">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li class="active"><a href="blog.html">Blog</a></li>
+					    
+						<router-link class="active" tag="li" to="/">
+						  <a>Главная</a>
+						</router-link>
+						
+						<router-link  tag="li" to="/scheme">
+						  <a>Схема</a>
+						</router-link>
+						
+						<router-link tag="li" to="/data">
+						  <a>Данные</a>
+						</router-link>
+						
+						<router-link tag="li" to="/test">
+						  <a>Тестовая страница</a>
+						</router-link>
+						
+						<router-link tag="li" to="/auth">
+						  <a>Contact Us</a>
+						</router-link>
+						
+						
+						<!--------
+						<li class="active" ><a href="#/">Главная</a></li>
+                        <li><a href="#/dbase-sheme">Схема</a></li>
+                        <li><a href="#/data-page">Данные</a></li>
+						<li><a href="#/test">Тестовая страница</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+					
+					
+					    
+                        <li class="active" ><a href="#/">Главная</a></li>
+                        <li><a href="#/dbase-sheme">Схема</a></li>
+                        <li><a href="#/data-page">Данные</a></li>
+						<li><a href="#/test">Тестовая страница</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+						------->
+						
                     </ul>
                 </nav><!-- .nav-menu -->
 
