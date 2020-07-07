@@ -487,19 +487,23 @@ const BaseMixin = {
 
         // Установить привилегии к базе
         setUserPrivileges (userName, dbName) {
-          var url = 'setUserPrivileges/' + userName + '/' + dbName
+          const url = 'setUserPrivileges/' + userName + '/' + dbName
           this.http(url).then(resp => {
-            alert('Пользователь ' + userName + ': Права к базе ' + dbName + ' установлены')
-            let res = resp
+            const message = 'Пользователь ' + userName + ': Права к базе ' + dbName + ' установлены'
+            this.alertShow(message);
+            this.fetchDbList()
+            this.fetchUserList()
           })
         },
 
         // Удалить привилегии к базе
         delUserPrivileges (userName, dbName) {
-          var url = 'delUserPrivileges/' + userName + '/' + dbName
+          const url = 'delUserPrivileges/' + userName + '/' + dbName
           this.http(url).then(resp => {
-            alert('Пользователь ' + userName + ': Права к базе ' + dbName + ' удалены')
-            let res = resp
+            const message = 'Пользователь ' + userName + ': Права к базе ' + dbName + ' удалены'
+            this.alertShow(message);
+            this.fetchDbList()
+            this.fetchUserList()
           })
         },
 

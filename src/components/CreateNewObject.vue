@@ -19,7 +19,11 @@
   <!--<pre>{{getDbList}}</pre>-->
 
   <div style="display: flex">
-      <DelegateUserRole></DelegateUserRole>
+      <DelegateUserRole
+        :db_list="getDbList"
+        :user_list="getUserList"
+        @delegate_action="delegateUserRoleAction"
+      ></DelegateUserRole>
   </div><hr/>
 
   <div style="display: flex">
@@ -313,7 +317,23 @@ export default {
       }
       const param = { action }
       this.$emit('btn_click', param)
-    }
+    },
+
+    delegateUserRoleAction(data) {
+        const userName = data.userName;
+        const dbName   = data.dbName;
+        const action   = data.action;
+
+        switch (action) {
+            case 'set' :
+                this.setUserPrivileges(userName, dbName)
+                break;
+            case 'delete' :
+                this.delUserPrivileges(userName, dbName)
+                break;
+        }
+    },
+
   }
 }
 </script>
