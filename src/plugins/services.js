@@ -20,6 +20,7 @@ const Http = {
           var uri = this.apiUrl + url
           return new Promise((resolve, reject) => {
             this.$http[method](uri, data).then(response => {
+
               var result = this.checkResponse(response)
               var err = {
                 result: result,
@@ -27,20 +28,22 @@ const Http = {
                 response: response
               }
               let bodyText = ''
-              if (response.bodyText) { bodyText = response.bodyText }
+              if (response.bodyText)
+                 bodyText = response.bodyText
 
-              // resolve(result)
-              if (result) resolve(result)
-              else {
-                this.warn(`Ошибка на сервере <br>
-                             (Получена строка вместо массива) <br>
-                             ${bodyText} `)
-                lg(err)
+              if (result === false)  {
+                  this.warn(`Ошибка на сервере <br>(Получена строка вместо массива) <br>${bodyText} `)
+                  lg(err)
+                  return false
               }
+
+              resolve(result)
+
             }, response => { // error callback
               this.responseError.push(response)
               console.log('Request Error')
             })
+              
           })
         },
 
