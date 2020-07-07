@@ -65,6 +65,7 @@ const InitApp = {
           rowItem: {},
           formDialog: false,
 
+
           panelSettingsMenu: {
             databases: 'Базы данных',
             tables: 'Таблицы',
@@ -146,6 +147,30 @@ const InitApp = {
       },
 
       methods: {
+
+        getRoutesNav() {
+            let routes = [];
+            for(let i in this.$router.options.routes){
+                let r = this.$router.options.routes[i]
+                let route = {
+                    path  : r.path,
+                    title : r.title,
+                    name  : r.name,
+                }
+                routes.push(route)
+            }
+            return routes;
+        },
+
+        customForIn(items, fn) {
+          let results = [];
+          for(let i in items) {
+              let item = items[i];
+              let r = fn(item);
+              results.push(r);
+          }
+          return results;
+        },
 
         isAutoField (item) {
           const compare = 'nextval'
@@ -269,37 +294,37 @@ const InitApp = {
 
         copyDb () {
           let newDbName = this.copyDbItem.newDbName
-          let dbName = this.copyDbItem.dbName
+          let dbName    = this.copyDbItem.dbName
           if (!newDbName) {
-            alert('Имя базы пустое')
+            this.warn('Имя базы пустое')
             return false
           }
 
-          let query = `CREATE DATABASE ${newDbName}
-                          WITH TEMPLATE   ${dbName}`
           this.sqlCommandType = 'exec'
-          this.sqlCommand = query
+          this.sqlCommand     = 'CREATE DATABASE ' +newDbName+ ' WITH TEMPLATE ' + dbName
           this.execSqlCommand(null, (response) => {
+            this.alertShow('База успешно скопирована')
+            this.fetchDbList ()
             this.showDatabaseList()
-            alert('Новая база успешно скопирована')
           })
         },
 
         copyTable () {
           let newName = this.copyTableItem.newName
-          let name = this.copyTableItem.name
-          if (!newName) {
-            alert('Имя новой таблицы пустое')
-            return false
-          }
+          let name    = this.copyTableItem.name
+          if(!newName) newName = name + '_copy'
 
-          let query = `CREATE TABLE ${newName} AS
-                         TABLE ${name}`
+          // if (!newName) {
+          //   alert('Имя новой таблицы пустое')
+          //   return false
+          // }
+
           this.sqlCommandType = 'exec'
-          this.sqlCommand = query
+          this.sqlCommand     = 'CREATE TABLE ' +newName+ ' AS TABLE ' + name
           this.execSqlCommand(null, (response) => {
-            this.getTableList()
-            alert('Новая таблица успешно скопирована')
+              this.fetchTableList ()
+              this.alertShow('Новая таблица успешно скопирована')
+              this.getTableList()
           })
         },
 
@@ -669,7 +694,7 @@ const InitApp = {
           if (!tableName) {
 			  this.warn('Нет имени таблицы');
 			  return false
-		  } 
+		  }
           var url = 'CREATE_TABLE/' + tableName + '/' + idName
           this.http(url).then(resp => {
             if (addFieldsFn) { addFieldsFn(tableName) }

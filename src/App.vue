@@ -1,4 +1,4 @@
-<template><div class="wrapper" >
+<template><div @mouseup="dragStop($event)" class="wrapper" >
 
         <AlertMessage></AlertMessage>
 
@@ -7,54 +7,21 @@
         <!--  Header -->
         <header id="header" class="fixed-top ">
             <div class="container-fluid">
-
                 <div class="logo float-left">
-                    <h4 class="text-light"><a href="index.html"><span>Pg-Admin</span></a></h4>
+                    <h4 class="text-light">
+                        <router-link  to="/" tag="a">
+                            <span>Pg-Admin</span>
+                        </router-link>
+                    </h4>
                 </div>
-
                 <nav class="nav-menu float-right d-none d-lg-block">
                     <ul>
-					    
-						<router-link class="active" tag="li" to="/">
-						  <a>Главная</a>
+						<router-link v-for="(item) in routes"
+                             tag="li" :to="item.path">
+						     <a>{{item.title}}</a>
 						</router-link>
-						
-						<router-link  tag="li" to="/scheme">
-						  <a>Схема</a>
-						</router-link>
-						
-						<router-link tag="li" to="/data">
-						  <a>Данные</a>
-						</router-link>
-						
-						<router-link tag="li" to="/test">
-						  <a>Тестовая страница</a>
-						</router-link>
-						
-						<router-link tag="li" to="/auth">
-						  <a>Contact Us</a>
-						</router-link>
-						
-						
-						<!--------
-						<li class="active" ><a href="#/">Главная</a></li>
-                        <li><a href="#/dbase-sheme">Схема</a></li>
-                        <li><a href="#/data-page">Данные</a></li>
-						<li><a href="#/test">Тестовая страница</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-					
-					
-					    
-                        <li class="active" ><a href="#/">Главная</a></li>
-                        <li><a href="#/dbase-sheme">Схема</a></li>
-                        <li><a href="#/data-page">Данные</a></li>
-						<li><a href="#/test">Тестовая страница</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-						------->
-						
                     </ul>
-                </nav><!-- .nav-menu -->
-
+                </nav>
             </div>
         </header>
         <!-- End Header -->
@@ -68,85 +35,7 @@
             <router-view/>
         </main>
 
-        <!--  Footer -->
-        <footer id="footer" style="margin-top:0px; border:0px red solid" >
-
-            <div class="footer-newsletter">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h4>Our Newsletter</h4>
-                            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                        </div>
-                        <div class="col-lg-6">
-                            <form action="" method="post">
-                                <input type="email" name="email"><input type="submit" value="Subscribe">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-top" >
-                <div class="container">
-                    <!-------
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Useful Links</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Our Services</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3 col-md-6 footer-contact">
-                            <h4>Contact Us</h4>
-                            <p>
-                                A108 Adam Street <br>
-                                New York, NY 535022<br>
-                                United States <br><br>
-                                <strong>Phone:</strong> +1 5589 55488 55<br>
-                                <strong>Email:</strong> info@example.com<br>
-                            </p>
-
-                        </div>
-                        <div class="col-lg-3 col-md-6 footer-info">
-                            <h3>About Moderna</h3>
-                            <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-                            <div class="social-links mt-3">
-                                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    ------->
-                </div>
-            </div>
-
-            <div class="container"  >
-                <div class="copyright">
-                    &copy; Copyright <strong><span>Moderna</span></strong>. All Rights Reserved
-                </div>
-                <div class="credits">
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
-            </div>
-        </footer>
-        <!-- End Footer -->
+        <Footer/>
 
         <a href="#" class="back-to-top">
             <i class="icofont-simple-up"></i>
@@ -154,12 +43,27 @@
 
 </div></template>
 
+<script>
+import Footer from '@/components/Footer'
+export default {
+    name: 'App',
+    data: () => ({
+        routes : [],
+    }),
+    components: {
+        Footer
+    },
+    created () {
+        this.routes = this.getRoutesNav();
+    }
+}
+</script>
+
 <style>
+   .nav-menu .router-link-exact-active {
+       background: red;
+   }
    .wrapper {
-	   /*border:0px red solid;*/
-	   /*display: block;*/
-	   /*position: absolute;*/
-	   /*min-width: 100%;*/
-	   /*min-height: 100% !important;*/
+
    }
 </style>

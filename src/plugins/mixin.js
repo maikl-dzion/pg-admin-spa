@@ -353,24 +353,24 @@ const BaseMixin = {
           })
         },
 
-        changeFieldName (fieldName, newName) {
-          var url = 'RENAME_FIELD/' + this.tableName + '/' + fieldName + '/' + newName
+        changeFieldName (fieldName, newName, tableName = null) {
+          if(!tableName) tableName = this.tableName
+          let url = 'RENAME_FIELD/' + tableName + '/' + fieldName + '/' + newName
           this.http(url).then(resp => {
-            this.getTableFields(this.tableName, resp => {
+            this.getTableFields(tableName, resp => {
               this.commonItem = resp
               this.alertShow('Успешное изменение поля')
             })
           })
         },
 
-        changeFieldType (fieldName, newType) {
-          var url = 'changeFieldType/' + this.tableName + '/' + fieldName + '/' + newType
-          // alert(url);
+        changeFieldType (fieldName, newType, tableName = null) {
+          if(!tableName) tableName = this.tableName
+          let url = 'changeFieldType/' + tableName + '/' + fieldName + '/' + newType
           this.http(url).then(resp => {
-            this.getTableFields(this.tableName, resp => {
+            this.getTableFields(tableName, resp => {
               this.commonItem = resp
               this.alertShow('Тип поля изменен')
-              // this.alertMessageOpen('Успешное изменение поля')
             })
           })
         },

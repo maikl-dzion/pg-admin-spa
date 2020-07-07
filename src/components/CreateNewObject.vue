@@ -14,7 +14,13 @@
               </a>
           </div>
       </div>
-  </div><hr>
+  </div><hr/>
+
+  <!--<pre>{{getDbList}}</pre>-->
+
+  <div style="display: flex">
+      <DelegateUserRole></DelegateUserRole>
+  </div><hr/>
 
   <div style="display: flex">
 
@@ -73,7 +79,7 @@
                       <i class="fa fa-plus-circle" ></i>
                   </button>
               </div>
-              <div class="my-form__label" >Добавить таблиц</div>
+              <div class="my-form__label" >Добавить таблицы</div>
               <hr class="my-form__delimiter" >
               <div class="my-form__container">
 
@@ -160,16 +166,94 @@
     <!------ / Добавление новых полей ----->
 
   </div><!---- display flex box --->
-
   <hr/>
+
+  <div style="display: flex" >
+
+      <!-----  Скопировать таблицу --------->
+      <div class="create-form-container" style="margin-left:10px">
+          <div class="my-form" >
+              <div class="my-form__label" >Скопировать таблицу</div>
+              <hr class="my-form__delimiter" >
+              <div class="my-form__container">
+
+                  <div class="my-form__select-box" style="margin-bottom:10px !important;" >
+                      <label class="select-label" > Выбрать таблицу для копирования</label>
+                      <select v-model="copyTableItem.name" class="custom-select-elem" >
+                          <option v-for="(item) in getDbTables"
+                                  :value="item.table_name" >
+                              {{item.table_name}}
+                          </option>
+                      </select>
+                  </div>
+
+                  <div class="my-form__elem-box">
+                      <input v-model="copyTableItem.newName" class="form__inp-text" type="text" required="">
+                      <label class="form__inp-label">Имя новой таблицы</label>
+                  </div>
+
+              </div>
+
+              <br/><hr class="my-form__delimiter">
+              <div class="my-form__btn-box">
+                  <a @click="btnClick('copy_table')" class="my-form__btn">
+                      <span></span><span></span><span></span><span></span>
+                      Сохранить
+                  </a>
+              </div>
+
+          </div>
+      </div>
+      <!-----  / Скопировать таблицу ------->
+
+      <!-----  Скопировать базу --------->
+      <div class="create-form-container" style="margin-left:10px">
+          <div class="my-form" >
+              <div class="my-form__label" >Скопировать базу</div>
+              <hr class="my-form__delimiter" >
+              <div class="my-form__container">
+
+                  <div class="my-form__select-box" style="margin-bottom:10px !important;" >
+                      <label class="select-label" > Выбрать базу для копирования</label>
+                      <select  v-model="copyDbItem.dbName" class="custom-select-elem" >
+                          <option v-for="(item) in getDbList"
+                                  :value="item.datname" >
+                                  {{item.datname}}
+                          </option>
+                      </select>
+                  </div>
+
+                  <div class="my-form__elem-box">
+                      <input  v-model="copyDbItem.newDbName" class="form__inp-text" type="text" required="">
+                      <label class="form__inp-label">Имя новой базы</label>
+                  </div>
+
+              </div>
+
+              <br/><hr class="my-form__delimiter">
+              <div class="my-form__btn-box">
+                  <a @click="btnClick('copy_db')" class="my-form__btn">
+                      <span></span><span></span><span></span><span></span>
+                      Сохранить
+                  </a>
+              </div>
+
+          </div>
+      </div>
+      <!-----  / Скопировать базу ------->
+
+  </div><hr/>
 
 </div>
 </template>
 
 <script>
-import SimpleBlueForm from '../components/SimpleBlueForm'
-import SimpleButton from '../components/SimpleButton'
-import BlueBtn from '../components/elements/BlueBtn'
+
+// import SimpleBlueForm from '../components/SimpleBlueForm'
+// import SimpleButton from '../components/SimpleButton'
+// import BlueBtn from '@/components/elements/BlueBtn'
+import DelegateUserRole from '@/components/db-control/DelegateUserRole'
+
 export default {
   name: 'CreateNewObjects',
   created () {
@@ -182,9 +266,10 @@ export default {
   }),
 
   components: {
-    SimpleBlueForm,
-    SimpleButton,
-    BlueBtn
+      DelegateUserRole,
+    // SimpleBlueForm,
+    // SimpleButton,
+    // BlueBtn
   },
 
   computed: {
@@ -210,18 +295,21 @@ export default {
   methods: {
     btnClick (action) {
       switch (action) {
-        case 'create_db' : this.addNewDb(); break
-        case 'create_user' : this.createDbUser(); break
+        case 'copy_db'       : this.copyDb();    break
+        case 'copy_table'    : this.copyTable();    break
+        case 'create_db'     : this.addNewDb();     break
+        case 'create_user'   : this.createDbUser(); break
         case 'create_fields' :
-          this.addNewFieldsForeach(this.newFieldsListSecond, this.selectTableName)
-          break
+              this.addNewFieldsForeach(this.newFieldsListSecond,
+                                       this.selectTableName)
+              break
         case 'create_table_list' :
-          let table = {}
-          for (let i in this.createTableList) {
-            table = this.createTableList[i]
-            this.createTableListFn(table.name, table.idName)
-          }
-          break
+              let table = {}
+              for (let i in this.createTableList) {
+                table = this.createTableList[i]
+                this.createTableListFn(table.name, table.idName)
+              }
+              break
       }
       const param = { action }
       this.$emit('btn_click', param)

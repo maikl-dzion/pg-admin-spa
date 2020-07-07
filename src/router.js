@@ -13,24 +13,28 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      title : 'Главная',
+      component: Home,
     },
-	
-	{
+
+    {
       path: '/scheme',
       name: 'scheme',
+      title : 'Схема',
       component: DbScheme
     },
-	
-	{
+
+    {
       path: '/data',
       name: 'data',
+      title : 'Данные',
       component: DataPage
     },
-	
+
     {
       path: '/test',
       name: 'test',
+      title : 'Тестовая страница',
       component: () => import('./pages/TestPage.vue')
     }
   ]

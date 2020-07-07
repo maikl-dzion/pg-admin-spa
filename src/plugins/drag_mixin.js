@@ -1,101 +1,110 @@
 const DragMixin = {
 
-  install (Vue, options) {
-    Vue.mixin({
+    install(Vue, options) {
+        Vue.mixin({
 
-      data: function () {
-        return {
-          dragStart: false,
-          _left: 4,
-          _top: 4,
-          dragParam: {
-            x: 0,
-            y: 0,
-            target: {},
-            current: {},
-            elem: {},
-            id: 0
-          }
-          // oldMouseX : 0,
-          // oldMouseY : 0,
-          // dragElem : {},
-          // elemId   : '',
-        }
-      }, // Data
+            data: function () {
+                return {
+                    dragStart: false,
+                    _left: 4,
+                    _top: 4,
+                    dragParam: {
+                        x: 0,
+                        y: 0,
+                        target: {},
+                        current: {},
+                        elem: {},
+                        id: 0
+                    }
+                    // oldMouseX : 0,
+                    // oldMouseY : 0,
+                    // dragElem : {},
+                    // elemId   : '',
+                }
+            }, // Data
 
-      methods: {
+            methods: {
 
-        dragInit (e) {
-          this.dragStart = true
-          this.dragParam.x = e.clientX
-          this.dragParam.y = e.clientY
-          this.dragParam.target = e.target
-          this.dragParam.elem = e.currentTarget
-          this.dragParam.id = e.currentTarget.id
-        },
+                dragInit(e, className) {
 
-        dragMove (e) {
-          if (!this.dragStart) return
-          if (this.dragParam.x == e.clientX &&
-               this.dragParam.y == e.clientY) return
+                    const list = document.querySelectorAll('.' + className);
+                    list.forEach(elem => {
+                        elem.style.zIndex = '';
+                    });
 
-          this.moveElem(e)
-        },
+                    this.dragStart = true
+                    this.dragParam.x = e.clientX
+                    this.dragParam.y = e.clientY
+                    this.dragParam.target = e.target
+                    this.dragParam.elem = e.currentTarget
+                    this.dragParam.id = e.currentTarget.id
+                    e.currentTarget.style.zIndex = 99;
+                },
 
-        dragStop (e) {
-          this.dragStart = false
-        },
+                dragMove(e) {
+                    if (!this.dragStart) return
+                    if (this.dragParam.x == e.clientX &&
+                        this.dragParam.y == e.clientY) return
 
-        moveElem (e) {
-          let leftMove = 0
-          let topMove = 0
-          let newLeft = ''
-          let newTop = ''
+                    this.moveElem(e)
+                },
 
-          let id = this.dragParam.id
-          let x = this.dragParam.x
-          let y = this.dragParam.y
-          let newX = e.clientX
-          let newY = e.clientY
+                dragStop(e) {
+                    this.dragStart = false
+                    // e.currentTarget.style.zIndex = 1;
+                },
 
-          var pos = this.getPosition('#' + id)
-          var elem = pos.elem
+                moveElem(e) {
+                    let leftMove = 0
+                    let topMove = 0
+                    let newLeft = ''
+                    let newTop = ''
 
-          // Движение по горизонтали
-          this.updateElem(x, newX, pos, 'left', elem)
+                    let id = this.dragParam.id
+                    let x = this.dragParam.x
+                    let y = this.dragParam.y
+                    let newX = e.clientX
+                    let newY = e.clientY
 
-          // Движение по вертикали
-          this.updateElem(y, newY, pos, 'top', elem)
+                    var pos = this.getPosition('#' + id)
+                    var elem = pos.elem
 
-          this.dragParam.x = newX
-          this.dragParam.y = newY
-        },
+                    // Движение по горизонтали
+                    this.updateElem(x, newX, pos, 'left', elem)
 
-        getPosition (selector) {
-          var elem = document.querySelector(selector)
-          var left = elem.style.left
-          var top = elem.style.top
-          left = parseInt(left.replace(/\D+/g, ''))
-          top = parseInt(top.replace(/\D+/g, ''))
-          return { left, top, elem }
-        },
+                    // Движение по вертикали
+                    this.updateElem(y, newY, pos, 'top', elem)
 
-        updateElem (p1, p2, pos, attr, elem) {
-          var offset = newAtrr = ''
-          if (p1 < p2) {
-            offset = p2 - p1
-            newAtrr = pos[attr] + offset
-          } else {
-            offset = p1 - p2
-            newAtrr = pos[attr] - offset
-          }
-          elem.style[attr] = newAtrr + 'px'
-        }
+                    this.dragParam.x = newX
+                    this.dragParam.y = newY
+                },
 
-      } // Methods
+                getPosition(selector) {
+                    var elem = document.querySelector(selector)
+                    var left = elem.style.left
+                    var top = elem.style.top
+                    left = parseInt(left.replace(/\D+/g, ''))
+                    top = parseInt(top.replace(/\D+/g, ''))
+                    return {left, top, elem}
+                },
 
-	  })
-  }
+                updateElem(p1, p2, pos, attr, elem) {
+                    var offset,
+                        newAtrr = ''
+                    if (p1 < p2) {
+                        offset = p2 - p1
+                        newAtrr = pos[attr] + offset
+                    } else {
+                        offset = p1 - p2
+                        newAtrr = pos[attr] - offset
+                    }
+                    elem.style[attr] = newAtrr + 'px'
+                }
+
+            } // Methods
+
+        })
+    }
 }
 
 export default DragMixin

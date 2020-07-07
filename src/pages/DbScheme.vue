@@ -1,5 +1,5 @@
 <template>
-  <div class="db-scheme" >
+  <div class="db-scheme-page" >
 
     <DbScheme/>
 
@@ -11,7 +11,7 @@
 import DbScheme from '@/components/DbScheme'
 
 export default {
-  name: 'DbScheme',
+  name: 'DbSchemePage',
   components: {
     DbScheme
   }

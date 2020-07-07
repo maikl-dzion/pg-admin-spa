@@ -240,6 +240,7 @@ export default {
   },
 
   computed: {
+
     getDbList () {
       return this.storeGet().getDbList
     },
@@ -259,6 +260,7 @@ export default {
   },
 
   created () {
+
     this.getCurrentDbUser() // currentDbUser
     this.getCurrentDatabase() // currentDatabase
     this.getCurConfig() // получаем текущий конфиг

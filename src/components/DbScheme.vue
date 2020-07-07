@@ -1,409 +1,195 @@
-<template><div class="baseControlPage" >
+<template>
+    <div class="DbScheme">
 
-    <!-- ======= Base Control Section ======= -->
-    <section class="breadcrumbs">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <!--<h2>Blog</h2>-->
-                <!---- Верхнее меню      ---->
-
-                <div class="link__div_flex">
-                    <div v-for="(title, fname) in panelSettingsMenu"
-                         @click="commonAction(fname, $event, 'link_item_active')" class="link_div">
-                        <div class="link_item">{{title}}</div>
-                    </div>
-                </div>
-
-                <!--<button type="button" class="btn btn-mdb-color waves-effect btn-sm"-->
-                        <!--style="margin: 0px 0px 0px auto; color:white;"-->
-                        <!--data-toggle="modal" data-target="#fullHeightModalRight">-->
-                        <!--Создание объектов-->
-                <!--</button>-->
-
-            </div>
-        </div>
-    </section><!-- End Blog Section -->
-
-    <!--<pre>{{showDbList}}</pre>-->
-
-    <!-- ======= Page Section ======= -->
-    <section class="blog" style="margin:0px; padding:0px;">
-        <div class="container-fluid" style="margin:0px; padding:0px;" >
-            <div class="row-flex" >
-
-                <!--- Left Panel --->
-                <div class="leftPanel"><div class="sidebar-left">
-
-                    <div class="content__left_panel">
-                        <div class="content__panel_header">
-                            {{commonActionName}}
+        <section class="breadcrumbs">
+            <div class="container-fluid">
+                <div class="d-flex">
+                    <div class="link__div_flex">
+                        <div v-for="(title, fname) in panelSettingsMenu" class="link_div"
+                             @click="schemeMenuAction(fname, $event, 'link_item_active')">
+                            <div class="link_item">{{title}}</div>
                         </div>
-                        <hr>
-                        <template v-if="commonActionName == 'databases'">
-                            <left-panel
-                                    :items="getDbList"
-                                    @delete_item="deleteDb"
-                                    @select_item="commonForm"
-                                    title="datname"
-                                    icon="fas fa-database"
-                                    :action="commonActionName"
-                            ></left-panel>
-                        </template>
-                        <template v-else-if="commonActionName == 'tables'">
-                            <left-panel
-                                    :items="getDbTables"
-                                    @delete_item="commonDeleteTable"
-                                    @select_item="commonForm"
-                                    title="table_name"
-                                    icon="far fa-credit-card"
-                                    :action="commonActionName"
-                            ></left-panel>
-                        </template>
-                        <template v-else-if="commonActionName == 'users'">
-                            <left-panel
-                                    :items="getUserList"
-                                    @delete_item="deleteDbUser"
-                                    @select_item="commonForm"
-                                    title="usename"
-                                    icon="fas fa-address-card"
-                                    :action="commonActionName"
-                            ></left-panel>
-                        </template>
-                        <template v-else-if="commonActionName == 'get_roles'">
-                            <left-panel
-                                    :items="getDbRoles"
-                                    @select_item="commonForm"
-                                    title="rolname"
-                                    icon="fas fa-address-card"
-                                    :action="commonActionName"
-                            ></left-panel>
-                        </template>
-
-                    </div>
-
-                    <!--<div class="sidebar-item categories">-->
-                        <!--<ul>-->
-                            <!--<li><a href="#">General <span>(25)</span></a></li>-->
-                            <!--<li><a href="#">Lifestyle <span>(12)</span></a></li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-
-                </div></div>
-                <!-- End leftPanel -->
-
-                <!--<SimpleBlueForm></SimpleBlueForm>-->
-                <!--<SimpleButton></SimpleButton>-->
-
-                <div class="centerPanel mainContent" >
-                    <div class="content__main_panel"  >
-
-                        <div class="content__panel_header">
-
-                            <button @click="createObjPanelOpen=!createObjPanelOpen"
-                                    class="btn btn-mdb-color waves-effect btn-sm"
-                                    style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">
-                                    Панель создание объектов
-                            </button>
-
-                        </div><hr>
-
-                        <!--<SimpleButton></SimpleButton>-->
-                        <!--<SimpleForm></SimpleForm>-->
-
-                        <template v-if="createObjPanelOpen" >
-                            <CreateNewObject
-                               @btn_click="getActionResponse"
-                            ></CreateNewObject>
-                        </template>
-                        <template v-else >
-
-                            <template v-if="commonActionName == 'tables'" >
-
-                                <!--<pre>{{commonItem}}</pre>-->
-                                <!--<button @click="g()">dfdggdg</button>-->
-
-                                <table class="table_col">
-                                    <colgroup>
-                                        <col style="background:#C7DAF0;">
-                                    </colgroup>
-                                    <!--<tr>-->
-                                        <!--<th>Имя поля</th>-->
-                                        <!--<th>Значение</th>-->
-                                    <!--</tr>-->
-                                    <tr v-for="(item, fname) in commonItem" :key="fname" >
-
-                                        <td class="td-field-input" style="width: 20% !important;" >
-                                            <div style="">{{fname}}</div>
-                                        </td>
-
-                                        <template v-if="!isAutoField(item)">
-
-                                            <td class="td-field-input"
-                                                style="width: 50% !important;"><div>
-                                                <input @change="changeFieldName(fname, commonItem[fname]['column_name'])"
-                                                       v-model="commonItem[fname]['column_name']"
-                                                       class="input-text-class" type="text"/>
-                                            </div></td>
-
-                                            <td class="td-field-input"
-                                                style="width: 20% !important; border-bottom:0px" ><div>
-                                                <select v-model="commonItem[fname]['input_type']"
-                                                        @change="changeFieldType(fname, commonItem[fname]['input_type'])"
-                                                        class="form-control" >
-                                                        <option v-for="(item, i) in tableFieldTypes"
-                                                                :value="item.name" >
-                                                                {{item.name}}
-                                                        </option>
-                                                </select>
-                                            </div></td>
-
-                                            <td class="td-field-input"
-                                                style="width: 10% !important; border-bottom:0px; " >
-                                                <div @click="commonDeleteField(fname)" class="deleteFieldBox">
-                                                    <i class="far fa-trash-alt" style="color:red;"></i>
-                                                </div></td>
-
-                                        </template>
-                                        <template v-else >
-                                            <td class="td-field-input"><div>
-                                                    <input :value="fname" type="text" style="width:100%;"
-                                                           class="input-text-class" disabled="true" />
-                                            </div></td>
-                                            <td class="td-field-input" style="border-bottom:0px" >
-                                                <div></div>
-                                            </td>
-                                            <td class="td-field-input" style="border-bottom:0px" >
-                                                <div></div>
-                                            </td>
-                                        </template>
-
-                                    </tr>
-                                </table>
-
-                            </template>
-                            <template v-else-if="commonActionName == 'databases'">
-                                <BaseSimpleForm
-                                        :item="commonItem"
-                                        name="datname"
-                                        :fields="['datname']"
-                                        @input_item="inputFormItem"
-                                ></BaseSimpleForm>
-                            </template>
-                            <template v-else-if="commonActionName == 'users'">
-                                <BaseSimpleForm
-                                        :item="commonItem"
-                                        name="usename"
-                                        :fields="['usename', 'passwd']"
-                                        @input_item="inputFormItem"
-                                ></BaseSimpleForm>
-                            </template>
-                            <template v-else-if="commonActionName == 'get_roles'">
-                                <BaseSimpleForm
-                                        :item="commonItem"
-                                        name="rolname"
-                                        :fields="['rolname', 'rolpassword']"
-                                        @input_item="inputFormItem"
-                                ></BaseSimpleForm>
-                            </template>
-
-                        </template>
-
-                        <!--<pre>{{commonItem}}</pre>-->
-
                     </div>
                 </div>
-                <!-- End blog -->
+            </div>
+        </section>
 
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </section><!-- End Blog Section -->
+        <!--<pre>{{tableInfoList}}</pre>-->
 
-</div></template>
+        <section class="scheme-section" style="padding:0px; margin:0px">
+            <div class="container-fluid" style="padding:0px; margin:0px">
+                <div @mousemove="dragMove($event)" class="canvas-container">
+
+                    <template v-if="commonActionName == 'databases'">
+                        databases
+                    </template>
+                    <template v-else-if="commonActionName == 'tables'">
+
+                        <div class="row-1" style="padding:0px; margin:0px;">
+                                <div v-for="(item, i) in tableInfoList" class="">
+
+                                    <div  class="divItemBox"
+                                        @mousedown="dragInit($event, 'divItemBox')"
+                                        @mouseup="dragStop($event)"
+                                        :id="`move_elem_${item.name}`"
+                                        :style="`left: ${item.left}px; top:${item.right}px; z-index: ${zIndex}`">
+                                        <div class="item__tableName">
+                                            {{item.name}}
+                                        </div>
+                                        <table class="tableFieldsBox">
+                                            <tr v-for="(field, fname) in item.fields">
+                                                <td class="tdFieldName">
+                                                    <input @change="changeFieldName(fname, field.column_name, item.name)"
+                                                            v-model="field.column_name"></td>
+                                                <td class="tdFieldType">
+                                                    <select v-model="field.input_type"
+                                                            @change="changeFieldType(fname, field.input_type, item.name)"
+                                                            class="custom-select-elem">
+                                                            <option v-for="(item) in tableFieldTypes"
+                                                                    :value="item.name">
+                                                                    {{item.name}}
+                                                            </option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+                        </div>
+
+                    </template>
+                    <template v-else-if="commonActionName == 'users'">
+                        users
+                    </template>
+                    <template v-else-if="commonActionName == 'get_roles'">
+                        get_roles
+                    </template>
+                </div>
+                <!--<div class="row">22</div>-->
+            </div>
+        </section>
+
+    </div>
+</template>
 
 <script>
 
-import LeftPanel from './BaseControlLeftPanel'
-import BaseSimpleForm from './BaseControlSimpleForm'
-import CreateNewObject from './CreateNewObject'
-import SimpleBlueForm from './SimpleBlueForm'
-import SimpleButton from './SimpleButton'
+    // import LeftPanel from './BaseControlLeftPanel'
+    // import BaseSimpleForm from './BaseControlSimpleForm'
+    // import CreateNewObject from './CreateNewObject'
+    // import SimpleBlueForm from './SimpleBlueForm'
+    // import SimpleButton from './SimpleButton'
 
-export default {
-  name: 'BaseControl',
-  data: () => ({}),
-  components: {
-    LeftPanel,
-    BaseSimpleForm,
-    CreateNewObject,
-    SimpleBlueForm,
-    SimpleButton
-  },
+    import ScemeMixin from '../plugins/scheme'
 
-  computed: {
-    getDbList () {
-      return this.storeGet().getDbList
-    },
+    export default {
+        name: 'DbScheme',
+        mixins: [ScemeMixin],
+        data: () => ({}),
+        components: {},
+        computed: {
+            getDbList() {
+                return this.storeGet().getDbList
+            },
 
-    getUserList () {
-      return this.storeGet().getUserList
-    },
+            getUserList() {
+                return this.storeGet().getUserList
+            },
 
-    getDbTables () {
-      return this.storeGet().getTableList
-    },
+            getDbTables() {
+                return this.storeGet().getTableList
+            },
 
-    getDbRoles () {
-      return this.storeGet().getDbRoles
+            getDbRoles() {
+                return this.storeGet().getDbRoles
+            }
+        },
+
+        created() {
+            this.getCurrentDbUser() // currentDbUser
+            this.getCurrentDatabase() // currentDatabase
+            this.getCurConfig()      // получаем текущий конфиг
+            this.getFileUsersConfig()
+
+            this.storeFetch('fetchDbList')
+            this.storeFetch('fetchUserList')
+            this.storeFetch('fetchTableList')
+            this.storeFetch('fetchDbRoles')
+
+            this.schemeMenuAction('tables')
+        },
+
+        methods: {}
     }
-
-  },
-
-  created () {
-    this.getCurrentDbUser() // currentDbUser
-    this.getCurrentDatabase() // currentDatabase
-    this.getCurConfig() // получаем текущий конфиг
-    this.getFileUsersConfig()
-
-    // this.showDatabaseList() // databaseList
-    // this.getDbUsersList() // usersList
-    // this.getTableList() // получаем таблицы
-
-    // this.fetchDbList()
-    // this.fetchUserList()
-    // this.fetchTableList()
-    // this.fetchDbRoles()
-
-    this.storeFetch('fetchDbList')
-    this.storeFetch('fetchUserList')
-    this.storeFetch('fetchTableList')
-    this.storeFetch('fetchDbRoles')
-  },
-
-  methods: {
-
-    getActionResponse (response) {
-      // let action = response.action
-      // // debugger;
-      // switch (action) {
-      //   case 'create_db' :
-      //       // this.fetchDbList()
-      //       break
-      // }
-    }
-
-  }
-}
 </script>
 
-<style >
-
-    /*@media (min-width: 992px) {*/
-        /*.modal .modal-full-height {*/
-            /*width: 60%;*/
-            /*max-width: 60%;*/
-        /*}*/
-    /*}*/
-
-    /*@media (max-width: 400px) {*/
-        /*.modal .modal-full-height {*/
-            /*width: 60%;*/
-            /*max-width: 60%;*/
-        /*}*/
-    /*}*/
-
-    /*@media (min-width: 576px) {*/
-        /*.modal-dialog {*/
-            /*max-width: 95%;*/
-        /*}*/
-    /*}*/
-
-    /*.td-field-input {*/
-        /*width: 150px !important;*/
-        /*border:1px #b0bed9 solid !important;*/
-    /*}*/
-
-    /*.td-field-input select{*/
-        /*border-radius: 0px;*/
-        /*width:100%;*/
-        /*height: 100%;*/
-        /*cursor:pointer*/
-    /*}*/
-
-    /*.table_col td {*/
-        /*border-right: 20px solid white;*/
-        /*border-left: 20px solid white;*/
-        /*!* color: #8b8e91; *!*/
-        /*color: grey !important;*/
-        /*border-bottom: 1px grey solid;*/
-    /*}*/
-
-    /***********************************/
-    /**** Simple Form Table ************/
-    .input-text-class {
-        width: 100%;
-        outline:0px #b0bed9 solid;
-        border:0px red solid;
-        border-bottom:1px gainsboro solid;
-        height: 30px;
-    }
-
-    .baseControlPage .table_col {
-        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-        font-size: 14px;
-        width: 80%;
-        min-width:400px;
-        background: white;
-        text-align: left;
-        border-collapse: collapse;
-        color: #3E4347;
+<style>
+    .canvas-container {
+        background: url('/assets/img/page-grid.jpg') !important;
+        background-repeat: repeat !important;
+        min-height: 700px !important;
         border: 0px red solid;
     }
-    .baseControlPage .table_col th:first-child, .table_col td:first-child {
-        color: #F5F6F6;
-        border-left: none;
-    }
-    .baseControlPage .table_col th {
-        font-weight: normal;
-        border-bottom: 2px solid #b0bed9 ;
-        border-right: 20px solid white;
-        border-left: 20px solid white;
-        padding: 4px;
-    }
-    .baseControlPage .table_col td {
-        border-right: 20px solid white;
-        border-left: 20px solid white;
-        padding: 4px;
-        /*color: #8b8e91;*/
-        color: grey !important;
-        border-bottom: 1px #0e4377 solid;
+
+    .divItemBox {
+        position: absolute;
+        border: 1px red solid;
+        background: white;
+        width: 270px !important;
+        padding: 3px;
+        margin: 3px;
+        z-index: 1;
     }
 
-    .baseControlPage .table_col input {
-        width: 100% !important;
-        border: 0px grey solid;
+    .item__tableName {
+        text-align: center;
+        cursor: move;
     }
 
-    .baseControlPage .table_col select {
+    .tableFieldsBox {
         width: 100%;
+    }
+
+    .tableFieldsBox td {
+        border: 1px red solid;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .tdFieldName {
+
+    }
+
+    .tdFieldType {
+
+    }
+
+    .tdFieldName input {
+        width: 100%;
+        /*outline: none;*/
         border-radius: 0px;
-        cursor:pointer;
-    }
-
-    .baseControlPage .deleteFieldBox {
-        width: 50px;
         border: 1px gainsboro solid;
-        margin:2px;
-        cursor:pointer;
-        text-align:center
     }
 
-    .baseControlPage .td-field-input div {
-        width: 100% !important;
+    .tdFieldType {
+
     }
 
-    .baseControlPage .td-field-input {
-        border: 0px blue solid;
-    }
-    /*****End Simple Form Tbale *******/
+    /*.item__tableName {*/
+    /*text-align: center;*/
+    /*}*/
+
+    /*.item__fieldBox {*/
+    /*display: flex;*/
+    /*}*/
+
+    /*.item__fieldBox .fieldName {*/
+
+    /*}*/
+
+    /*.item__fieldBox .fieldType {*/
+
+    /*}*/
 
 </style>
