@@ -2,7 +2,7 @@
 <div style="width:100%;" >
 
   <div style="display: flex" >
-      <div class="my-form" style="width:480px; display: flex">
+      <div class="my-form" style="width:380px; display: flex">
           <div class="my-form__elem-box" style="width:60%; ">
               <input v-model="newDbName" class="form__inp-text" type="text"  required="">
               <label class="form__inp-label" style="padding-left: 4px">Имя базы</label>
@@ -14,16 +14,49 @@
               </a>
           </div>
       </div>
+
+      <div class="my-form" style="width:480px; display: flex; margin-left:10px">
+
+          <div class="my-form__flex-box">
+              <div class="my-form__elem-box" style="width:80%">
+                  <input v-model="newPassword" class="form__inp-text" type="text" required="">
+                  <label class="form__inp-label" >Пароль</label>
+              </div>
+              <div class="margin-box"></div>
+              <div class="my-form__elem-box">
+                  <CustomSelect
+                          style="width:150px; padding:2px;"
+                          title="Выбрать пользователя"
+                          name="usename"
+                          label="usename"
+                          hover="1"
+                          :items="getUserList"
+                          @select_item="d => selectedUserName = d.value"
+                  ></CustomSelect>
+              </div>
+          </div>
+
+          <div class="my-form__btn-box" style="width:25%; margin-left: 5px;" >
+              <a @click="btnClick('change_user_password')" class="my-form__btn">
+                  <span></span><span></span><span></span><span></span>
+                  Изменить пароль
+              </a>
+          </div>
+      </div>
+
   </div><hr/>
 
   <!--<pre>{{getDbList}}</pre>-->
 
+
   <div style="display: flex">
+      <!--  Управление правами пользователя -->
       <DelegateUserRole
         :db_list="getDbList"
         :user_list="getUserList"
         @delegate_action="delegateUserRoleAction"
       ></DelegateUserRole>
+      <!--  /Управление правами пользователя -->
   </div><hr/>
 
   <div style="display: flex">
@@ -266,7 +299,9 @@ export default {
   },
 
   data: () => ({
-    selectTableName: ''
+     selectTableName  : '',
+     selectedUserName : '',
+     newPassword      : '',
   }),
 
   components: {
@@ -299,14 +334,24 @@ export default {
   methods: {
     btnClick (action) {
       switch (action) {
-        case 'copy_db'       : this.copyDb();    break
+
+        case 'copy_db'       : this.copyDb();       break
         case 'copy_table'    : this.copyTable();    break
         case 'create_db'     : this.addNewDb();     break
         case 'create_user'   : this.createDbUser(); break
+        //------------------
         case 'create_fields' :
               this.addNewFieldsForeach(this.newFieldsListSecond,
                                        this.selectTableName)
               break
+        //------------------
+        case 'change_user_password' :
+              this.changeUserPassword (this.selectedUserName, this.newPassword)
+                  .then(resp => {
+                      this.alertShow('Пароль пользователя изменен');
+                  })
+              break
+        //-----------------
         case 'create_table_list' :
               let table = {}
               for (let i in this.createTableList) {
@@ -315,6 +360,7 @@ export default {
               }
               break
       }
+
       const param = { action }
       this.$emit('btn_click', param)
     },

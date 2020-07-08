@@ -26,18 +26,19 @@
 
     <!--<pre>{{showDbList}}</pre>-->
 
-    <CustomSelect
-        style="width:300px; padding:4px;"
-        title="Выбрать пользователя"
-        name="userId"
-        label="userName"
-        :items="[
-           { userId : 34, userName : 'Игнатов'},
-           { userId : 39, userName : 'Силантьев'},
-           { userId : 55, userName : 'Григорин'},
-        ]"
-        @select_item="selectItemTest"
-    ></CustomSelect>
+    <!--<CustomSelect-->
+        <!--style="width:240px; padding:4px;"-->
+        <!--title="Выбрать пользователя"-->
+        <!--name="userId"-->
+        <!--label="userName"-->
+        <!--:selected_value="39"-->
+        <!--:items="[-->
+           <!--{ userId : 34, userName : 'Игнатов'},-->
+           <!--{ userId : 39, userName : 'Силантьев'},-->
+           <!--{ userId : 55, userName : 'Григорин'},-->
+        <!--]"-->
+        <!--@select_item="r => t1 = r.value"-->
+    <!--&gt;</CustomSelect>-->
 
     <!-- ======= Page Section ======= -->
     <section class="blog" style="margin:0px; padding:0px;">
@@ -243,7 +244,7 @@ import SimpleButton from './SimpleButton'
 
 export default {
   name: 'BaseControl',
-  data: () => ({}),
+  data: () => ({ t1 : ''}),
   components: {
     LeftPanel,
     BaseSimpleForm,
@@ -296,7 +297,7 @@ export default {
 
   methods: {
     selectItemTest(data) {
-        lg(data)
+        // lg(data)
     },
 
     getActionResponse (response) {

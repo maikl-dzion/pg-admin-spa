@@ -26,16 +26,16 @@ export default {
                     let tableList = this.getDbTables
                     let ch = 1;
                     let left = 10
-                    let right = 120
+                    let right = 150
                     let zIndex = 1
                     for(let i in tableList) {
                         ch++
                         zIndex++
-                        left = left + 50
-                        right = right + 50
                         let item = tableList[i];
                         let tableName = item.table_name
                         this.getTableFieldsForm(tableName, { left, right, zIndex})
+                        left = left + 150
+                        right = right + 30
                     }
                     break
 
