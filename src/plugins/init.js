@@ -8,7 +8,9 @@ import Http from './services'
 
 import AlertMessage from '../components/AlertMessage'
 import WarnMessage from '../components/WarnMessage'
-import CustomSelect from '../components/elements/CustomSelect'
+// import CustomSelect from '../components/elements/CustomSelect'
+import CustomTable from '@/components/elements/Table'
+import CustomSelect from '@/components/elements/Select'
 
 const InitApp = {
 
@@ -16,7 +18,7 @@ const InitApp = {
     Vue.component('AlertMessage', AlertMessage)
     Vue.component('WarnMessage' , WarnMessage)
     Vue.component('CustomSelect', CustomSelect)
-    // Vue.component('PersonsList', PersonsList)
+    Vue.component('CustomTable' , CustomTable)
 
     Vue.mixin({
       // mixins: [Http, BaseMixin, DataFormMixin, DragMixin],
@@ -475,10 +477,9 @@ const InitApp = {
 
         editItem (fieldName, item) {
           var newValue = item[fieldName]
-          var itemId = item['id']
+          var itemId   = item['id']
           var url = 'EDIT_ITEM/' + this.tableName + '/' + fieldName + '/' + itemId + '/' + newValue
           this.http(url).then(resp => {
-            // var r = resp;
             this.getTableListSheme()
             // this.getTableData(this.tableName);
           })

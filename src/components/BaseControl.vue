@@ -26,6 +26,19 @@
 
     <!--<pre>{{showDbList}}</pre>-->
 
+    <CustomSelect
+        style="width:300px; padding:4px;"
+        title="Выбрать пользователя"
+        name="userId"
+        label="userName"
+        :items="[
+           { userId : 34, userName : 'Игнатов'},
+           { userId : 39, userName : 'Силантьев'},
+           { userId : 55, userName : 'Григорин'},
+        ]"
+        @select_item="selectItemTest"
+    ></CustomSelect>
+
     <!-- ======= Page Section ======= -->
     <section class="blog" style="margin:0px; padding:0px;">
         <div class="container-fluid" style="margin:0px; padding:0px;" >
@@ -282,6 +295,9 @@ export default {
   },
 
   methods: {
+    selectItemTest(data) {
+        lg(data)
+    },
 
     getActionResponse (response) {
       // let action = response.action

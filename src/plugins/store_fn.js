@@ -30,6 +30,10 @@ const StoreFn = {
 
         fetchDbRoles () {
           this.$store.dispatch('fetchDbRoles')
+        },
+
+        fetchTableData (tableName) {
+            this.$store.dispatch('fetchTableData', tableName)
         }
 
       } // ------- methods

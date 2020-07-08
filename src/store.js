@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 Vue.use(Vuex)
 
 // async function http1 (url) {
@@ -14,91 +15,105 @@ Vue.use(Vuex)
 // }
 
 class HttpService {
-  constructor (apiUrl) {
-    this.apiUrl = apiUrl
-  }
-
-  async send (url, method = 'get', data = null) {
-    const apiUrl = this.apiUrl + url
-    let response = await fetch(apiUrl)
-    if (response.ok) {
-      const result = await response.json()
-      return result.data
+    constructor(apiUrl) {
+        this.apiUrl = apiUrl
     }
 
-    alert('Ошибка HTTP: ' + response.status)
-  }
+    async send(url, method = 'get', data = null) {
+        const apiUrl = this.apiUrl + url
+        let response = await fetch(apiUrl)
+        if (response.ok) {
+            const result = await response.json()
+            return result.data
+        }
+
+        alert('Ошибка HTTP: ' + response.status)
+    }
 }
 
 const http = new HttpService(apiUrl)
 
 export default new Vuex.Store({
-  state: {
-    dababaseList: [],
-    userList: [],
-    tableList: [],
-    dbRoles: [],
-    tableFields: {}
-  },
-  mutations: {
-    setDbList (state, data) {
-      state.dababaseList = data
+    state: {
+        dababaseList: [],
+        userList: [],
+        tableList: [],
+        dbRoles: [],
+        tableData : [],
+        tableFields: {}
     },
-    setUserList (state, data) {
-      state.userList = data
+    mutations: {
+        setDbList(state, data) {
+            state.dababaseList = data
+        },
+        setUserList(state, data) {
+            state.userList = data
+        },
+        setTableList(state, data) {
+            state.tableList = data
+        },
+        setDbRoles(state, data) {
+            state.dbRoles = data
+        },
+        setTableData(state, data) {
+            state.tableData = data
+        }
     },
-    setTableList (state, data) {
-      state.tableList = data
+    actions: {
+
+        async fetchDbList(context) {
+            let url = '/SHOW_DATABASE_LIST'
+            let data = await http.send(url)
+            context.commit('setDbList', data)
+        },
+
+        async fetchUserList(context) {
+            let url = '/getDbUsersList'
+            let data = await http.send(url)
+            context.commit('setUserList', data)
+        },
+
+        async fetchTableList(context) {
+            let url = '/GET_TABLE_LIST'
+            let data = await http.send(url)
+            context.commit('setTableList', data)
+        },
+
+        async fetchDbRoles(context) {
+            let command = 'SELECT * FROM pg_roles'
+            let url = '/EXEC_SQL_COMMAND/' + command + '/query'
+            let data = await http.send(url)
+            context.commit('setDbRoles', data)
+        },
+
+        async fetchTableData(context, tableName) {
+            const url = '/GET_TABLE_DATA/' + tableName
+            let data = await http.send(url)
+            context.commit('setTableData', data)
+        }
+
     },
-    setDbRoles (state, data) {
-      state.dbRoles = data
+    getters: {
+
+        getUserList: state => {
+            return state.userList
+        },
+
+        getDbList: state => {
+            return state.dababaseList
+        },
+
+        getTableList: state => {
+            return state.tableList
+        },
+
+        getDbRoles: state => {
+            return state.dbRoles
+        },
+
+        getDataList: state => {
+            return state.tableData
+        }
+
     }
-  },
-  actions: {
-
-    async fetchDbList (context) {
-      let url = '/SHOW_DATABASE_LIST'
-      let data = await http.send(url)
-      context.commit('setDbList', data)
-    },
-
-    async fetchUserList (context) {
-      let url = '/getDbUsersList'
-      let data = await http.send(url)
-      context.commit('setUserList', data)
-    },
-
-    async fetchTableList (context) {
-      let url = '/GET_TABLE_LIST'
-      let data = await http.send(url)
-      context.commit('setTableList', data)
-    },
-
-    async fetchDbRoles (context) {
-      let command = 'SELECT * FROM pg_roles'
-      let url = '/EXEC_SQL_COMMAND/' + command + '/query'
-      let data = await http.send(url)
-      context.commit('setDbRoles', data)
-    }
-
-  },
-  getters: {
-
-    getUserList: state => {
-      return state.userList
-    },
-
-    getDbList: state => {
-      return state.dababaseList
-    },
-
-    getTableList: state => {
-      return state.tableList
-    },
-
-    getDbRoles: state => {
-      return state.dbRoles
-    }
-
-  }
 })
