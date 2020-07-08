@@ -8,41 +8,61 @@
 
     <div class="dlg-item-name">
         <div class="dlg-name">
-            <div style="text-align:left; font-style: italic; font-size: 12px;">Пользователь</div>
-            <div>{{userName}}</div>
+            <!--<div style="text-align:left; font-style: italic; font-size: 12px;">Пользователь</div>-->
+            <!--<div>{{userName}}</div>-->
+
+            <CustomSelect
+                    style="width:100%; padding:2px;"
+                    title="Выбрать пользователя"
+                    name="usename"
+                    label="usename"
+                    hover="1"
+                    :items="user_list"
+                    @select_item="d => userName = d.value"
+            ></CustomSelect>
+
         </div>
         <div class="dlg-name" >
-            <div style="text-align:left; font-style: italic; font-size: 12px;">База</div>
-            <div>{{dataName}}</div>
+            <!--<div style="text-align:left; font-style: italic; font-size: 12px;">База</div>-->
+            <!--<div>{{dataName}}</div>-->
+            <CustomSelect
+                style="width:100%; padding:2px;"
+                title="Выбрать базу"
+                name="datname"
+                label="datname"
+                hover="1"
+                :items="db_list"
+                @select_item="d => dataName = d.value"
+            ></CustomSelect>
         </div>
     </div>
 
-    <hr style="margin: 0px 0px 10px 0px"/>
+    <!--<hr style="margin: 0px 0px 10px 0px"/>-->
 
-    <ul class="menu" >
-        <li><a>Пользователи</a>
-            <ul>
-                <li><a style="text-align: center; background: #b8daff">Пользователи</a></li>
-                <li v-for="(item) in user_list">
-                    <a @click="userName = item['usename']">
-                        {{item['usename']}}
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li><a class="brd" >Базы данных</a>
-            <ul>
-                <li><a style="text-align: center; background: #b8daff">Базы</a></li>
-                <li v-for="(item) in db_list" >
-                    <a @click="dataName = item['datname']">
-                        {{item['datname']}}
-                    </a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+    <!--<ul class="menu" >-->
+        <!--<li><a>Пользователи</a>-->
+            <!--<ul>-->
+                <!--<li><a style="text-align: center; background: #b8daff">Пользователи</a></li>-->
+                <!--<li v-for="(item) in user_list">-->
+                    <!--<a @click="userName = item['usename']">-->
+                        <!--{{item['usename']}}-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</li>-->
+        <!--<li><a class="brd" >Базы данных</a>-->
+            <!--<ul>-->
+                <!--<li><a style="text-align: center; background: #b8daff">Базы</a></li>-->
+                <!--<li v-for="(item) in db_list" >-->
+                    <!--<a @click="dataName = item['datname']">-->
+                        <!--{{item['datname']}}-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</li>-->
+    <!--</ul>-->
 
-    <hr style="margin: 10px 0px 0px 0px"/>
+    <hr style="margin: 5px 0px 2px 0px"/>
 
     <div class="my-form dlg-button-box">
         <a @click="actionClick('delete')" class="my-form__btn">
@@ -103,15 +123,17 @@
     .dlg-container {
         border: 1px gainsboro solid;
         padding:0px;
-        width: 300px;
+        width: 340px;
         background: ghostwhite;
         padding: 2px;
     }
 
     .dlg-title {
-        font-weight: bold;
+        /*font-weight: bold;*/
         text-align: center;
         padding-top: 3px;
+        font-size: 17px;
+        color: grey;
     }
 
     .dlg-button-box {
