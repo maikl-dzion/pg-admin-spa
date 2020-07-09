@@ -240,6 +240,22 @@ const InitApp = {
           // console.log(target)
         },
 
+        cssClassListRender(selector, action, className) {
+            let elements = document.querySelectorAll(selector)
+            switch (action) {
+                case 'del_class' :
+                    for (let elem of elements)
+                        elem.classList.remove(className)
+                    break;
+
+                case 'set_class' :
+                    for (let elem of elements)
+                        elem.classList.add(className)
+                    break;
+            }
+
+        },
+
         jqSetActiveElement (elemId, activeClass, listClass) {
           $('.' + listClass).removeClass(activeClass)
           $('#' + elemId).addClass(activeClass)

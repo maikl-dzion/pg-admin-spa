@@ -28,7 +28,7 @@
                         <div class="row-1" style="padding:0px; margin:0px;">
                                 <div v-for="(item, i) in tableInfoList" class="">
 
-                                    <div  class="divItemBox"
+                                    <div class="divItemBox"
                                         @mousedown="dragInit($event, 'divItemBox')"
                                         @mouseup="dragStop($event)"
                                         :id="`move_elem_${item.name}`"
@@ -134,12 +134,25 @@
 
     .divItemBox {
         position: absolute;
-        border: 1px red solid;
-        background: white;
+        border: 2px darkslategrey solid;
+        background: ghostwhite;
         width: 270px !important;
         padding: 3px;
         margin: 3px;
         z-index: 1;
+
+        box-shadow:
+                -15px -15px 2px -5px rgba(160,82,45,.5),
+                -15px 15px 2px -5px rgba(0,255,255,.5),
+                15px -15px 2px -5px rgba(255,0,0,.5),
+                15px 15px 2px -5px rgba(255,255,0,.5);
+
+        box-shadow:
+                inset rgba(0,0,0,.5) -3px -3px 8px,
+                inset rgba(255,255,255,.9) 3px 3px 8px,
+                rgba(0,0,0,.8) 3px 3px 8px -3px;
+
+        box-shadow: 6px 6px #989898, 12px 12px #6c6666;
     }
 
     .item__tableName {
@@ -152,7 +165,7 @@
     }
 
     .tableFieldsBox td {
-        border: 1px red solid;
+        border: 1px #b0bed9 solid;
         margin: 0px;
         padding: 0px;
     }
