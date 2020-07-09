@@ -236,11 +236,11 @@
 
 <script>
 
-import LeftPanel from './BaseControlLeftPanel'
-import BaseSimpleForm from './BaseControlSimpleForm'
-import CreateNewObject from './CreateNewObject'
-import SimpleBlueForm from './SimpleBlueForm'
-import SimpleButton from './SimpleButton'
+import LeftPanel from '@/components/BaseControlLeftPanel'
+import BaseSimpleForm from '@/components/BaseControlSimpleForm'
+import CreateNewObject from '@/components/CreateNewObject'
+import SimpleBlueForm from '@/components/SimpleBlueForm'
+import SimpleButton from '@/components/SimpleButton'
 
 export default {
   name: 'BaseControl',

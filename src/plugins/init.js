@@ -310,9 +310,12 @@ const InitApp = {
           this.pushFieldToArray(true)
         },
 
-        copyDb () {
-          let newDbName = this.copyDbItem.newDbName
-          let dbName    = this.copyDbItem.dbName
+        copyDb (dbName = null, newDbName = null) {
+          if(!dbName || !newDbName) {
+              newDbName = this.copyDbItem.newDbName
+              dbName    = this.copyDbItem.dbName
+          }
+
           if (!newDbName) {
             this.warn('Имя базы пустое')
             return false
@@ -327,9 +330,12 @@ const InitApp = {
           })
         },
 
-        copyTable () {
-          let newName = this.copyTableItem.newName
-          let name    = this.copyTableItem.name
+        copyTable (name = null, newName = null) {
+          if(!name || !newName) {
+              newName = this.copyTableItem.newName
+              name    = this.copyTableItem.name
+          }
+
           if(!newName) newName = name + '_copy'
 
           // if (!newName) {
@@ -665,14 +671,14 @@ const InitApp = {
           this.newFieldsJson.push(Object.assign({}, this.newFieldModel))
         },
 
-        deleteField (fieldName, ret = false) {
-          var url = 'DELETE_FIELD/' + this.tableName + '/' + fieldName
-          if (ret) return this.http(url)
-
+        deleteField (fieldName, _return = false, tableName = null) {
+          if(!tableName) tableName = this.tableName
+          const url = 'DELETE_FIELD/' + tableName + '/' + fieldName
+          if (_return)
+             return this.http(url)
           this.http(url).then(resp => {
             this.getTableFields(this.tableName)
             this.getTableListSheme()
-            // this.alertSuccess('Поле удалено');
           })
         },
 

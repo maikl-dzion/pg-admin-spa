@@ -1,7 +1,9 @@
 <template>
 <div style="width:100%;" >
 
+  <!-- Создание базы, изменение пароля пользователя  --->
   <div style="display: flex" >
+
       <div class="my-form" style="width:380px; display: flex">
           <div class="my-form__elem-box" style="width:60%; ">
               <input v-model="newDbName" class="form__inp-text" type="text"  required="">
@@ -45,18 +47,21 @@
       </div>
 
   </div><hr/>
-
-  <!--<pre>{{getDbList}}</pre>-->
-
+  <!-- / Создание базы, изменение пароля пользователя  --->
 
   <div style="display: flex">
+      <!-- Копирование объектов  --->
+      <CopyObject></CopyObject>
+      <!-- /Копирование объектов --->
+
       <!--  Управление правами пользователя -->
-      <DelegateUserRole
-        :db_list="getDbList"
-        :user_list="getUserList"
-        @delegate_action="delegateUserRoleAction"
+      <DelegateUserRole style="margin-left:10px"
+          :db_list="getDbList"
+          :user_list="getUserList"
+          @delegate_action="delegateUserRoleAction"
       ></DelegateUserRole>
       <!--  /Управление правами пользователя -->
+
   </div><hr/>
 
   <div style="display: flex">
@@ -105,6 +110,7 @@
             </div>
 
         </div>
+
     </div>
     <!-----  / Добавление пользователя ---->
 
@@ -202,83 +208,6 @@
     </div>
     <!------ / Добавление новых полей ----->
 
-  </div><!---- display flex box --->
-  <hr/>
-
-  <div style="display: flex" >
-
-      <!-----  Скопировать таблицу --------->
-      <div class="create-form-container" style="margin-left:10px">
-          <div class="my-form" >
-              <div class="my-form__label" >Скопировать таблицу</div>
-              <hr class="my-form__delimiter" >
-              <div class="my-form__container">
-
-                  <div class="my-form__select-box" style="margin-bottom:10px !important;" >
-                      <label class="select-label" > Выбрать таблицу для копирования</label>
-                      <select v-model="copyTableItem.name" class="custom-select-elem" >
-                          <option v-for="(item) in getDbTables"
-                                  :value="item.table_name" >
-                              {{item.table_name}}
-                          </option>
-                      </select>
-                  </div>
-
-                  <div class="my-form__elem-box">
-                      <input v-model="copyTableItem.newName" class="form__inp-text" type="text" required="">
-                      <label class="form__inp-label">Имя новой таблицы</label>
-                  </div>
-
-              </div>
-
-              <br/><hr class="my-form__delimiter">
-              <div class="my-form__btn-box">
-                  <a @click="btnClick('copy_table')" class="my-form__btn">
-                      <span></span><span></span><span></span><span></span>
-                      Сохранить
-                  </a>
-              </div>
-
-          </div>
-      </div>
-      <!-----  / Скопировать таблицу ------->
-
-      <!-----  Скопировать базу --------->
-      <div class="create-form-container" style="margin-left:10px">
-          <div class="my-form" >
-              <div class="my-form__label" >Скопировать базу</div>
-              <hr class="my-form__delimiter" >
-              <div class="my-form__container">
-
-                  <div class="my-form__select-box" style="margin-bottom:10px !important;" >
-                      <label class="select-label" > Выбрать базу для копирования</label>
-                      <select  v-model="copyDbItem.dbName" class="custom-select-elem" >
-                          <option v-for="(item) in getDbList"
-                                  :value="item.datname" >
-                                  {{item.datname}}
-                          </option>
-                      </select>
-                  </div>
-
-                  <div class="my-form__elem-box">
-                      <input  v-model="copyDbItem.newDbName" class="form__inp-text" type="text" required="">
-                      <label class="form__inp-label">Имя новой базы</label>
-                  </div>
-
-              </div>
-
-              <br/><hr class="my-form__delimiter">
-              <div class="my-form__btn-box">
-                  <a @click="btnClick('copy_db')" class="my-form__btn">
-                      <span></span><span></span><span></span><span></span>
-                      Сохранить
-                  </a>
-              </div>
-
-          </div>
-      </div>
-      <!-----  / Скопировать базу ------->
-
   </div><hr/>
 
 </div>
@@ -286,10 +215,8 @@
 
 <script>
 
-// import SimpleBlueForm from '../components/SimpleBlueForm'
-// import SimpleButton from '../components/SimpleButton'
-// import BlueBtn from '@/components/elements/BlueBtn'
 import DelegateUserRole from '@/components/db-control/DelegateUserRole'
+import CopyObject from '@/components/db-control/CopyDbObject'
 
 export default {
   name: 'CreateNewObjects',
@@ -306,9 +233,7 @@ export default {
 
   components: {
       DelegateUserRole,
-    // SimpleBlueForm,
-    // SimpleButton,
-    // BlueBtn
+      CopyObject,
   },
 
   computed: {
