@@ -52,8 +52,10 @@
                                                 </select>
                                             </td>
                                             <td style="background: red; width: 30px; text-align: center">
-                                                <i @click="commonDeleteField(fname, item.name)" class="fa fa-times"
+                                                <i @click="deleteTableField(item.name, fname, i)" class="fa fa-times"
                                                    style="color:white;font-size: 14px; cursor:pointer"></i>
+                                                <!--<i @click="commonDeleteField(fname, item.name)" class="fa fa-times"-->
+                                                <!--style="color:white;font-size: 14px; cursor:pointer"></i>-->
                                             </td>
                                         </tr>
                                     </table>
@@ -101,7 +103,11 @@
 
             getDbRoles() {
                 return this.storeGet().getDbRoles
-            }
+            },
+
+            tableFields() {
+                return this.storeGet().getTableFields
+            },
         },
 
         created() {
@@ -118,7 +124,9 @@
             this.schemeMenuAction('tables')
         },
 
-        methods: {}
+        methods: {
+
+        }
     }
 </script>
 

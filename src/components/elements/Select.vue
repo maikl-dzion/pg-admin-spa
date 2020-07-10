@@ -1,7 +1,7 @@
 <template><div class="selectElemContainer" >
-    <!--<pre>{{items}}</pre>-->
-    <!--{{label}}-->
-    <div class="form__inp-label selectElemTitle">
+
+    <div v-if="title"
+         class="form__inp-label selectElemTitle">
         {{title}}
     </div>
 
@@ -82,6 +82,11 @@
 
 <style scoped >
 
+    .selectElemContainer {
+        width: 100%; /* Ширина меню */
+        height:100%;
+    }
+
     .selectElemTitle {
         border:1px gainsboro solid;
         text-align: left;
@@ -94,6 +99,7 @@
     .selectElemUlBox,
     .selectElemUlList{
         width: 100%; /* Ширина меню */
+        /*height:100%;*/
         list-style: none; /* Для списка убираем маркеры */
         margin: 0; /* Нет отступов вокруг */
         padding: 0; /* Убираем поля вокруг текста */

@@ -35,6 +35,11 @@ const http = new HttpService(apiUrl)
 
 export default new Vuex.Store({
     state: {
+
+        tableName : '',
+        dbName    : '',
+        userName  : '',
+
         dababaseList: [],
         userList: [],
         tableList: [],
@@ -57,6 +62,16 @@ export default new Vuex.Store({
         },
         setTableData(state, data) {
             state.tableData = data
+        },
+
+        setTableFields(state, data) {
+            state.tableFields = data
+        },
+
+        setParam(state, data) {
+            const value = data.value
+            const name  = data.name
+            state[name] = value
         }
     },
     actions: {
@@ -90,6 +105,16 @@ export default new Vuex.Store({
             const url = '/GET_TABLE_DATA/' + tableName
             let data = await http.send(url)
             context.commit('setTableData', data)
+        },
+
+        async fetchTableFields(context, tableName) {
+            const url = '/GET_TABLE_FIELDS/' + tableName
+            let data = await http.send(url)
+            context.commit('setTableFields', data)
+        },
+
+        setParam(context, data) {
+            context.commit('setParam', data)
         }
 
     },
@@ -113,7 +138,14 @@ export default new Vuex.Store({
 
         getDataList: state => {
             return state.tableData
-        }
+        },
 
+        getTableFields: state => {
+            return state.tableFields
+        },
+
+        getParam: (state, name) => {
+            return state[name]
+        },
     }
 })

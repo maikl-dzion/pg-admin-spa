@@ -320,6 +320,7 @@ const BaseMixin = {
                         case 'tables' :
                             itemName = item.table_name
                             this.tableName = itemName
+                            this.fetchTableFields (this.tableName)
                             this.getTableFields(this.tableName, tableFields => {
                                 this.commonItem = tableFields
                             })
@@ -335,6 +336,7 @@ const BaseMixin = {
                     const url = 'DELETE_FIELD/' + tableName + '/' + fieldName
                     this.deleteField(fieldName, true, tableName).then(resp => {
                         this.fetchTableList ()
+                        this.fetchTableFields (tableName)
                         this.getTableFields(tableName, resp => {
                             this.commonItem = resp
                             this.alertShow('Поле таблицы удалено')
@@ -384,6 +386,7 @@ const BaseMixin = {
                     if (!tableName) tableName = this.tableName
                     let url = 'changeFieldType/' + tableName + '/' + fieldName + '/' + newType
                     this.http(url).then(resp => {
+                        this.fetchTableFields (tableName)
                         this.getTableFields(tableName, resp => {
                             this.commonItem = resp
                             this.alertShow('Тип поля изменен')

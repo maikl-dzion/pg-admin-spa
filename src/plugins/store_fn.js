@@ -12,8 +12,8 @@ const StoreFn = {
           return this.$store.getters
         },
 
-        storeFetch (fnName) {
-          this.$store.dispatch(fnName)
+        storeFetch (fnName, data = null) {
+          this.$store.dispatch(fnName, data)
         },
 
         fetchDbList () {
@@ -34,7 +34,15 @@ const StoreFn = {
 
         fetchTableData (tableName) {
             this.$store.dispatch('fetchTableData', tableName)
-        }
+        },
+
+        fetchTableFields (tableName) {
+            this.$store.dispatch('fetchTableFields', tableName)
+        },
+
+        setParam (data) {
+            this.$store.dispatch('setParam', data)
+        },
 
       } // ------- methods
 

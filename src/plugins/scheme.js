@@ -63,5 +63,18 @@ export default {
             }
             this.tableInfoList.push(json)
         },
+
+        deleteTableField(tableName, fieldName, i) {
+            const url = 'DELETE_FIELD/' + tableName + '/' + fieldName
+            this.deleteField(fieldName, true, tableName).then(resp => {
+                //this.fetchTableList ()
+                //this.fetchTableFields (tableName)
+                this.getTableFields(tableName, fields => {
+                    this.tableInfoList[i]['fields'] = fields
+                    this.alertShow('Поле таблицы удалено')
+                })
+            })
+        },
+
     },
 }
