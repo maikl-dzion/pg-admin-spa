@@ -53,7 +53,7 @@
                                             </td>
                                             <td style="background: red; width: 30px; text-align: center">
                                                 <i @click="commonDeleteField(fname, item.name)" class="fa fa-times"
-                                                   style="color:white;font-size: 25px; cursor:pointer"></i>
+                                                   style="color:white;font-size: 14px; cursor:pointer"></i>
                                             </td>
                                         </tr>
                                     </table>

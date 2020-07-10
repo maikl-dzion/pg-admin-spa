@@ -3,12 +3,13 @@
 
         <!--<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>-->
 
-        <template v-for="(label, i) in tabs" >
-            <input type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="">
-            <label :for="'tab-btn-' + (i+1)">{{label}}</label>
+        <template v-for="(item, i) in tabs" >
+            <input v-if="item.active" type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="" checked>
+            <input v-else="item.active" type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="">
+            <label :for="'tab-btn-' + (i+1)">{{item.label}}</label>
         </template>
 
-        <template v-for="(label, i) in tabs" >
+        <template v-for="(item, i) in tabs" >
             <div :id="'content-' + (i+1)" style="margin-top: -8px;">
                 <slot :name="'content-' + (i+1)"/>
             </div>
@@ -43,7 +44,7 @@ export default {
         display: none;
     }
 
-    .tabs>div {
+    .tabs > div {
         /* скрыть контент по умолчанию */
         display: none;
         border: 1px solid #e0e0e0;
@@ -65,7 +66,7 @@ export default {
         user-select: none;
         background-color: #f5f5f5;
         border: 1px solid #e0e0e0;
-        padding: 2px 8px;
+        padding: 2px 14px;
         font-size: 16px;
         line-height: 1.5;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;

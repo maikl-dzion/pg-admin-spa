@@ -89,117 +89,130 @@
 
                             <div class="content__panel_header">
 
-                                <button @click="createObjPanelOpen=!createObjPanelOpen"
-                                        class="btn btn-mdb-color waves-effect btn-sm"
-                                        style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">
-                                        Панель создание объектов
-                                </button>
+                                <!--<button @click="createObjPanelOpen=!createObjPanelOpen"-->
+                                        <!--class="btn btn-mdb-color waves-effect btn-sm"-->
+                                        <!--style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">-->
+                                        <!--Панель создание объектов-->
+                                <!--</button>-->
 
                             </div>
                             <hr>
 
-                            <template v-if="createObjPanelOpen">
+                            <TabPanel style="border: 0px red solid; margin:1px"
+                                :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}]" >
+                                <!--:tabs="['Редактирование','Создание объектов']" >-->
+                                <div slot="content-1">
 
-                                <CreateNewObject
-                                        @btn_click="getActionResponse"
-                                ></CreateNewObject>
+                                    <template v-if="commonActionName == 'tables'">
 
-                            </template>
-                            <template v-else>
 
-                                <template v-if="commonActionName == 'tables'">
+                                        <TableFielsEdit
+                                           :fields="commonItem"
+                                           :table_name="tableName"
+                                        ></TableFielsEdit>
 
-                                    <table class="table_col">
-                                        <colgroup>
-                                            <col style="background:#C7DAF0;">
-                                        </colgroup>
+                                        <!--<table class="table_col">-->
+                                            <!--<colgroup>-->
+                                                <!--<col style="background:#C7DAF0;">-->
+                                            <!--</colgroup>-->
 
-                                        <tr v-for="(item, fname) in commonItem" :key="fname">
+                                            <!--<tr v-for="(item, fname) in commonItem" :key="fname">-->
 
-                                            <td class="td-field-input" style="width: 20% !important;">
-                                                <div style="">{{fname}}</div>
-                                            </td>
+                                                <!--<td class="td-field-input" style="width: 20% !important;">-->
+                                                    <!--<div style="">{{fname}}</div>-->
+                                                <!--</td>-->
 
-                                            <template v-if="!isAutoField(item)">
+                                                <!--<template v-if="!isAutoField(item)">-->
 
-                                                <td class="td-field-input"
-                                                    style="width: 50% !important;">
-                                                    <div>
-                                                        <input @change="changeFieldName(fname, commonItem[fname]['column_name'])"
-                                                               v-model="commonItem[fname]['column_name']"
-                                                               class="input-text-class" type="text"/>
-                                                    </div>
-                                                </td>
+                                                    <!--<td class="td-field-input"-->
+                                                        <!--style="width: 50% !important;">-->
+                                                        <!--<div>-->
+                                                            <!--<input @change="changeFieldName(fname, commonItem[fname]['column_name'])"-->
+                                                                   <!--v-model="commonItem[fname]['column_name']"-->
+                                                                   <!--class="input-text-class" type="text"/>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
 
-                                                <td class="td-field-input"
-                                                    style="width: 20% !important; border-bottom:0px">
-                                                    <div>
-                                                        <select v-model="commonItem[fname]['input_type']"
-                                                                @change="changeFieldType(fname, commonItem[fname]['input_type'])"
-                                                                class="form-control">
-                                                            <option v-for="(item, i) in tableFieldTypes"
-                                                                    :value="item.name">
-                                                                {{item.name}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </td>
+                                                    <!--<td class="td-field-input"-->
+                                                        <!--style="width: 20% !important; border-bottom:0px">-->
+                                                        <!--<div>-->
+                                                            <!--<select v-model="commonItem[fname]['input_type']"-->
+                                                                    <!--@change="changeFieldType(fname, commonItem[fname]['input_type'])"-->
+                                                                    <!--class="form-control">-->
+                                                                <!--<option v-for="(item, i) in tableFieldTypes"-->
+                                                                        <!--:value="item.name">-->
+                                                                    <!--{{item.name}}-->
+                                                                <!--</option>-->
+                                                            <!--</select>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
 
-                                                <td class="td-field-input"
-                                                    style="width: 10% !important; border-bottom:0px; ">
-                                                    <div @click="commonDeleteField(fname)" class="deleteFieldBox">
-                                                        <i class="far fa-trash-alt" style="color:red;"></i>
-                                                    </div>
-                                                </td>
+                                                    <!--<td class="td-field-input"-->
+                                                        <!--style="width: 10% !important; border-bottom:0px; ">-->
+                                                        <!--<div @click="commonDeleteField(fname)" class="deleteFieldBox">-->
+                                                            <!--<i class="far fa-trash-alt" style="color:red;"></i>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
 
-                                            </template>
-                                            <template v-else>
-                                                <td class="td-field-input">
-                                                    <div>
-                                                        <input :value="fname" type="text" style="width:100%;"
-                                                               class="input-text-class" disabled="true"/>
-                                                    </div>
-                                                </td>
-                                                <td class="td-field-input" style="border-bottom:0px">
-                                                    <div></div>
-                                                </td>
-                                                <td class="td-field-input" style="border-bottom:0px">
-                                                    <div></div>
-                                                </td>
-                                            </template>
+                                                <!--</template>-->
+                                                <!--<template v-else>-->
+                                                    <!--<td class="td-field-input">-->
+                                                        <!--<div>-->
+                                                            <!--<input :value="fname" type="text" style="width:100%;"-->
+                                                                   <!--class="input-text-class" disabled="true"/>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
+                                                    <!--<td class="td-field-input" style="border-bottom:0px">-->
+                                                        <!--<div></div>-->
+                                                    <!--</td>-->
+                                                    <!--<td class="td-field-input" style="border-bottom:0px">-->
+                                                        <!--<div></div>-->
+                                                    <!--</td>-->
+                                                <!--</template>-->
 
-                                        </tr>
-                                    </table>
+                                            <!--</tr>-->
+                                        <!--</table>-->
 
-                                </template>
-                                <template v-else-if="commonActionName == 'databases'">
-                                    <BaseSimpleForm
-                                            :item="commonItem"
-                                            name="datname"
-                                            :fields="['datname']"
-                                            @input_item="inputFormItem"
-                                    ></BaseSimpleForm>
-                                </template>
-                                <template v-else-if="commonActionName == 'users'">
-                                    <BaseSimpleForm
-                                            :item="commonItem"
-                                            name="usename"
-                                            :fields="['usename', 'passwd']"
-                                            @input_item="inputFormItem"
-                                    ></BaseSimpleForm>
-                                </template>
-                                <template v-else-if="commonActionName == 'get_roles'">
-                                    <BaseSimpleForm
-                                            :item="commonItem"
-                                            name="rolname"
-                                            :fields="['rolname', 'rolpassword']"
-                                            @input_item="inputFormItem"
-                                    ></BaseSimpleForm>
-                                </template>
+                                    </template>
+                                    <template v-else-if="commonActionName == 'databases'">
+                                        <BaseSimpleForm
+                                                :item="commonItem"
+                                                name="datname"
+                                                :fields="['datname']"
+                                                @input_item="inputFormItem"
+                                        ></BaseSimpleForm>
+                                    </template>
+                                    <template v-else-if="commonActionName == 'users'">
+                                        <BaseSimpleForm
+                                                :item="commonItem"
+                                                name="usename"
+                                                :fields="['usename', 'passwd']"
+                                                @input_item="inputFormItem"
+                                        ></BaseSimpleForm>
+                                    </template>
+                                    <template v-else-if="commonActionName == 'get_roles'">
+                                        <BaseSimpleForm
+                                                :item="commonItem"
+                                                name="rolname"
+                                                :fields="['rolname', 'rolpassword']"
+                                                @input_item="inputFormItem"
+                                        ></BaseSimpleForm>
+                                    </template>
 
-                            </template>
+                                </div>
+                                <div slot="content-2">
 
-                            <!--<pre>{{commonItem}}</pre>-->
+                                    <CreateNewObject
+                                            @btn_click="getActionResponse"
+                                    ></CreateNewObject>
+
+                                </div>
+
+                            </TabPanel>
+
+                            <!--<template v-if="createObjPanelOpen">-->
+                            <!--</template>-->
+                            <!--<template v-else></template>-->
 
                         </div>
                     </div>
@@ -217,8 +230,7 @@
     import LeftPanel from '@/components/BaseControlLeftPanel'
     import BaseSimpleForm from '@/components/BaseControlSimpleForm'
     import CreateNewObject from '@/components/CreateNewObject'
-    import SimpleBlueForm from '@/components/SimpleBlueForm'
-    import SimpleButton from '@/components/SimpleButton'
+    import TableFielsEdit from '@/components/db-control/TableFieldsEdit'
 
     export default {
         name: 'BaseControl',
@@ -227,8 +239,7 @@
             LeftPanel,
             BaseSimpleForm,
             CreateNewObject,
-            SimpleBlueForm,
-            SimpleButton
+            TableFielsEdit,
         },
 
         computed: {

@@ -7,8 +7,9 @@
                 size="1"
         ></Spinner>
 
-        <TabPanel
-                :tabs="['Редактирование','Создание объектов']" >
+        <TabPanel style="border: 0px red solid; margin:10px"
+
+             :tabs="['Редактирование','Создание объектов']" >
 
             <div slot="content-1">
                 ghjj

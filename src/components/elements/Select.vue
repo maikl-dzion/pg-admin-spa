@@ -9,7 +9,7 @@
         <li class="selectElemLiBox" >
 
             <a @click="viewState = true" class="brd" >
-                {{selectLabel}}
+               {{selectLabel}}
             </a>
 
             <template v-if="hover">
@@ -42,11 +42,11 @@
 <script>
     export default {
         name: "Select",
-        props: ['items', 'title', 'name', 'label', 'selected_value', 'hover'],
+        props: ['items', 'title', 'name', 'label', 'selected_value', 'hover', 'field_name'],
         data: () => ({
            selectLabel : '',
            selectValue : '',
-           viewState  : false,
+           viewState   : false,
         }),
 
         created() {
@@ -55,10 +55,13 @@
 
         methods : {
             selectItem(item, value) {
-                this.viewState = false;
+                let field_name = '';
+                if(this.field_name)
+                    field_name = this.field_name
+                this.viewState   = false;
                 this.selectLabel = item[this.label]
                 this.selectValue = value;
-                this.$emit('select_item', {item, value});
+                this.$emit('select_item', {item, value, field_name});
             },
 
             setInitSelectedValue(){
