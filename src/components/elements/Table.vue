@@ -40,7 +40,7 @@
 
 <script>
     export default {
-        name: "table"
+        name: "CustomTable"
     }
 </script>
 

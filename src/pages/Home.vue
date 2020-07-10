@@ -80,17 +80,9 @@
 
                             </div>
 
-                            <!--<div class="sidebar-item categories">-->
-                            <!--<ul>-->
-                            <!--<li><a href="#">General <span>(25)</span></a></li>-->
-                            <!--<li><a href="#">Lifestyle <span>(12)</span></a></li>-->
-                            <!--</ul>-->
-                            <!--</div>-->
-
                         </div>
                     </div>
                     <!-- End leftPanel -->
-
 
                     <div class="centerPanel mainContent">
                         <div class="content__main_panel">
@@ -100,19 +92,18 @@
                                 <button @click="createObjPanelOpen=!createObjPanelOpen"
                                         class="btn btn-mdb-color waves-effect btn-sm"
                                         style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">
-                                    Панель создание объектов
+                                        Панель создание объектов
                                 </button>
 
                             </div>
                             <hr>
 
-                            <!--<SimpleButton></SimpleButton>-->
-                            <!--<SimpleForm></SimpleForm>-->
-
                             <template v-if="createObjPanelOpen">
+
                                 <CreateNewObject
                                         @btn_click="getActionResponse"
                                 ></CreateNewObject>
+
                             </template>
                             <template v-else>
 

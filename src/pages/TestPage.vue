@@ -3,6 +3,23 @@
 
         <CustomForm/>
 
+        <Spinner
+                size="1"
+        ></Spinner>
+
+        <TabPanel
+                :tabs="['Редактирование','Создание объектов']" >
+
+            <div slot="content-1">
+                ghjj
+            </div>
+
+            <div slot="content-2">
+                rtyyyyy
+            </div>
+
+        </TabPanel>
+
     </div>
 </template>
 
