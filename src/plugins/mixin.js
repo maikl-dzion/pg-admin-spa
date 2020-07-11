@@ -452,8 +452,8 @@ const BaseMixin = {
                     })
                 },
 
-                selectUserPassword(userName) {
-                    let users = this.usersList
+                selectUserPassword(userName, users = null) {
+                    if(!users) users = this.usersList
                     for (let i in users) {
                         let name = users[i]['usename']
                         if (userName == name) {

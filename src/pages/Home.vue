@@ -36,8 +36,8 @@
                             <div class="content__left_panel">
                                 <div class="content__panel_header">
                                     <!--{{commonActionName}}-->
-                                </div>
-                                <hr>
+                                </div><hr>
+
                                 <template v-if="commonActionName == 'databases'">
                                     <left-panel
                                             :items="getDbList"
@@ -90,88 +90,41 @@
                             <div class="content__panel_header">
 
                                 <!--<button @click="createObjPanelOpen=!createObjPanelOpen"-->
-                                        <!--class="btn btn-mdb-color waves-effect btn-sm"-->
-                                        <!--style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">-->
-                                        <!--Панель создание объектов-->
+                                <!--class="btn btn-mdb-color waves-effect btn-sm"-->
+                                <!--style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">-->
+                                <!--Панель создание объектов-->
                                 <!--</button>-->
 
-                            </div>
-                            <hr>
+                                <!--<div class="borderless">-->
+                                <!--<button class="animeCustomBtn" style="padding:0px" >-->
+                                <!--Конфигурацию базы по умолчанию-->
+                                <!--</button>-->
+                                <!--</div>-->
+                                <!---->
+                                <!--<div class="blue">-->
+                                <!--<button class="animeCustomBtn" >Home</button>-->
+                                <!--</div>-->
+
+                                <div class="bw" style="padding:0px">
+                                    <button @click="setDefaultConfig()" class="animeCustomBtn"
+                                            style="padding:2px 5px 2px 5px; color:black; font-size:12px;">
+                                        Конфигурацию по умолчанию
+                                    </button>
+                                </div>
+
+                            </div><hr>
 
                             <TabPanel style="border: 0px red solid; margin:1px"
-                                :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}]" >
+                                      :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}, { label : 'Конфигурация'}]">
                                 <!--:tabs="['Редактирование','Создание объектов']" >-->
                                 <div slot="content-1">
 
                                     <template v-if="commonActionName == 'tables'">
 
-
                                         <TableFielsEdit
-                                           :fields="commonItem"
-                                           :table_name="tableName"
+                                                :fields="commonItem"
+                                                :table_name="tableName"
                                         ></TableFielsEdit>
-
-                                        <!--<table class="table_col">-->
-                                            <!--<colgroup>-->
-                                                <!--<col style="background:#C7DAF0;">-->
-                                            <!--</colgroup>-->
-
-                                            <!--<tr v-for="(item, fname) in commonItem" :key="fname">-->
-
-                                                <!--<td class="td-field-input" style="width: 20% !important;">-->
-                                                    <!--<div style="">{{fname}}</div>-->
-                                                <!--</td>-->
-
-                                                <!--<template v-if="!isAutoField(item)">-->
-
-                                                    <!--<td class="td-field-input"-->
-                                                        <!--style="width: 50% !important;">-->
-                                                        <!--<div>-->
-                                                            <!--<input @change="changeFieldName(fname, commonItem[fname]['column_name'])"-->
-                                                                   <!--v-model="commonItem[fname]['column_name']"-->
-                                                                   <!--class="input-text-class" type="text"/>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
-
-                                                    <!--<td class="td-field-input"-->
-                                                        <!--style="width: 20% !important; border-bottom:0px">-->
-                                                        <!--<div>-->
-                                                            <!--<select v-model="commonItem[fname]['input_type']"-->
-                                                                    <!--@change="changeFieldType(fname, commonItem[fname]['input_type'])"-->
-                                                                    <!--class="form-control">-->
-                                                                <!--<option v-for="(item, i) in tableFieldTypes"-->
-                                                                        <!--:value="item.name">-->
-                                                                    <!--{{item.name}}-->
-                                                                <!--</option>-->
-                                                            <!--</select>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
-
-                                                    <!--<td class="td-field-input"-->
-                                                        <!--style="width: 10% !important; border-bottom:0px; ">-->
-                                                        <!--<div @click="commonDeleteField(fname)" class="deleteFieldBox">-->
-                                                            <!--<i class="far fa-trash-alt" style="color:red;"></i>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
-
-                                                <!--</template>-->
-                                                <!--<template v-else>-->
-                                                    <!--<td class="td-field-input">-->
-                                                        <!--<div>-->
-                                                            <!--<input :value="fname" type="text" style="width:100%;"-->
-                                                                   <!--class="input-text-class" disabled="true"/>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
-                                                    <!--<td class="td-field-input" style="border-bottom:0px">-->
-                                                        <!--<div></div>-->
-                                                    <!--</td>-->
-                                                    <!--<td class="td-field-input" style="border-bottom:0px">-->
-                                                        <!--<div></div>-->
-                                                    <!--</td>-->
-                                                <!--</template>-->
-
-                                            <!--</tr>-->
-                                        <!--</table>-->
 
                                     </template>
                                     <template v-else-if="commonActionName == 'databases'">
@@ -202,17 +155,22 @@
                                 </div>
                                 <div slot="content-2">
 
+                                    <!--- Создание объектов   -->
                                     <CreateNewObject
-                                            @btn_click="getActionResponse"
+                                         @btn_click="getActionResponse"
                                     ></CreateNewObject>
+                                    <!--- / Создание объектов --->
 
+                                </div>
+                                <div slot="content-3">
+
+                                    <!--- Изменение конфигурации базы -->
+                                    <ChangeDbConfig
+                                    ></ChangeDbConfig>
+                                    <!--- / Изменение конфигурации базы -->
                                 </div>
 
                             </TabPanel>
-
-                            <!--<template v-if="createObjPanelOpen">-->
-                            <!--</template>-->
-                            <!--<template v-else></template>-->
 
                         </div>
                     </div>
@@ -231,6 +189,7 @@
     import BaseSimpleForm from '@/components/BaseControlSimpleForm'
     import CreateNewObject from '@/components/CreateNewObject'
     import TableFielsEdit from '@/components/db-control/TableFieldsEdit'
+    import ChangeDbConfig from '@/components/db-control/ChangeDbConfig'
 
     export default {
         name: 'BaseControl',
@@ -240,6 +199,7 @@
             BaseSimpleForm,
             CreateNewObject,
             TableFielsEdit,
+            ChangeDbConfig,
         },
 
         computed: {
@@ -303,6 +263,10 @@
 </script>
 
 <style>
+
+    .bw .animeCustomBtn:hover {
+        background: ghostwhite;
+    }
 
     /*@media (min-width: 992px) {*/
     /*.modal .modal-full-height {*/

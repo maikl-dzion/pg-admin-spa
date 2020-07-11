@@ -10,6 +10,7 @@ import AlertMessage from '../components/AlertMessage'
 import WarnMessage from '../components/WarnMessage'
 import Spinner from '@/components/elements/Spinner'
 import TabPanel from '@/components/elements/TabPanel'
+import AnimeButton from '@/components/elements/AnimeButton'
 // import CustomSelect from '../components/elements/CustomSelect'
 import CustomTable from '@/components/elements/Table'
 import CustomSelect from '@/components/elements/Select'
@@ -23,6 +24,7 @@ const InitApp = {
     Vue.component('CustomTable' , CustomTable)
     Vue.component('Spinner',      Spinner)
     Vue.component('TabPanel',     TabPanel)
+    Vue.component('AnimeButton',  AnimeButton)
 
     Vue.mixin({
       // mixins: [Http, BaseMixin, DataFormMixin, DragMixin],

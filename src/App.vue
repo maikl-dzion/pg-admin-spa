@@ -53,9 +53,30 @@ export default {
     components: {
         Footer
     },
-    created () {
+
+    created() {
+
         this.routes = this.getRoutesNav();
-    }
+
+        this.getCurrentDbUser() // currentDbUser
+        this.getCurrentDatabase() // currentDatabase
+        this.getCurConfig() // получаем текущий конфиг
+        this.getFileUsersConfig()
+
+        // this.showDatabaseList() // databaseList
+        // this.getDbUsersList() // usersList
+        // this.getTableList() // получаем таблицы
+
+        // this.fetchDbList()
+        // this.fetchUserList()
+        // this.fetchTableList()
+        // this.fetchDbRoles()
+
+        this.storeFetch('fetchDbList')
+        this.storeFetch('fetchUserList')
+        this.storeFetch('fetchTableList')
+        this.storeFetch('fetchDbRoles')
+    },
 }
 </script>
 

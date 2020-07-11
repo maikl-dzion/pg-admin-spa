@@ -1,115 +1,120 @@
 <template>
-  <div @mousemove="dragMove($event)" class="dataListPage" >
+    <div @mousemove="dragMove($event)" class="dataListPage">
 
-    <section class="breadcrumbs">
-      <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center">
+        <section class="breadcrumbs">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center">
 
-        </div>
-      </div>
-    </section>
+                </div>
+            </div>
+        </section>
 
-    <!--- Модальное окно редактирования --->
-    <div v-if="modalFlag"
+        <!--- Модальное окно редактирования --->
+        <div v-if="modalFlag"
 
-         class="dataItemModalContainter"
-         @mousedown="dragInit($event, 'dataItemModalContainter')"
-         @mouseup="dragStop($event)"
-         id="move_elem_modal_container"
-         style="top:60px; left:20px; " >
+             class="dataItemModalContainter"
+             @mousedown="dragInit($event, 'dataItemModalContainter')"
+             @mouseup="dragStop($event)"
+             id="move_elem_modal_container"
+             style="top:60px; left:20px; ">
 
-      <button @click="modalFlag = false" class="btn">Close</button>
+            <button @click="modalFlag = false" class="btn">Close</button>
 
-      <div class="dataItemModalBox" style="overflow: auto">
-        <table class="dataItemModalTable">
-          <tr >
-            <th>Имя поля</th>
-            <th>Значение</th>
-          </tr>
-          <tr v-for="(value, fname) in itemData" >
-            <td><div>{{fname}}</div></td>
-            <td>
+            <div class="dataItemModalBox" style="overflow: auto">
+                <table class="dataItemModalTable">
+                    <tr>
+                        <th>Имя поля</th>
+                        <th>Значение</th>
+                    </tr>
+                    <tr v-for="(value, fname) in itemData">
+                        <td>
+                            <div>{{fname}}</div>
+                        </td>
+                        <td>
                             <textarea @change="editItem(fname, itemData)"
                                       v-model="itemData[fname]"
-                                      class="data-table-textarea" >
+                                      class="data-table-textarea">
                             </textarea>
 
-              <!--<input @change="editItem(fname, itemData)"-->
-              <!--v-model="itemData[fname]"-->
-              <!--class="data-table-input" type="text"/>-->
-            </td>
-          </tr>
-        </table>
-      </div>
+                            <!--<input @change="editItem(fname, itemData)"-->
+                            <!--v-model="itemData[fname]"-->
+                            <!--class="data-table-input" type="text"/>-->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <!--- / Модальное окно редактирования --->
+
+        <!--<pre>{{tableData}}</pre>-->
+
+        <section class="blog" style="margin:0px; padding:0px;">
+            <div class="sidebar" style="padding: 4px; margin:0px;">
+                <div class="sidebar-item tags" style="margin:0px;">
+                    <ul style="padding: 4px; margin:0px;">
+                        <li v-for="(item) in getDbTables" style="padding: 0px; margin:0px;"
+                            @click="loadingDataList(item.table_name)">
+                            <a @click="setActiveElement ($event, 'menu-item-active')"
+                               :id="'list-menu-item-' + item.table_name"
+                               class="list-menu-item" style="">
+                                {{item.table_name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin:0px; padding: 0px;">
+            <div class="my-form" style="margin:0px; padding: 0px;">
+                <div class="my-form__btn-box" style="margin-left:5px; padding: 4px;">
+                    <a @click="addItem()" class="my-form__btn">
+                        <span></span><span></span><span></span><span></span>
+                        Добавить новую запись
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======= Page Section ======= -->
+        <section class="data-section blog" style="margin:0px; padding:0px;">
+            <div style="display: flex; padding:3px;">
+
+                <!--<div class="data-list-left-panel">-->
+                <!--<div v-for="(item) in getDbTables" >-->
+                <!--<div>{{item.table_name}}</div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <div class="data-list-center-panel">
+                    <table class="data-table">
+                        <tr>
+                            <th class="data-table-header"
+                                v-for="(item, fname) in tableData[0]">{{fname}}
+                            </th>
+                        </tr>
+
+                        <tr v-for="(item, i) in tableData"
+                            @click="trRowActive($event)" @dblclick="itemEditOpen(item)"
+                            class="data-table-row-tr">
+                            <!--<td><input type="checkbox" class="data-table-input" /></td>-->
+                            <template v-for="(value, fname) in item" >
+                                <td class="data-table-col-td" >
+                                    <input @change="editItem(fname, item)" v-model="item[fname]"
+                                           class="data-table-input" type="text"/>
+                                </td>
+                            </template>
+
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
 
     </div>
-    <!--- / Модальное окно редактирования --->
-
-    <!--<pre>{{tableData}}</pre>-->
-
-    <section class="blog" style="margin:0px; padding:0px;">
-      <div class="sidebar" style="padding: 4px; margin:0px;">
-        <div class="sidebar-item tags" style="margin:0px;">
-          <ul style="padding: 4px; margin:0px;" >
-            <li v-for="(item) in getDbTables" style="padding: 0px; margin:0px;"
-                @click="loadingDataList(item.table_name)">
-                <a @click="setActiveElement ($event, 'menu-item-active')"
-                   :id="'list-menu-item-' + item.table_name"
-                   class="list-menu-item" style="" >
-                  {{item.table_name}}
-                </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section style="margin:0px; padding: 0px;">
-      <div class="my-form" style="margin:0px; padding: 0px;">
-        <div class="my-form__btn-box" style="margin-left:5px; padding: 4px;">
-          <a @click="addItem()" class="my-form__btn">
-            <span></span><span></span><span></span><span></span>
-            Добавить новую запись
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= Page Section ======= -->
-    <section class="data-section blog" style="margin:0px; padding:0px;">
-      <div style="display: flex; padding:3px;">
-
-        <!--<div class="data-list-left-panel">-->
-        <!--<div v-for="(item) in getDbTables" >-->
-        <!--<div>{{item.table_name}}</div>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <div class="data-list-center-panel">
-          <table class="data-table">
-            <tr>
-              <th class="data-table-header"
-                  v-for="(item, fname) in tableData[0]">{{fname}}
-              </th>
-            </tr>
-
-            <tr v-for="(item) in tableData"
-                @click="trRowActive($event)" @dblclick="itemEditOpen(item)"
-                class="data-table-row-tr" style="">
-              <td v-for="(value, fname) in item"
-                  class="data-table-col-td" >
-                <input @change="editItem(fname, item)" v-model="item[fname]"
-                       class="data-table-input" type="text"/>
-              </td>
-            </tr>
-          </table>
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
 </template>
 
 <script>
@@ -119,8 +124,8 @@
     export default {
         name: 'DataList',
         data: () => ({
-            itemData : {},
-            modalFlag : false,
+            itemData: {},
+            modalFlag: false,
         }),
         components: {},
         computed: {
@@ -157,7 +162,7 @@
                 return document.querySelector(selector)
             },
 
-            trRowActive(event){
+            trRowActive(event) {
                 let parent = event.target.parentNode;
                 let tr = parent.parentNode;
                 this.cssClassListRender('.tr-item-active', 'del_class', 'tr-item-active')
@@ -179,148 +184,145 @@
 <style scoped>
 
 
-  .dataItemModalContainter {
-    border:1px grey solid;
-    position:absolute;
-    z-index:999;
-    width:550px;
-    min-height: 400px;
-    background: gainsboro;
-    margin: 3px;
-    padding:5px;
+    .dataItemModalContainter {
+        border: 1px grey solid;
+        position: absolute;
+        z-index: 999;
+        width: 550px;
+        min-height: 400px;
+        background: gainsboro;
+        margin: 3px;
+        padding: 5px;
 
-    box-shadow:
-            -15px -15px 2px -5px rgba(160,82,45,.5),
-            -15px 15px 2px -5px rgba(0,255,255,.5),
-            15px -15px 2px -5px rgba(255,0,0,.5),
-            15px 15px 2px -5px rgba(255,255,0,.5);
-    /*top:60px;*/
-    /*right:3px;*/
-  }
+        box-shadow: -15px -15px 2px -5px rgba(160, 82, 45, .5),
+        -15px 15px 2px -5px rgba(0, 255, 255, .5),
+        15px -15px 2px -5px rgba(255, 0, 0, .5),
+        15px 15px 2px -5px rgba(255, 255, 0, .5);
+        /*top:60px;*/
+        /*right:3px;*/
+    }
 
-  .dataItemModalBox {
-    position:relative;
-  }
+    .dataItemModalBox {
+        position: relative;
+    }
 
-  .dataItemModalTable {
+    .dataItemModalTable {
 
-  }
+    }
 
-  .dataItemModalTable td{
-    padding:0px !important;
-    margin:0px !important;
-  }
+    .dataItemModalTable td {
+        padding: 0px !important;
+        margin: 0px !important;
+    }
 
-  .dataItemModalTable td div{
-    padding:4px !important;
-  }
+    .dataItemModalTable td div {
+        padding: 4px !important;
+    }
 
-  .data-table-textarea {
-    width: 100%;
-    height: 30px;
-  }
+    .data-table-textarea {
+        width: 100%;
+        height: 30px;
+    }
 
+    .data-list-left-panel,
+    .data-list-center-panel {
+        border: 0px red solid;
+        width: 100%;
+        padding: 1px;
+    }
 
-  .data-list-left-panel,
-  .data-list-center-panel {
-    border: 0px red solid;
-    width: 100%;
-    padding: 1px;
-  }
+    .data-list-left-panel {
+        width: 20%;
+    }
 
-  .data-list-left-panel {
-    width: 20%;
-  }
+    .data-list-center-panel {
 
-  .data-list-center-panel {
+    }
 
-  }
+    table {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+        font-size: 14px;
+        border-collapse: collapse;
+        text-align: center;
+        width: 100%;
+    }
 
-  table {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    font-size: 14px;
-    border-collapse: collapse;
-    text-align: center;
-    width: 100%;
-  }
+    th, td:first-child {
+        background: #AFCDE7;
+        color: white;
+        padding: 10px 20px;
+    }
 
-  th, td:first-child {
-    background: #AFCDE7;
-    color: white;
-    padding: 10px 20px;
-  }
+    th, td {
+        border-style: solid;
+        border-width: 0 1px 1px 0;
+        border-color: white;
+    }
 
-  th, td {
-    border-style: solid;
-    border-width: 0 1px 1px 0;
-    border-color: white;
-  }
+    td {
+        background: #D8E6F3;
+    }
 
-  td {
-    background: #D8E6F3;
-  }
+    th:first-child, td:first-child {
+        text-align: left;
+    }
 
-  th:first-child, td:first-child {
-    text-align: left;
-  }
+    .data-table-header {
+        color: black
+    }
 
-  .data-table-header {
-    color: black
-  }
+    /*  поля и строки таблицы */
+    .data-table-row-tr {
+        border: 0px red solid;
+    }
 
-  /*  поля и строки таблицы */
-  .data-table-row-tr {
-    border: 0px red solid;
-  }
+    .data-table-col-td {
+        margin: 0px;
+        padding: 0px !important;
+        border: 0px gainsboro solid !important;
+    }
 
-  .data-table-col-td {
-    margin: 0px;
-    padding: 0px !important;
-    border: 0px gainsboro solid !important;
-  }
+    .data-table-input {
+        border: 1px gainsboro solid;
+        width: 100%;
+    }
 
-  .data-table-input {
-    border: 1px gainsboro solid;
-    width: 100%;
-  }
+    .data-table-row-tr:hover .data-table-input {
+        background: gainsboro;
+        cursor: pointer;
+    }
 
-  .data-table-row-tr:hover .data-table-input {
-    background: gainsboro;
-    cursor: pointer;
-  }
+    /* .поля и строки таблицы */
 
-  /* .поля и строки таблицы */
+    .menu-item-active {
+        background: #b0bed9;
+        color: black !important;
+    }
 
-  .menu-item-active {
-    background: #b0bed9;
-    color: black !important;
-  }
+    .tr-item-active {
+        border-bottom: 3px red solid;
+        border-left: 3px red solid;
+        border-right: 3px red solid;
+    }
 
-  .tr-item-active {
-    border-bottom:3px red solid;
-    border-left:3px red solid;
-    border-right:3px red solid;
-  }
+    /*@media (min-width: 992px) {*/
+    /*.modal .modal-full-height {*/
+    /*width: 60%;*/
+    /*max-width: 60%;*/
+    /*}*/
+    /*}*/
 
+    /*@media (max-width: 400px) {*/
+    /*.modal .modal-full-height {*/
+    /*width: 60%;*/
+    /*max-width: 60%;*/
+    /*}*/
+    /*}*/
 
-  /*@media (min-width: 992px) {*/
-  /*.modal .modal-full-height {*/
-  /*width: 60%;*/
-  /*max-width: 60%;*/
-  /*}*/
-  /*}*/
-
-  /*@media (max-width: 400px) {*/
-  /*.modal .modal-full-height {*/
-  /*width: 60%;*/
-  /*max-width: 60%;*/
-  /*}*/
-  /*}*/
-
-  /*@media (min-width: 576px) {*/
-  /*.modal-dialog {*/
-  /*max-width: 95%;*/
-  /*}*/
-  /*}*/
+    /*@media (min-width: 576px) {*/
+    /*.modal-dialog {*/
+    /*max-width: 95%;*/
+    /*}*/
+    /*}*/
 
 </style>
