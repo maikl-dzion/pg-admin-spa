@@ -40,6 +40,10 @@ export default new Vuex.Store({
         dbName    : '',
         userName  : '',
 
+        currentUser   : '',
+        currentDb     : '',
+        currentConfig : {},
+
         dababaseList: [],
         userList: [],
         tableList: [],

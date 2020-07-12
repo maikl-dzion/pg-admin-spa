@@ -436,11 +436,18 @@ const BaseMixin = {
                 },
 
                 getCurrentDbUser() {
-                    var url = 'CURRENT_DB_USER'
+                    const url = 'CURRENT_DB_USER'
                     this.http(url).then(resp => {
                         this.currentDbUser = resp
                         let len = this.currentDbUser.length
-                        this.curUserInfo = this.currentDbUser[len - 1]
+                        this.curUserInfo = this.currentDbUser[len - 1];
+
+                        const currentUser = this.curUserInfo.usename;
+                        const currentDb   = this.curUserInfo.datname;
+
+                        this.setStoreParam ({ name : 'currentUser',   value : currentUser})
+                        this.setStoreParam ({ name : 'currentDb',     value : currentDb})
+                        this.setStoreParam ({ name : 'currentConfig', value : this.curUserInfo})
                     })
                 },
 
@@ -588,7 +595,7 @@ const BaseMixin = {
                     var url = 'GET_CUR_CONFIG'
                     this.http(url).then(resp => {
                         this.curConfig = resp
-                        this.dbConf = resp
+                        this.dbConf    = resp
                         this.dbConfPrint = Object.assign({}, resp)
                     })
                 },
@@ -629,7 +636,7 @@ const BaseMixin = {
                     })
                 },
 
-                // Удалить привилегии к базе
+                // ---
                 getDbDump(userName, userPassword, dbName) {
                     var remoteUrl = 'http://185.63.191.96'
                     var apiUrl = this.apiUrl

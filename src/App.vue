@@ -13,6 +13,12 @@
                             <span>Pg-Admin</span>
                         </router-link>
                     </h4>
+                    <div class="current-config-container" >
+                        <div>База:{{this.curUserInfo.datname}}</div>
+                        <div>Пользователь:{{this.curUserInfo.usename}}</div>
+                        <div>Ip:{{this.curUserInfo.client_addr}}</div>
+                        <div>port:{{this.curUserInfo.client_port}}</div>
+                    </div>
                 </div>
                 <nav class="nav-menu float-right d-none d-lg-block">
                     <ul>
@@ -84,7 +90,19 @@ export default {
    .nav-menu .router-link-exact-active {
        background: red;
    }
-   .wrapper {
-
+   .wrapper {}
+   .current-config-container {
+       background: #b8daff;
+       display: flex;
+       padding:0px;
+       position: absolute;
+       /*right:10px;*/
    }
+   .current-config-container div {
+       margin:1px;
+       padding:1px;
+       border-bottom: 1px #326690 solid;
+       font-size: 11px;
+   }
+
 </style>

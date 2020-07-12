@@ -42,7 +42,13 @@
 
 <script>
     export default {
-        name: "AnimeButton"
+        name: "AnimeButton",
+        computed : {
+            getUser() {
+                // return this.storeGet().getParam('currentUser')
+                // return this.getStoreParam ('currentUser')
+            }
+        }
     }
 </script>
 

@@ -165,8 +165,7 @@
                                 <div slot="content-3">
 
                                     <!--- Изменение конфигурации базы -->
-                                    <ChangeDbConfig
-                                    ></ChangeDbConfig>
+                                    <ChangeDbConfig></ChangeDbConfig>
                                     <!--- / Изменение конфигурации базы -->
                                 </div>
 

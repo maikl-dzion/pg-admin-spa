@@ -12,6 +12,10 @@ const StoreFn = {
           return this.$store.getters
         },
 
+        getStoreParam (name) {
+           this.$store.state[name]
+        },
+
         storeFetch (fnName, data = null) {
           this.$store.dispatch(fnName, data)
         },
@@ -40,7 +44,7 @@ const StoreFn = {
             this.$store.dispatch('fetchTableFields', tableName)
         },
 
-        setParam (data) {
+        setStoreParam (data) {
             this.$store.dispatch('setParam', data)
         },
 
