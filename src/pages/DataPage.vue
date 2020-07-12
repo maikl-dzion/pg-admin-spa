@@ -90,6 +90,7 @@
                 <div class="data-list-center-panel">
                     <table class="data-table">
                         <tr>
+                            <!--<th>ytyt</th>-->
                             <th class="data-table-header"
                                 v-for="(item, fname) in tableData[0]">{{fname}}
                             </th>
@@ -98,7 +99,14 @@
                         <tr v-for="(item, i) in tableData"
                             @click="trRowActive($event)" @dblclick="itemEditOpen(item)"
                             class="data-table-row-tr">
-                            <!--<td><input type="checkbox" class="data-table-input" /></td>-->
+
+                            <!--<td style="margin:0px; padding:0px; background: white"><Checkbox style="margin:0px; padding:0px;"-->
+                                          <!--:value="i"-->
+                                          <!--:fname="i"-->
+                                          <!--:param = "{}"-->
+                                          <!--@change_value="d => { checkboxValue = d.value }"-->
+                            <!--&gt;</Checkbox></td>-->
+
                             <template v-for="(value, fname) in item" >
                                 <td class="data-table-col-td" >
                                     <input @change="editItem(fname, item)" v-model="item[fname]"

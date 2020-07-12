@@ -13,18 +13,20 @@ import TabPanel from '@/components/elements/TabPanel'
 import AnimeButton from '@/components/elements/AnimeButton'
 // import CustomSelect from '../components/elements/CustomSelect'
 import CustomTable from '@/components/elements/Table'
-import CustomSelect from '@/components/elements/Select'
+import Select from '@/components/elements/Select'
+import Checkbox from '@/components/elements/Checkbox'
 
 const InitApp = {
 
   install (Vue, options) {
     Vue.component('AlertMessage', AlertMessage)
     Vue.component('WarnMessage' , WarnMessage)
-    Vue.component('CustomSelect', CustomSelect)
+    Vue.component('CustomSelect', Select)
     Vue.component('CustomTable' , CustomTable)
-    Vue.component('Spinner',      Spinner)
-    Vue.component('TabPanel',     TabPanel)
-    Vue.component('AnimeButton',  AnimeButton)
+    Vue.component('Spinner'     , Spinner)
+    Vue.component('TabPanel'    , TabPanel)
+    Vue.component('AnimeButton' , AnimeButton)
+    Vue.component('Checkbox'    , Checkbox)
 
     Vue.mixin({
       // mixins: [Http, BaseMixin, DataFormMixin, DragMixin],
