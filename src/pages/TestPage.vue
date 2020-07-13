@@ -25,7 +25,7 @@
         <Checkbox style="margin-left:2px"
             label="rtyy"
             :value="checkboxValue"
-            :fname="email"
+            fname="email"
             :param = "{}"
             label_class="rrrr"
             @change_value="d => { checkboxValue = d.value }"

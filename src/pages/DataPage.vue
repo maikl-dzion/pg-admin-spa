@@ -67,14 +67,25 @@
         </section>
 
         <section style="margin:0px; padding: 0px;">
-            <div class="my-form" style="margin:0px; padding: 0px;">
+
+            <div class="my-form" style="margin:0px; padding: 0px; display: flex">
+
+                <div class="my-form__btn-box" style="margin-left:5px; padding: 4px;">
+                    <a @click="beforyAddItem()" class="my-form__btn">
+                        <span></span><span></span><span></span><span></span>
+                        Предварительная запись
+                    </a>
+                </div>
+
                 <div class="my-form__btn-box" style="margin-left:5px; padding: 4px;">
                     <a @click="addItem()" class="my-form__btn">
                         <span></span><span></span><span></span><span></span>
                         Добавить новую запись
                     </a>
                 </div>
+
             </div>
+
         </section>
 
         <!-- ======= Page Section ======= -->
@@ -88,34 +99,63 @@
                 <!--</div>-->
 
                 <div class="data-list-center-panel">
-                    <table class="data-table">
-                        <tr>
-                            <!--<th>ytyt</th>-->
+
+                    <!--<pre>{{beforyNewItems}}</pre>-->
+
+                    <template v-if="beforyNewItems.length" >
+
+                        <div class="bw" style="padding:0px">
+                            <button @click="saveNewItems()" class="animeCustomBtn"
+                                    style="padding:2px 5px 2px 5px; color:black; font-size:12px;">
+                                    Сохранить новые данные
+                            </button>
+                        </div>
+
+                        <table class="data-table">
+                            <tr><th class="data-table-header"
+                                    v-for="(item, fname) in tableInfo"
+                                    :title="item.data_type" >{{fname}}
+                            </th></tr>
+                            <tr v-for="(item, i) in beforyNewItems"
+                                class="data-table-row-tr">
+                                <td v-for="(value, fname) in item" class="data-table-col-td" >
+                                    <input v-model="item[fname]" class="data-table-input" type="text"/>
+                                </td>
+                            </tr>
+                        </table><p/>
+                    </template>
+
+                    <table class="data-table" >
+
+                        <tr><th></th>
                             <th class="data-table-header"
-                                v-for="(item, fname) in tableData[0]">{{fname}}
-                            </th>
-                        </tr>
+                                v-for="(item, fname) in tableInfo"
+                                :title="item.data_type +'-||-'+ item.column_default" >
+                                {{fname}}
+                        </th></tr>
 
                         <tr v-for="(item, i) in tableData"
                             @click="trRowActive($event)" @dblclick="itemEditOpen(item)"
                             class="data-table-row-tr">
 
-                            <!--<td style="margin:0px; padding:0px; background: white"><Checkbox style="margin:0px; padding:0px;"-->
-                                          <!--:value="i"-->
-                                          <!--:fname="i"-->
-                                          <!--:param = "{}"-->
-                                          <!--@change_value="d => { checkboxValue = d.value }"-->
-                            <!--&gt;</Checkbox></td>-->
+                            <td class="data-table-col-td"
+                                style="margin:0px; padding:0px; width: 10px;">
+                                <i @click="deleteItem(item)" class="fa fa-trash-o fa-lg"
+                                   style="background: transparent; cursor:pointer; border-bottom: 1px red solid;
+                                          color:red; width:100%; height:100%;
+                                          padding:5px 5px 5px 11px;"></i>
+                            </td>
 
                             <template v-for="(value, fname) in item" >
                                 <td class="data-table-col-td" >
-                                    <input @change="editItem(fname, item)" v-model="item[fname]"
+                                    <input @change="editItem(fname, item)"
+                                           v-model="item[fname]"
                                            class="data-table-input" type="text"/>
                                 </td>
                             </template>
-
                         </tr>
                     </table>
+
                 </div>
 
             </div>
@@ -134,8 +174,10 @@
         data: () => ({
             itemData: {},
             modalFlag: false,
+            deleteItemsJson : {},
+            beforyNewItems : [],
         }),
-        components: {},
+        // components: {},
         computed: {
             getDbTables() {
                 return this.storeGet().getTableList
@@ -151,15 +193,18 @@
         methods: {
 
             loadingDataList(tableName) {
+                this.beforyNewItems = []
                 this.tableName = tableName
-                this.getTableData(tableName)
+                this.getTableDataList(tableName)
+                // this.getTableData(tableName)
             },
 
             getFirstItemData() {
                 const tableName = this.getDbTables
                 for (let tabName in this.getDbTables) {
                     this.tableName = tableName
-                    this.getTableData(tabName)
+                    // this.getTableData(tabName)
+                    this.getTableDataList(tabName)
                     const elem = this.getElement('#list-menu-item-' + tabName)
                     elem.classList.add('menu-item-active')
                     return true;
@@ -182,7 +227,50 @@
                 this.itemData = item
             },
 
+            beforyAddItem() {
+                let newItem = {}
+                // lg(this.tableInfo)
+                for(let fieldName in this.tableInfo) {
+                    let fdata = this.tableInfo[fieldName];
+                    newItem[fieldName] = '';
+                }
+                this.beforyNewItems.push(newItem)
+            },
+
+            saveNewItems() {
+                const tableName = this.tableName
+                for(let i in this.beforyNewItems) {
+                    let item = this.beforyNewItems[i];
+                    this.addNewItemFn(tableName, item)
+                }
+            },
+
+            addNewItemFn(tableName, data) {
+                const url = 'ADD_ITEM/' + tableName
+                this.http(url, data, 'post').then(resp => {
+                    this.getTableData(tableName)
+                })
+            },
+
+            // [f2cvvvv] =>
+            //         [column_name] => f2cvvvv
+            //         [column_default] =>
+            //         [data_type] => integer
+            //         [auto_increment] => false
+            //         [input_type] => integer
+            //         [form_type] => num
+
+            // deleteItemAddToJson (item) {
+            //     const idName = this.setAutoIncName()
+            //     if (item[idName]) {
+            //         const id = item[idName]
+            //         this.deleteItemsJson[id];
+            //         console.log(this.deleteItemsJson)
+            //     }
+            // },
+
         },
+
         mounted() {
             this.getFirstItemData()
         },

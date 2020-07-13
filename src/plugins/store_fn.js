@@ -1,57 +1,62 @@
-
 const StoreFn = {
-  install: function (Vue, options) {
-    Vue.mixin({
-      data: function () {
-        return {}
-      },
+    install: function (Vue, options) {
+        Vue.mixin({
+            data: function () {
+                return {}
+            },
 
-      methods: {
+            methods: {
 
-        storeGet () {
-          return this.$store.getters
-        },
+                localStore(key, value = null) {
+                    if(!value)
+                        return localStorage.getItem(key);
+                    localStorage.setItem(key, value);
+                },
 
-        getStoreParam (name) {
-           this.$store.state[name]
-        },
+                storeGet() {
+                    return this.$store.getters
+                },
 
-        storeFetch (fnName, data = null) {
-          this.$store.dispatch(fnName, data)
-        },
+                getStoreParam(name) {
+                    this.$store.state[name]
+                },
 
-        fetchDbList () {
-          this.$store.dispatch('fetchDbList')
-        },
+                storeFetch(fnName, data = null) {
+                    this.$store.dispatch(fnName, data)
+                },
 
-        fetchUserList () {
-          this.$store.dispatch('fetchUserList')
-        },
+                fetchDbList() {
+                    this.$store.dispatch('fetchDbList')
+                },
 
-        fetchTableList () {
-          this.$store.dispatch('fetchTableList')
-        },
+                fetchUserList() {
+                    this.$store.dispatch('fetchUserList')
+                },
 
-        fetchDbRoles () {
-          this.$store.dispatch('fetchDbRoles')
-        },
+                fetchTableList() {
+                    this.$store.dispatch('fetchTableList')
+                },
 
-        fetchTableData (tableName) {
-            this.$store.dispatch('fetchTableData', tableName)
-        },
+                fetchDbRoles() {
+                    this.$store.dispatch('fetchDbRoles')
+                },
 
-        fetchTableFields (tableName) {
-            this.$store.dispatch('fetchTableFields', tableName)
-        },
+                fetchTableData(tableName) {
+                    this.$store.dispatch('fetchTableData', tableName)
+                },
 
-        setStoreParam (data) {
-            this.$store.dispatch('setParam', data)
-        },
+                fetchTableFields(tableName) {
+                    this.$store.dispatch('fetchTableFields', tableName)
+                },
 
-      } // ------- methods
+                setStoreParam(data) {
+                    this.$store.dispatch('setParam', data)
+                },
 
-    }) // --------- Vue.mixin
-  }
+            } // ------- methods
+
+        }) // --------- Vue.mixin
+    }
 }
 
 export default StoreFn
