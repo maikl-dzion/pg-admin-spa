@@ -1,18 +1,20 @@
 <template><div class="baseControlPage" >
-    
+
 <!-- Верхнее меню -->
 <section class="breadcrumbs">
-    <div class="container-fluid"><div class="d-flex justify-content-between align-items-center">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
 
-        <div class="link__div_flex">
-            <div v-for="(title, fname) in panelSettingsMenu"
-                 @click="commonAction(fname, $event, 'link_item_active')"
-                 class="link_div">
-                <div class="link_item">{{title}}</div>
+            <div class="link__div_flex">
+                <div v-for="(title, fname) in panelSettingsMenu"
+                     @click="commonAction(fname, $event, 'link_item_active')"
+                     class="link_div">
+                    <div class="link_item">{{title}}</div>
+                </div>
             </div>
-        </div>
 
-</div></div>
+        </div>
+    </div>
 </section>
 <!-- Верхнее меню -->
 

@@ -25,14 +25,15 @@
     <!-- / Заголовок(меню) -->
 
     <!-- ======= DbControl Content Section ======= -->
-    <section class="blog" style="margin:0px; padding:0px;">
+    <section class="blog" style="margin:0px; padding:0px; border:0px red solid">
         <div class="container-fluid" style="margin:0px; padding:0px;">
             <div class="row-flex">
 
                 <!--- Левая панель --->
-                <div class="leftPanel">
-                    <div class="sidebar-left">
-                        <div class="content__left_panel">
+                <div class="leftPanel" >
+                     <div class="sidebar-left">
+                        <div class="content__left_panel"
+                            style="border:0px red solid; margin-top:0px">
 
                             <div class="content__panel_header">
                                 <slot name="left-panel-header"/>
@@ -41,7 +42,7 @@
                             <slot name="left-panel"/>
 
                         </div>
-                    </div>
+                     </div>
                 </div>
                 <!--- / Левая панель --->
 
