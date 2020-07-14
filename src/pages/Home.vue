@@ -1,194 +1,144 @@
-<template>
-    <div class="baseControlPage">
+<template><div class="baseControlPage" >
+    
+<!-- Верхнее меню -->
+<section class="breadcrumbs">
+    <div class="container-fluid"><div class="d-flex justify-content-between align-items-center">
 
-        <!-- ======= Base Control Section ======= -->
-        <section class="breadcrumbs">
-            <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center">
-                    <!---- Верхнее меню      ---->
-                    <div class="link__div_flex">
-                        <div v-for="(title, fname) in panelSettingsMenu"
-                             @click="commonAction(fname, $event, 'link_item_active')" class="link_div">
-                            <div class="link_item">{{title}}</div>
-                        </div>
-                    </div>
-
-                    <!--<button type="button" class="btn btn-mdb-color waves-effect btn-sm"-->
-                    <!--style="margin: 0px 0px 0px auto; color:white;"-->
-                    <!--data-toggle="modal" data-target="#fullHeightModalRight">-->
-                    <!--Создание объектов-->
-                    <!--</button>-->
-
-                </div>
+        <div class="link__div_flex">
+            <div v-for="(title, fname) in panelSettingsMenu"
+                 @click="commonAction(fname, $event, 'link_item_active')"
+                 class="link_div">
+                <div class="link_item">{{title}}</div>
             </div>
-        </section>
+        </div>
 
+</div></div>
+</section>
+<!-- Верхнее меню -->
 
-        <!-- ======= Page Section ======= -->
-        <section class="blog" style="margin:0px; padding:0px;">
-            <div class="container-fluid" style="margin:0px; padding:0px;">
-                <div class="row-flex">
+<!-- ################ -->
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<ContentSection>
 
-                    <!--- Left Panel --->
-                    <div class="leftPanel">
-                        <div class="sidebar-left">
+        <!-- Левая часть -->
+        <template slot="left-panel-header"></template>
+        <template slot="left-panel">
+            <template v-if="commonActionName == 'databases'">
+                <left-panel
+                        :items="getDbList"
+                        @delete_item="deleteDb"
+                        @select_item="commonForm"
+                        title="datname"
+                        icon="fas fa-database"
+                        :action="commonActionName"
+                ></left-panel>
+            </template>
+            <template v-else-if="commonActionName == 'tables'">
+                <left-panel
+                        :items="getDbTables"
+                        @delete_item="commonDeleteTable"
+                        @select_item="commonForm"
+                        title="table_name"
+                        icon="far fa-credit-card"
+                        :action="commonActionName"
+                ></left-panel>
+            </template>
+            <template v-else-if="commonActionName == 'users'">
+                <left-panel
+                        :items="getUserList"
+                        @delete_item="deleteDbUser"
+                        @select_item="commonForm"
+                        title="usename"
+                        icon="fas fa-address-card"
+                        :action="commonActionName"
+                ></left-panel>
+            </template>
+            <template v-else-if="commonActionName == 'get_roles'">
+                <left-panel
+                        :items="getDbRoles"
+                        @select_item="commonForm"
+                        title="rolname"
+                        icon="fas fa-address-card"
+                        :action="commonActionName"
+                ></left-panel>
+            </template>
+        </template>
 
-                            <div class="content__left_panel">
-                                <div class="content__panel_header">
-                                    <!--{{commonActionName}}-->
-                                </div><hr>
+        <!-- Средняя часть (контентная часть)-->
+        <template slot="content-panel-header"></template>
+        <template slot="content-panel">
 
-                                <template v-if="commonActionName == 'databases'">
-                                    <left-panel
-                                            :items="getDbList"
-                                            @delete_item="deleteDb"
-                                            @select_item="commonForm"
-                                            title="datname"
-                                            icon="fas fa-database"
-                                            :action="commonActionName"
-                                    ></left-panel>
-                                </template>
-                                <template v-else-if="commonActionName == 'tables'">
-                                    <left-panel
-                                            :items="getDbTables"
-                                            @delete_item="commonDeleteTable"
-                                            @select_item="commonForm"
-                                            title="table_name"
-                                            icon="far fa-credit-card"
-                                            :action="commonActionName"
-                                    ></left-panel>
-                                </template>
-                                <template v-else-if="commonActionName == 'users'">
-                                    <left-panel
-                                            :items="getUserList"
-                                            @delete_item="deleteDbUser"
-                                            @select_item="commonForm"
-                                            title="usename"
-                                            icon="fas fa-address-card"
-                                            :action="commonActionName"
-                                    ></left-panel>
-                                </template>
-                                <template v-else-if="commonActionName == 'get_roles'">
-                                    <left-panel
-                                            :items="getDbRoles"
-                                            @select_item="commonForm"
-                                            title="rolname"
-                                            icon="fas fa-address-card"
-                                            :action="commonActionName"
-                                    ></left-panel>
-                                </template>
+            <TabPanel style="border: 0px red solid; margin:1px"
+                      :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}, { label : 'Конфигурация'}]">
+                <!--:tabs="['Редактирование','Создание объектов']" >-->
+                <template slot="content-1">
 
-                            </div>
+                    <template v-if="commonActionName == 'tables'">
 
-                        </div>
-                    </div>
-                    <!-- End leftPanel -->
+                        <TableFielsEdit
+                                :fields="commonItem"
+                                :table_name="tableName"
+                        ></TableFielsEdit>
 
-                    <div class="centerPanel mainContent">
-                        <div class="content__main_panel">
+                    </template>
+                    <template v-else-if="commonActionName == 'databases'">
+                        <BaseSimpleForm
+                                :item="commonItem"
+                                name="datname"
+                                :fields="['datname']"
+                                @input_item="inputFormItem"
+                        ></BaseSimpleForm>
+                    </template>
+                    <template v-else-if="commonActionName == 'users'">
+                        <BaseSimpleForm
+                                :item="commonItem"
+                                name="usename"
+                                :fields="['usename', 'passwd']"
+                                @input_item="inputFormItem"
+                        ></BaseSimpleForm>
+                    </template>
+                    <template v-else-if="commonActionName == 'get_roles'">
+                        <BaseSimpleForm
+                                :item="commonItem"
+                                name="rolname"
+                                :fields="['rolname', 'rolpassword']"
+                                @input_item="inputFormItem"
+                        ></BaseSimpleForm>
+                    </template>
 
-                            <div class="content__panel_header">
+                </template>
+                <template slot="content-2">
 
-                                <!--<button @click="createObjPanelOpen=!createObjPanelOpen"-->
-                                <!--class="btn btn-mdb-color waves-effect btn-sm"-->
-                                <!--style="margin: 0px 0px 0px auto; color:white; border-radius: 0px;">-->
-                                <!--Панель создание объектов-->
-                                <!--</button>-->
+                    <!-- Создание объектов   -->
+                    <CreateNewObject
+                          @btn_click="getActionResponse"
+                    ></CreateNewObject>
+                    <!-- / Создание объектов -->
 
-                                <!--<div class="borderless">-->
-                                <!--<button class="animeCustomBtn" style="padding:0px" >-->
-                                <!--Конфигурацию базы по умолчанию-->
-                                <!--</button>-->
-                                <!--</div>-->
-                                <!---->
-                                <!--<div class="blue">-->
-                                <!--<button class="animeCustomBtn" >Home</button>-->
-                                <!--</div>-->
+                </template>
+                <template slot="content-3">
 
-                                <div class="bw" style="padding:0px">
-                                    <button @click="setDefaultConfig()" class="animeCustomBtn"
-                                            style="padding:2px 5px 2px 5px; color:black; font-size:12px;">
-                                        Конфигурацию по умолчанию
-                                    </button>
-                                </div>
+                    <!-- Изменение конфигурации базы -->
+                    <ChangeDbConfig></ChangeDbConfig>
+                    <!-- / Изменение конфигурации базы -->
 
-                            </div><hr>
+                </template>
 
-                            <TabPanel style="border: 0px red solid; margin:1px"
-                                      :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}, { label : 'Конфигурация'}]">
-                                <!--:tabs="['Редактирование','Создание объектов']" >-->
-                                <div slot="content-1">
+            </TabPanel>
+        </template>
 
-                                    <template v-if="commonActionName == 'tables'">
+</ContentSection>
 
-                                        <TableFielsEdit
-                                                :fields="commonItem"
-                                                :table_name="tableName"
-                                        ></TableFielsEdit>
-
-                                    </template>
-                                    <template v-else-if="commonActionName == 'databases'">
-                                        <BaseSimpleForm
-                                                :item="commonItem"
-                                                name="datname"
-                                                :fields="['datname']"
-                                                @input_item="inputFormItem"
-                                        ></BaseSimpleForm>
-                                    </template>
-                                    <template v-else-if="commonActionName == 'users'">
-                                        <BaseSimpleForm
-                                                :item="commonItem"
-                                                name="usename"
-                                                :fields="['usename', 'passwd']"
-                                                @input_item="inputFormItem"
-                                        ></BaseSimpleForm>
-                                    </template>
-                                    <template v-else-if="commonActionName == 'get_roles'">
-                                        <BaseSimpleForm
-                                                :item="commonItem"
-                                                name="rolname"
-                                                :fields="['rolname', 'rolpassword']"
-                                                @input_item="inputFormItem"
-                                        ></BaseSimpleForm>
-                                    </template>
-
-                                </div>
-                                <div slot="content-2">
-
-                                    <!--- Создание объектов   -->
-                                    <CreateNewObject
-                                         @btn_click="getActionResponse"
-                                    ></CreateNewObject>
-                                    <!--- / Создание объектов --->
-
-                                </div>
-                                <div slot="content-3">
-
-                                    <!--- Изменение конфигурации базы -->
-                                    <ChangeDbConfig></ChangeDbConfig>
-                                    <!--- / Изменение конфигурации базы -->
-                                </div>
-
-                            </TabPanel>
-
-                        </div>
-                    </div>
-                    <!-- End blog -->
-
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </section><!-- End Blog Section -->
-
-    </div>
-</template>
+</div></template>
 
 <script>
 
-    import LeftPanel from '@/components/BaseControlLeftPanel'
-    import BaseSimpleForm from '@/components/BaseControlSimpleForm'
+    import LeftPanel       from '@/components/BaseControlLeftPanel'
+    import BaseSimpleForm  from '@/components/BaseControlSimpleForm'
     import CreateNewObject from '@/components/CreateNewObject'
-    import TableFielsEdit from '@/components/db-control/TableFieldsEdit'
-    import ChangeDbConfig from '@/components/db-control/ChangeDbConfig'
+    import TableFielsEdit  from '@/components/db-control/TableFieldsEdit'
+    import ChangeDbConfig  from '@/components/db-control/ChangeDbConfig'
+    import ContentSection  from '@/components/db-control/ContentSection'
 
     export default {
         name: 'BaseControl',
@@ -199,6 +149,7 @@
             CreateNewObject,
             TableFielsEdit,
             ChangeDbConfig,
+            ContentSection,
         },
 
         computed: {
@@ -227,15 +178,6 @@
             this.getCurConfig() // получаем текущий конфиг
             this.getFileUsersConfig()
 
-            // this.showDatabaseList() // databaseList
-            // this.getDbUsersList() // usersList
-            // this.getTableList() // получаем таблицы
-
-            // this.fetchDbList()
-            // this.fetchUserList()
-            // this.fetchTableList()
-            // this.fetchDbRoles()
-
             this.storeFetch('fetchDbList')
             this.storeFetch('fetchUserList')
             this.storeFetch('fetchTableList')
@@ -243,20 +185,10 @@
         },
 
         methods: {
-            selectItemTest(data) {
-                // lg(data)
-            },
 
-            getActionResponse(response) {
-                // let action = response.action
-                // // debugger;
-                // switch (action) {
-                //   case 'create_db' :
-                //       // this.fetchDbList()
-                //       break
-                // }
-            }
+            getActionResponse(response) {},
 
+            selectItemTest(data) {},
         }
     }
 </script>
@@ -309,6 +241,7 @@
 
     /***********************************/
     /**** Simple Form Table ************/
+
     .input-text-class {
         width: 100%;
         outline: 0px #b0bed9 solid;

@@ -4,9 +4,9 @@
         <!--<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>-->
 
         <template v-for="(item, i) in tabs" >
-            <input v-if="item.active" type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="" checked>
+            <input v-if="item.active"   type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="" checked>
             <input v-else="item.active" type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="">
-            <label :for="'tab-btn-' + (i+1)">{{item.label}}</label>
+            <label :id="'tab-label-' + (i+1)" :for="'tab-btn-' + (i+1)">{{item.label}}</label>
         </template>
 
         <template v-for="(item, i) in tabs" >
@@ -47,8 +47,9 @@ export default {
     .tabs > div {
         /* скрыть контент по умолчанию */
         display: none;
-        border: 1px solid #e0e0e0;
-        padding: 10px 15px;
+        border: 0px solid #e0e0e0;
+        border-top: 1px solid #e0e0e0;
+        padding: 10px 2px 2px 2px;
         font-size: 16px;
     }
 
@@ -59,7 +60,7 @@ export default {
         display: block;
     }
 
-    .tabs>label {
+    .tabs > label {
         display: inline-block;
         text-align: center;
         vertical-align: middle;
@@ -73,13 +74,19 @@ export default {
         cursor: pointer;
         position: relative;
         top: 1px;
+        /*margin-left: 20px;*/
     }
 
-    .tabs>label:not(:first-of-type) {
+    .tabs >label:not(:first-of-type) {
         border-left: none;
     }
 
-    .tabs>input[type="radio"]:checked+label {
+    #tab-label-1 {
+        /*border: 2px red solid;*/
+        margin-left: 4px;
+    }
+
+    .tabs > input[type="radio"]:checked+label {
         background-color: #fff;
         border-bottom: 1px solid #fff;
     }
