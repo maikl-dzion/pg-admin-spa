@@ -98,11 +98,12 @@ const BaseMixin = {
                     selectFieldType: 'VARCHAR',
 
                     tableFieldTypes: [
-                        {name: 'integer', title: 'Число', size: ''},
-                        {name: 'varchar', title: 'Строка', size: '255'},
-                        {name: 'text', title: 'Textarea', size: ''}
-                    ]
-
+                        {name: 'integer', title: 'Число'  , size: ''},
+                        {name: 'varchar', title: 'Строка'  , size: '255'},
+                        {name: 'text'   , title: 'Textarea', size: ''},
+                        {name: 'SERIAL' , title: 'Serial'  , size: ''}
+                    ],
+                    
                 }
             }, // Data
 

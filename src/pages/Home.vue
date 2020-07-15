@@ -22,6 +22,18 @@
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <ContentSection>
 
+        <!--border-bottom: 1px red solid;-->
+        <!--border-right: 1px red solid;-->
+        <!--background: cadetblue;-->
+        <!--color: white;-->
+
+        <!--border: 0;-->
+        <!--border-top: 1px red solid;-->
+        <!--border-right: 1px red solid;-->
+        <!--background: brown;-->
+        <!--color: white;-->
+
+
         <!-- Левая часть -->
         <template slot="left-panel-header"></template>
         <template slot="left-panel">
@@ -70,11 +82,11 @@
         <template slot="content-panel-header"></template>
         <template slot="content-panel">
 
-            <div style="display: flex; border: 1px red solid">
-                <div>content 1</div>
-                <div style="border-bottom:2px blue solid">content 2</div>
-                <div>content 2</div>
-            </div>
+            <!--<div style="display: flex; border: 1px red solid">-->
+                <!--<div>content 1</div>-->
+                <!--<div style="border-bottom:2px blue solid">content 2</div>-->
+                <!--<div>content 2</div>-->
+            <!--</div>-->
 
             <TabPanel style="border: 0px red solid; margin:0px"
                       :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}, { label : 'Конфигурация'}]">

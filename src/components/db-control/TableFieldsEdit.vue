@@ -22,16 +22,27 @@
                         </td>
 
                         <td style="width:60px;">
-                            <CustomSelect
-                                    style="width:100%; padding:0px;"
+
+                            <ui-select
+                                    style="width:100%; padding:0px; margin:0px"
                                     name="name"
                                     label="name"
-                                    hover="1"
-                                    :field_name="fname"
-                                    :selected_value="fields[fname]['input_type']"
+                                    :param="{ field_name : fname,
+                                             current_value : fields[fname]['input_type']}"
                                     :items="tableFieldTypes"
                                     @select_item="selectChangeType"
-                            ></CustomSelect>
+                            ></ui-select>
+
+                            <!--<CustomSelect-->
+                                    <!--style="width:100%; padding:0px;"-->
+                                    <!--name="name"-->
+                                    <!--label="name"-->
+                                    <!--hover="1"-->
+                                    <!--:field_name="fname"-->
+                                    <!--:selected_value="fields[fname]['input_type']"-->
+                                    <!--:items="tableFieldTypes"-->
+                                    <!--@select_item="selectChangeType"-->
+                            <!--&gt;</CustomSelect>-->
                         </td>
 
                         <td style="width:20px !important; color:white; background: red">
