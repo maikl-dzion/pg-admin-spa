@@ -30,7 +30,7 @@
             <div class="row-flex">
 
                 <!--- Левая панель --->
-                <div class="leftPanel" >
+                <div class="leftPanel">
                      <div class="sidebar-left">
                         <div class="content__left_panel"
                             style="border:0px red solid; margin-top:0px">
@@ -47,8 +47,8 @@
                 <!--- / Левая панель --->
 
                 <!--- Центральная  панель --->
-                <div class="centerPanel mainContent">
-                    <div class="content__main_panel">
+                <div class="centerPanel mainContent" >
+                     <div class="content__main_panel">
                         <div class="content__panel_header" style="margin-top:-2px;">
 
                             <!--<button @click="createObjPanelOpen=!createObjPanelOpen"-->
@@ -73,7 +73,7 @@
 
                         <slot name="content-panel"/>
 
-                    </div>
+                     </div>
                 </div>
                 <!--- / Центральная  панель --->
 

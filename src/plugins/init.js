@@ -14,6 +14,7 @@ import AnimeButton from '@/components/elements/AnimeButton'
 import CustomTable from '@/components/elements/Table'
 import Select from '@/components/elements/Select'
 import Checkbox from '@/components/elements/Checkbox'
+import UiSelect from '@/components/elements/UI-Select'
 
 const InitApp = {
 
@@ -26,6 +27,7 @@ const InitApp = {
         Vue.component('TabPanel', TabPanel)
         Vue.component('AnimeButton', AnimeButton)
         Vue.component('Checkbox', Checkbox)
+        Vue.component('ui-select', UiSelect)
 
         Vue.mixin({
             // mixins: [Http, BaseMixin, DataFormMixin, DragMixin],

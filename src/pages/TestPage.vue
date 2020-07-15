@@ -1,7 +1,21 @@
 <template>
     <div class="about">
 
-        <CustomForm/>
+        <ui-select
+          name="id"
+          label="name"
+          :items="testArr"
+          :param="{ title : 'Выбрать базу',
+                    current_value : '',
+                    field_name    : '' }"
+          @select_item="data => { lg(data) }"
+        ></ui-select>
+
+        <hr/>
+
+        <!--<CustomForm/>-->
+
+        <hr/>
 
         <Spinner
                 size="3"
@@ -14,19 +28,30 @@
 
         <div>
 
-            <div class="container">
-                <span class="choose">Choose Gender</span>
+            <div class="custom-select-container"
+                 style="border: 1px red solid; width: 300px">
 
-                <div class="dropdown">
-                    <div class="select">
+                <span class="custom-choose">Choose Gender</span>
+
+                <div class="custom-dropdown">
+                    <div class="ui-select">
                         <span>Select Gender</span>
                         <i class="fa fa-chevron-left"></i>
                     </div>
+
                     <input type="hidden" name="gender">
-                    <ul class="dropdown-menu">
-                        <li id="male">Male</li>
-                        <li id="female">Female</li>
+
+                    <ul class="custom-dropdown-menu">
+                        <li class="dropdown-menu-option" >Male</li>
+                        <li class="dropdown-menu-option" >Female</li>
+                        <li class="dropdown-menu-option" >Male 2</li>
+                        <li class="dropdown-menu-option" >Female 2</li>
+                        <li class="dropdown-menu-option" >Male</li>
+                        <li class="dropdown-menu-option" >Female</li>
+                        <li class="dropdown-menu-option" >Male 2</li>
+                        <li class="dropdown-menu-option" >Female 2</li>
                     </ul>
+
                 </div>
 
                 <span class="msg"></span>
@@ -67,6 +92,13 @@
 
         data: () => ({
             checkboxValue: false,
+
+            testArr : [
+                {id: 'maikldb'  , name: 'maikldb'},
+                {id: 'reestrsrv', name: 'reestrsrv'},
+                {id: 'reestrdb' , name: 'reestrdb'}
+            ],
+
         }),
 
         components: {
@@ -110,28 +142,31 @@
 
         mounted() {
 
-            /*Dropdown Menu*/
-            $('.dropdown').click(function () {
-                $(this).attr('tabindex', 1).focus();
-                $(this).toggleClass('active');
-                $(this).find('.dropdown-menu').slideToggle(300);
-            });
-            $('.dropdown').focusout(function () {
-                $(this).removeClass('active');
-                $(this).find('.dropdown-menu').slideUp(300);
-            });
-            $('.dropdown .dropdown-menu li').click(function () {
-                $(this).parents('.dropdown').find('span').text($(this).text());
-                $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
-            });
-            /*End Dropdown Menu*/
-
-
-            $('.dropdown-menu li').click(function () {
-                var input = '<strong>' + $(this).parents('.dropdown').find('input').val() + '</strong>',
-                    msg = '<span class="msg">Hidden input value: ';
-                $('.msg').html(msg + input + '</span>');
-            });
+            // /*custom-dropdown Menu*/
+            // $('.custom-dropdown').click(function () {
+            //     $(this).attr('tabindex', 1).focus();
+            //     $(this).toggleClass('active');
+            //     $(this).find('.custom-dropdown-menu').slideToggle(300);
+            // });
+            // $('.custom-dropdown').focusout(function () {
+            //     $(this).removeClass('active');
+            //     $(this).find('.custom-dropdown-menu').slideUp(300);
+            // });
+            // $('.custom-dropdown .custom-dropdown-menu li').click(function () {
+            //     $(this).parents('.custom-dropdown').find('span').text($(this).text());
+            //     $(this).parents('.custom-dropdown')
+            //            .find('input')
+            //            .attr('value', $(this).attr('id'));
+            // });
+            // /*End custom-dropdown Menu*/
+            //
+            // $('.custom-dropdown-menu li').click(function () {
+            //     var input = '<strong>' + $(this)
+            //             .parents('.custom-dropdown')
+            //             .find('input').val() + '</strong>',
+            //         msg = '<span class="msg">Hidden input value: ';
+            //     $('.msg').html(msg + input + '</span>');
+            // });
 
         },
 
@@ -149,20 +184,25 @@
         background-color: #fafafa
     }
     span.msg,
-    span.choose {
+    span.custom-choose {
         color: #555;
-        padding: 5px 0 10px;
-        display: inherit
-    }
-    .container {
-        width: 500px;
-        margin: 50px auto 0;
-        text-align: center
+        padding: 2px;
+        font-size: 12px;
+        display: inherit;
+        text-align: left;
+        font-style: italic;
+        color: #b0bed9;
     }
 
+    /*.container {*/
+        /*width: 500px;*/
+        /*margin: 50px auto 0;*/
+        /*text-align: center*/
+    /*}*/
+
     /*Styling Selectbox*/
-    .dropdown {
-        width: 300px;
+    .custom-dropdown {
+        width: 100%;
         display: inline-block;
         background-color: #fff;
         border-radius: 2px;
@@ -174,12 +214,12 @@
         height: 100%;
         text-align: left
     }
-    .dropdown .select {
+    .custom-dropdown .ui-select {
         cursor: pointer;
         display: block;
-        padding: 10px
+        padding: 4px 10px 4px 4px;
     }
-    .dropdown .select > i {
+    .custom-dropdown .ui-select > i {
         font-size: 13px;
         color: #888;
         cursor: pointer;
@@ -187,22 +227,22 @@
         float: right;
         line-height: 20px
     }
-    .dropdown:hover {
+    .custom-dropdown:hover {
         box-shadow: 0 0 4px rgb(204, 204, 204)
     }
-    .dropdown:active {
+    .custom-dropdown:active {
         background-color: #f8f8f8
     }
-    .dropdown.active:hover,
-    .dropdown.active {
+    .custom-dropdown.active:hover,
+    .custom-dropdown.active {
         box-shadow: 0 0 4px rgb(204, 204, 204);
         border-radius: 2px 2px 0 0;
         background-color: #f8f8f8
     }
-    .dropdown.active .select > i {
+    .custom-dropdown.active .ui-select > i {
         transform: rotate(-90deg)
     }
-    .dropdown .dropdown-menu {
+    .custom-dropdown .custom-dropdown-menu {
         position: absolute;
         background-color: #fff;
         width: 100%;
@@ -212,25 +252,29 @@
         border-radius: 0 1px 2px 2px;
         overflow: hidden;
         display: none;
-        max-height: 144px;
+        /*max-height: 144px;*/
         overflow-y: auto;
         z-index: 9
     }
-    .dropdown .dropdown-menu li {
-        padding: 10px;
+    .custom-dropdown .custom-dropdown-menu li {
+        padding: 4px;
         transition: all .2s ease-in-out;
         cursor: pointer
     }
-    .dropdown .dropdown-menu {
+    .custom-dropdown .custom-dropdown-menu {
         padding: 0;
         list-style: none
     }
-    .dropdown .dropdown-menu li:hover {
+    .custom-dropdown .custom-dropdown-menu li:hover {
         background-color: #f2f2f2
     }
-    .dropdown .dropdown-menu li:active {
+    .custom-dropdown .custom-dropdown-menu li:active {
         background-color: #e2e2e2
     }
+
+    /*.custom-dropdown:hover .custom-dropdown-menu{*/
+        /*display: block !important;*/
+    /*}*/
 
 </style>
 

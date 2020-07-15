@@ -70,7 +70,13 @@
         <template slot="content-panel-header"></template>
         <template slot="content-panel">
 
-            <TabPanel style="border: 0px red solid; margin:1px"
+            <div style="display: flex; border: 1px red solid">
+                <div>content 1</div>
+                <div style="border-bottom:2px blue solid">content 2</div>
+                <div>content 2</div>
+            </div>
+
+            <TabPanel style="border: 0px red solid; margin:0px"
                       :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}, { label : 'Конфигурация'}]">
                 <!--:tabs="['Редактирование','Создание объектов']" >-->
                 <template slot="content-1">
