@@ -20,10 +20,12 @@
       <div class="my-form" style="width:480px; display: flex; margin-left:10px">
 
           <div class="my-form__flex-box">
+
               <div class="my-form__elem-box" style="width:80%">
                   <input v-model="newPassword" class="form__inp-text" type="text" required="">
                   <label class="form__inp-label" >Пароль</label>
               </div>
+
               <div class="margin-box"></div>
               <div class="my-form__elem-box">
                   <CustomSelect
@@ -50,6 +52,7 @@
   <!-- / Создание базы, изменение пароля пользователя  --->
 
   <div style="display: flex">
+
       <!-- Копирование объектов  --->
       <CopyObject></CopyObject>
       <!-- /Копирование объектов --->

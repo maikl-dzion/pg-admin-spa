@@ -160,6 +160,13 @@ const InitApp = {
 
             methods: {
 
+                createElemId() {
+                    let num = Math.random() + 's';
+                    let a = num.split('.')
+                    num = a[1]
+                    return num;
+                },
+
                 getRoutesNav() {
                     let routes = [];
                     for (let i in this.$router.options.routes) {

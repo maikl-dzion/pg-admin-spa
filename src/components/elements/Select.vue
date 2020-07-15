@@ -5,7 +5,7 @@
         {{title}}
     </div>
 
-    <ul class="selectElemUlBox">
+    <ul class="selectElemUlBox" :id="'select-elem-box-' + randNum">
         <li class="selectElemLiBox" >
 
             <a @click="viewState = true" class="brd" >
@@ -13,7 +13,8 @@
             </a>
 
             <template v-if="hover">
-                <ul class="selectElemUlList" >
+                <ul class="selectElemUlList"
+                    :style="'width:' + ulMenuWidth+ 'px'">
                     <li v-for="(item) in items"
                         class="selectElemLiItem">
                         <a @click="selectItem(item, item[name])" >
@@ -24,7 +25,8 @@
             </template>
             <template v-else >
                 <ul v-if="viewState"
-                    class="selectElemUlList" >
+                    class="selectElemUlList + 'px'"
+                    :style="'width:' + ulMenuWidth" >
                     <li v-for="(item) in items"
                         class="selectElemLiItem">
                         <a @click="selectItem(item, item[name])" >
@@ -42,14 +44,24 @@
 <script>
     export default {
         name: "Select",
-        props: ['items', 'title', 'name', 'label', 'selected_value', 'hover', 'field_name'],
+        props: ['items', 'title', 'name',
+                'label', 'selected_value',
+                'hover', 'field_name', 'width'],
         data: () => ({
            selectLabel : '',
            selectValue : '',
            viewState   : false,
+           ulMenuWidth : 300,
+           randNum     : 0,
         }),
 
         created() {
+
+            this.randNum = this.createElemId()
+
+            if(this.width)
+                this.ulMenuWidth = this.width;
+
             this.setInitSelectedValue()
         },
 
@@ -76,6 +88,14 @@
                     }
                 }
             },
+        },
+
+        mounted() {
+            // debugger
+            // const elemId = document.querySelector('#select-elem-box-' + this.randNum)
+            // const width  = elemId.style.width;
+            // alert(width);
+
         }
     }
 </script>
@@ -105,7 +125,7 @@
         padding: 0; /* Убираем поля вокруг текста */
         font-family: Arial, sans-serif; /* Рубленый шрифт для текста меню */
         font-size: 10pt; /* Размер названий в пункте меню */
-        z-index:38;
+        z-index:45;
         border-bottom: 1px solid #ccc; /* Линия снизу */
     }
 
@@ -115,10 +135,12 @@
 
     .selectElemUlList  {
         position: absolute; /* Подменю позиционируются абсолютно */
-        display: none;      /* Скрываем подменю */
+        display : none;      /* Скрываем подменю */
         margin-left: 0px;   /* Сдвигаем подменю вправо */
         margin-top: -1px;   /* Сдвигаем подменю вверх */
         width: 300px;
+        border: 1px gainsboro solid;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
     .selectElemLiBox a {
@@ -132,19 +154,27 @@
         text-align: center;
     }
 
+    .selectElemLiItem {
+        background: aliceblue;
+        border: 0px #ccc solid;
+        padding:0px 5px 0px 5px;
+    }
+
     .selectElemLiItem a {
         display: block; /* Ссылка как блочный элемент */
         padding: 5px; /* Поля вокруг надписи */
         text-decoration: none; /* Подчеркивание у ссылок убираем */
         color: #666; /* Цвет текста */
-        border: 1px solid #ccc;/* Рамка вокруг пунктов меню */
-        background-color: #f0f0f0; /* Цвет фона */
+        border: 0px solid #ccc;/* Рамка вокруг пунктов меню */
+        background-color: aliceblue; /* Цвет фона */
         border-bottom: none; /* Границу снизу не проводим */
     }
 
     .selectElemLiItem a:hover {
         color: #ffe; /* Цвет текста активного пункта */
         background-color: #5488af; /* Цвет фона активного пункта */
+        /*background: #777;*/
+        /*box-shadow:10px 10px 10px rgba(0,0,0,0.8);*/
     }
 
     .selectElemLiBox:hover .selectElemUlList {

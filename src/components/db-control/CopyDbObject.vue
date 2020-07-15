@@ -20,6 +20,7 @@
                         name="table_name"
                         label="table_name"
                         hover="1"
+                        width="155"
                         :items="getDbTables"
                         @select_item="d => copyTableItem.name = d.value"
                 ></CustomSelect>
