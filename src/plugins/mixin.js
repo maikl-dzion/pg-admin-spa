@@ -103,7 +103,7 @@ const BaseMixin = {
                         {name: 'text'   , title: 'Textarea', size: ''},
                         {name: 'SERIAL' , title: 'Serial'  , size: ''}
                     ],
-                    
+
                 }
             }, // Data
 

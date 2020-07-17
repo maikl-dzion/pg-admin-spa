@@ -1,6 +1,29 @@
 <template>
     <div class="about">
 
+        <hr/><br/>
+
+        <v-select
+
+            title="Выбрать тип поля"
+            :items="tableFieldTypes"
+            label="title"
+            name="name"
+            :param="{width: 200, fname : '', value : ''}"
+            @select_item="selectedItem"
+
+        ></v-select>
+
+        <p/><p/>
+
+        <v-input-text
+           style="margin:5px 5px 5px 50px;"
+           label="Выбрать таблицу"
+           value="value2344"
+           fname="fgh"
+           @edit="inputTest">
+        </v-input-text>
+
         <ui-select
           name="id"
           label="name"
@@ -86,6 +109,7 @@
 
 <script>
     import CustomForm from '@/components/elements/CustomForm'
+    import vSelect from '@/components/elements/v-select'
 
     export default {
         name: 'home',
@@ -102,7 +126,8 @@
         }),
 
         components: {
-            CustomForm
+            CustomForm,
+            vSelect
         },
 
         computed: {
@@ -115,6 +140,14 @@
         },
 
         methods: {
+
+            inputTest(data) {
+               // lg(data);
+            },
+
+            selectedItem(data) {
+                // lg(data);
+            },
 
             btnClickCss() {
 

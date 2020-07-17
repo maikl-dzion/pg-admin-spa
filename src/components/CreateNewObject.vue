@@ -117,43 +117,45 @@
     </div>
     <!-----  / Добавление пользователя ---->
 
+    <CreateTableSet/>
+
     <!-----  Добавление таблиц ------------>
-    <div class="create-form-container" style="margin-left:10px">
-          <div class="my-form" >
-              <div class="custom-btn-container" >
-                  <button @click="pushTableToArray()" class="custom-btn" >
-                      <i class="fa fa-plus-circle" ></i>
-                  </button>
-              </div>
-              <div class="my-form__label" >Добавить таблицы</div>
-              <hr class="my-form__delimiter" >
-              <div class="my-form__container">
+    <!--<div class="create-form-container" style="margin-left:10px">-->
+          <!--<div class="my-form" >-->
+              <!--<div class="custom-btn-container" >-->
+                  <!--<button @click="pushTableToArray()" class="custom-btn" >-->
+                      <!--<i class="fa fa-plus-circle" ></i>-->
+                  <!--</button>-->
+              <!--</div>-->
+              <!--<div class="my-form__label" >Добавить таблицы</div>-->
+              <!--<hr class="my-form__delimiter" >-->
+              <!--<div class="my-form__container">-->
 
-                  <div v-for="(item) in createTableList"
-                       class="my-form__flex-box" >
-                      <div class="my-form__elem-box">
-                          <input v-model="item.name" class="form__inp-text" type="text" required="">
-                          <label class="form__inp-label" >Имя таблицы</label>
-                      </div>
-                      <div class="margin-box"></div>
-                      <div class="my-form__elem-box" style="width:40%">
-                          <input v-model="item.idName" class="form__inp-text" type="text" required="">
-                          <label class="form__inp-label" >Имя Id поля</label>
-                      </div>
-                  </div>
+                  <!--<div v-for="(item) in createTableList"-->
+                       <!--class="my-form__flex-box" >-->
+                      <!--<div class="my-form__elem-box">-->
+                          <!--<input v-model="item.name" class="form__inp-text" type="text" required="">-->
+                          <!--<label class="form__inp-label" >Имя таблицы</label>-->
+                      <!--</div>-->
+                      <!--<div class="margin-box"></div>-->
+                      <!--<div class="my-form__elem-box" style="width:40%">-->
+                          <!--<input v-model="item.idName" class="form__inp-text" type="text" required="">-->
+                          <!--<label class="form__inp-label" >Имя Id поля</label>-->
+                      <!--</div>-->
+                  <!--</div>-->
 
-              </div>
+              <!--</div>-->
 
-              <br/><hr class="my-form__delimiter">
-              <div class="my-form__btn-box">
-                  <a @click="btnClick('create_table_list')" class="my-form__btn">
-                      <span></span><span></span><span></span><span></span>
-                      Сохранить
-                  </a>
-              </div>
+              <!--<br/><hr class="my-form__delimiter">-->
+              <!--<div class="my-form__btn-box">-->
+                  <!--<a @click="btnClick('create_table_list')" class="my-form__btn">-->
+                      <!--<span></span><span></span><span></span><span></span>-->
+                      <!--Сохранить-->
+                  <!--</a>-->
+              <!--</div>-->
 
-          </div>
-    </div>
+          <!--</div>-->
+    <!--</div>-->
     <!------ / Добавление таблиц  --------->
 
     <!-----  Добавление новых полей ------->
@@ -219,7 +221,8 @@
 <script>
 
 import DelegateUserRole from '@/components/db-control/DelegateUserRole'
-import CopyObject from '@/components/db-control/CopyDbObject'
+import CopyObject       from '@/components/db-control/CopyDbObject'
+import CreateTableSet      from '@/components/db-control/CreateTableSet'
 
 export default {
   name: 'CreateNewObjects',
@@ -237,6 +240,7 @@ export default {
   components: {
       DelegateUserRole,
       CopyObject,
+      CreateTableSet,
   },
 
   computed: {

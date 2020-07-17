@@ -15,6 +15,8 @@ import CustomTable from '@/components/elements/Table'
 import Select from '@/components/elements/Select'
 import Checkbox from '@/components/elements/Checkbox'
 import UiSelect from '@/components/elements/UI-Select'
+import vInputText from '@/components/elements/v-input-text'
+import vSelect from '@/components/elements/v-select'
 
 const InitApp = {
 
@@ -28,6 +30,8 @@ const InitApp = {
         Vue.component('AnimeButton', AnimeButton)
         Vue.component('Checkbox', Checkbox)
         Vue.component('ui-select', UiSelect)
+        Vue.component('v-input-text', vInputText)
+        Vue.component('v-select', vSelect)
 
         Vue.mixin({
             // mixins: [Http, BaseMixin, DataFormMixin, DragMixin],
@@ -302,12 +306,11 @@ const InitApp = {
                 },
 
                 addNewFieldsForeach(fieldList = null, tableName = null) {
-                    if (!fieldList) {
+                    if (!fieldList)
                         fieldList = this.newFieldsList
-                    }
-                    if (!tableName) {
+
+                    if (!tableName)
                         tableName = this.tableName
-                    }
 
                     let addFieldFn = (tableName, name, type, end = false) => {
                         if (!name) return false
