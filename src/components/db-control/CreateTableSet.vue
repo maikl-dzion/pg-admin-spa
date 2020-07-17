@@ -60,8 +60,8 @@
                                         :items="tableFieldTypes"
                                         label="title"
                                         name="name"
-                                        :param="{width: 120, fname : '', value : ''}"
-                                        @select_item="selectedItem"
+                                        :param="{width: 120, fname : '', value : field.type}"
+                                        @select_item="d => { field.type = d.value}"
                                 ></v-select>
 
                             </div>
@@ -110,13 +110,66 @@
 
             addTableList() {
                 let table = {}
+                const len = this.createTableList.length;
                 let tableList = Object.assign({}, this.createTableList)
                 for (let i in tableList) {
-                    table = tableList[i]
-                    this.createTableListFn(table.name, table.idName, () => {
-                        this.addNewFieldsForeach(table.fields, table.name)
-                    })
+                    table = tableList[i];
+                    this.addTableAndFieldsAsync(table.name, table.idName, table.fields, response => {
+                         console.log(response);
+                    });
+
+                    // this.createTableListFn(table.name, table.idName, () => {
+                    //     this.addNewFieldsForeach(table.fields, table.name)
+                    // })
                 }
+            },
+
+            async addTableAndFieldsAsync(tableName, idName, tableFields = null, callback = null) {
+                if (!tableName) {
+                    this.warn('Нет имени таблицы');
+                    return false
+                }
+
+                const url = 'CREATE_TABLE/' + tableName + '/' + idName
+                const response = await this.http(url)
+                this.successAddTable(tableName);
+                let respFields = [];
+                if(tableFields) {
+                    for(let i in tableFields) {
+                        const fieldItem = tableFields[i];
+                        let resp = this.addFieldFnAsync(tableName, fieldItem)
+                        respFields.push(resp);
+                    }
+                }
+
+                if(callback) {
+                    callback({ table: response, fields : respFields, tableName})
+                }
+            },
+
+            async addFieldFnAsync(tableName, fieldItem) {
+                let name = fieldItem.name;
+                let type = fieldItem.type;
+                if (!name)
+                    return false
+                const url = 'ADD_FIELD/' + tableName + '/' + name + '/' + type
+                const response = this.http(url)
+                this.successAddField(tableName)
+                return response;
+            },
+
+            successAddTable(tableName = null) {
+                this.fetchTableList()
+                this.alertShow('Новая таблица создана')
+                this.getTableList()
+            },
+
+            successAddField(tableName = null) {
+                this.alertShow('Новое поле добавлено')
+                this.getTableFields(tableName, resp => {
+                    this.commonItem = resp
+                })
+                this.getTableListSheme()
             },
         },
     }
