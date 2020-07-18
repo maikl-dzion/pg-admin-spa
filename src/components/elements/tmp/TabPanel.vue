@@ -1,16 +1,16 @@
 <template>
     <div class="tabs">
 
+        <!--<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>-->
+
         <template v-for="(item, i) in tabs" >
             <input v-if="item.active"   type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="" checked>
-            <input v-else="item.active" type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="" style="">
-            <label :id="'tab-label-' + (i+1)"
-                   :for="'tab-btn-' + (i+1)"
-                   v-html="item.label"></label>
+            <input v-else="item.active" type="radio" name="tab-btn" :id="'tab-btn-' + (i+1)" value="">
+            <label :id="'tab-label-' + (i+1)" :for="'tab-btn-' + (i+1)">{{item.label}}</label>
         </template>
 
         <template v-for="(item, i) in tabs" >
-            <div :id="'content-' + (i+1)" style="margin-top: -9px; padding-top:24px;">
+            <div :id="'content-' + (i+1)" style="margin-top: -8px;">
                 <slot :name="'content-' + (i+1)"/>
             </div>
         </template>
@@ -48,7 +48,7 @@ export default {
         /* скрыть контент по умолчанию */
         display: none;
         border: 0px solid #e0e0e0;
-        border-top: 2px solid gainsboro;
+        border-top: 1px solid #e0e0e0;
         padding: 10px 2px 2px 2px;
         font-size: 16px;
     }
@@ -65,9 +65,8 @@ export default {
         text-align: center;
         vertical-align: middle;
         user-select: none;
-        background-color: none;
-        /*border: 1px solid #e0e0e0;*/
-        border: 0px solid red;
+        background-color: #f5f5f5;
+        border: 1px solid #e0e0e0;
         padding: 2px 14px;
         font-size: 16px;
         line-height: 1.5;
@@ -75,7 +74,6 @@ export default {
         cursor: pointer;
         position: relative;
         top: 1px;
-        color: grey;
         /*margin-left: 20px;*/
     }
 
@@ -90,9 +88,7 @@ export default {
 
     .tabs > input[type="radio"]:checked+label {
         background-color: #fff;
-        border-bottom: 2px solid #326690;
-        color:#326690;
-        font-weight: bold;
+        border-bottom: 1px solid #fff;
     }
 
 </style>

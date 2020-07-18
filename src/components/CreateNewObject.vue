@@ -4,77 +4,73 @@
         <!-- Создание базы, изменение пароля пользователя  --->
         <div style="display: flex">
 
-            <div class="my-form" style="width:380px; display: flex">
-                <div class="my-form__elem-box" style="width:60%; ">
-                    <input v-model="newDbName" class="form__inp-text" type="text" required="">
-                    <label class="form__inp-label" style="padding-left: 4px">Имя базы</label>
+            <!-- Добавляем новую базу -->
+            <div style="width:500px; background: aliceblue; border:2px gainsboro solid;
+                        padding:6px; display: flex">
+
+                <div class="vFieldContainer" style="width:60%; margin:0px 10px 0px 0px;">
+                    <input v-model="newDbName" style="outline: none"
+                           class="vInputText" type="text" required>
+                    <label>Имя базы</label>
                 </div>
-                <div class="my-form__btn-box" style="width:40%; margin-left: 10px;">
-                    <a @click="btnClick('create_db')" class="my-form__btn">
-                        <span></span><span></span><span></span><span></span>
-                        Добавить новую базу
-                    </a>
-                </div>
+
+                <button @click="btnClick('create_db')"
+                        style="width:40%;height: 34px; margin:0px; border-radius: 0; "
+                        class="btn btn-success btn-sm px-2 waves-effect export-to-snippet">
+                        <i class="fa fa-database"></i> &nbsp; Добавить новую базу
+                </button>
+
             </div>
 
-            <div class="my-form" style="width:480px; display: flex; margin-left:10px">
+            <!-- Изменяем пароль пользователя -->
+            <div style="width:500px; background: aliceblue; border:2px gainsboro solid;
+                        padding:6px; display: flex; margin-left:7px;">
 
-                <div class="my-form__flex-box">
-
-                    <div class="my-form__elem-box" style="width:80%">
-                        <input v-model="newPassword" class="form__inp-text" type="text" required="">
-                        <label class="form__inp-label">Пароль</label>
-                    </div>
-
-                    <div class="margin-box"></div>
-                    <div class="my-form__elem-box">
-                        <CustomSelect
-                                style="width:150px; padding:2px;"
-                                title="Выбрать пользователя"
-                                name="usename"
-                                label="usename"
-                                hover="1"
-                                :items="getUserList"
-                                @select_item="d => selectedUserName = d.value"
-                        ></CustomSelect>
-                    </div>
+                <div class="vFieldContainer" style="width:45%; margin:0px;">
+                    <input v-model="newPassword" style="outline: none"
+                           class="vInputText" type="text" required>
+                    <label>Новый пароль</label>
                 </div>
 
-                <div class="my-form__btn-box" style="width:25%; margin-left: 5px;">
-                    <a @click="btnClick('change_user_password')" class="my-form__btn">
-                        <span></span><span></span><span></span><span></span>
-                        Изменить пароль
-                    </a>
-                </div>
+                <v-select
+                        style="width:32%; margin:0px 4px 0px 5px;"
+                        label="usename"
+                        name="usename"
+                        title="Пользователи"
+                        :items="getUserList"
+                        :param="{width: 140}"
+                        @select_item="data => selectedUserName = data.value"
+                ></v-select>
+
+                <button @click="btnClick('change_user_password')"
+                        style="width:37%; height: 34px; margin:0px; border-radius: 0; "
+                        class="btn btn-success btn-sm px-2 waves-effect export-to-snippet">
+                    <i class="fa fa-pencil"></i> &nbsp; Изменить пароль
+                </button>
+
             </div>
-
-        </div>
-        <hr/>
-        <!-- / Создание базы, изменение пароля пользователя  --->
-
-
-        <div>
-
-            <CreateTableSetRow/>
 
         </div><hr/>
+        <!-- / Создание базы, изменение пароля пользователя  --->
+
+        <!--  Добавление таблиц  -->
+        <div><CreateTableSetRow/></div><hr/>
+        <!--  / Добавление таблиц -->
 
         <div style="display: flex">
-
             <!-- Копирование объектов  --->
             <CopyObject></CopyObject>
             <!-- /Копирование объектов --->
 
             <!--  Управление правами пользователя -->
-            <DelegateUserRole style="margin-left:10px"
-                              :db_list="getDbList"
-                              :user_list="getUserList"
-                              @delegate_action="delegateUserRoleAction"
+            <DelegateUserRole
+                    style="margin-left:10px"
+                    :db_list="getDbList"
+                    :user_list="getUserList"
+                    @delegate_action="delegateUserRoleAction"
             ></DelegateUserRole>
             <!--  /Управление правами пользователя -->
-
-        </div>
-        <hr/>
+        </div><hr/>
 
         <div style="display: flex">
 
@@ -126,46 +122,6 @@
             </div>
             <!-----  / Добавление пользователя ---->
 
-            <!--<CreateTableSet/>-->
-
-            <!-----  Добавление таблиц ------------>
-            <!--<div class="create-form-container" style="margin-left:10px">-->
-            <!--<div class="my-form" >-->
-            <!--<div class="custom-btn-container" >-->
-            <!--<button @click="pushTableToArray()" class="custom-btn" >-->
-            <!--<i class="fa fa-plus-circle" ></i>-->
-            <!--</button>-->
-            <!--</div>-->
-            <!--<div class="my-form__label" >Добавить таблицы</div>-->
-            <!--<hr class="my-form__delimiter" >-->
-            <!--<div class="my-form__container">-->
-
-            <!--<div v-for="(item) in createTableList"-->
-            <!--class="my-form__flex-box" >-->
-            <!--<div class="my-form__elem-box">-->
-            <!--<input v-model="item.name" class="form__inp-text" type="text" required="">-->
-            <!--<label class="form__inp-label" >Имя таблицы</label>-->
-            <!--</div>-->
-            <!--<div class="margin-box"></div>-->
-            <!--<div class="my-form__elem-box" style="width:40%">-->
-            <!--<input v-model="item.idName" class="form__inp-text" type="text" required="">-->
-            <!--<label class="form__inp-label" >Имя Id поля</label>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--</div>-->
-
-            <!--<br/><hr class="my-form__delimiter">-->
-            <!--<div class="my-form__btn-box">-->
-            <!--<a @click="btnClick('create_table_list')" class="my-form__btn">-->
-            <!--<span></span><span></span><span></span><span></span>-->
-            <!--Сохранить-->
-            <!--</a>-->
-            <!--</div>-->
-
-            <!--</div>-->
-            <!--</div>-->
-            <!------ / Добавление таблиц  --------->
 
             <!-----  Добавление новых полей ------->
             <div class="create-form-container" style="margin-left:10px">
@@ -222,8 +178,7 @@
             </div>
             <!------ / Добавление новых полей ----->
 
-        </div>
-        <hr/>
+        </div><hr/>
 
     </div>
 </template>

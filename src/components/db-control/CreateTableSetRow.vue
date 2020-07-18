@@ -9,13 +9,13 @@
             </button>
 
             <button @click="clearTableList"
-                style="border-radius: 0; color:white"
+                style="border-radius: 0; color:white; width: 140px;"
                 class="btn btn-blue-grey btn-sm px-2 waves-effect export-to-snippet">
                 <i class="fa fa-repeat" style="color:white"></i> &nbsp; Очистить
             </button>
 
             <button @click="addTableList"
-                style="margin:0px 10px 0px 30px; border-radius: 0;"
+                style="width: 180px; margin:0px 10px 0px 20px; border-radius: 0;"
                 class="btn btn-success btn-sm px-2 waves-effect export-to-snippet">
                 <i class="fa fa-floppy-o" ></i> &nbsp; Сохранить результат
             </button>
@@ -201,7 +201,8 @@
         border:2px gainsboro solid;
         margin: 4px;
         padding:10px 2px 10px 5px;
-        box-shadow: 3px 4px 5px rgba(68, 68, 68, 0.4);
+        background: aliceblue;
+        /*box-shadow: 3px 4px 5px rgba(68, 68, 68, 0.4);*/
     }
 
     .newCreateFormContainer .newTableFieldsBox {

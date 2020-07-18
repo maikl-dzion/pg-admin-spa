@@ -88,8 +88,10 @@
                 <!--<div>content 2</div>-->
             <!--</div>-->
 
-            <TabPanel style="border: 0px red solid; margin:0px"
-                      :tabs="[{ label: 'Редактирование', active : 1 }, { label : 'Создание объектов'}, { label : 'Конфигурация'}]">
+            <TabPanel style="margin:0px;"
+                      :tabs="[{ label : 'Поля объектов (редактирование/просмотр)', active : 1 },
+                              { label : 'Создание объектов'},
+                              { label : 'Настройки / привилегии'}]">
                 <!--:tabs="['Редактирование','Создание объектов']" >-->
                 <template slot="content-1">
 
@@ -138,7 +140,7 @@
                 </template>
                 <template slot="content-3">
 
-                    <!-- Изменение конфигурации базы -->
+                    <!-- Изменение конфигурации базы   -->
                     <ChangeDbConfig></ChangeDbConfig>
                     <!-- / Изменение конфигурации базы -->
 
