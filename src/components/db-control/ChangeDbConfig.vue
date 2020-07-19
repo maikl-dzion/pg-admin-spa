@@ -1,13 +1,6 @@
 <template>
     <div style="position: relative; width:100%;">
 
-        <div class="bw" style="padding:0px">
-            <button @click="setDefaultConfig()" class="animeCustomBtn"
-                    style="padding:2px 5px 2px 5px; color:black; font-size:12px;">
-                Установить конфигурацию по умолчанию
-            </button>
-        </div><hr style="margin:0px 0px 15px 0px"/>
-
         <!--<pr>{{dbConf}}</pr>-->
         <table class="db-config-table" >
                 <tr v-for="(value, confName) in dbConf" >

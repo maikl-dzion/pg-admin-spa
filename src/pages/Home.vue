@@ -89,7 +89,7 @@
             <!--</div>-->
 
             <TabPanel style="margin:0px;"
-                      :tabs="[{ label : 'Поля объектов (редактирование/просмотр)', active : 1 },
+                      :tabs="[{ label : 'Редактирование объектов', active : 1 },
                               { label : 'Создание объектов'},
                               { label : 'Настройки / привилегии'}]">
                 <!--:tabs="['Редактирование','Создание объектов']" >-->
@@ -140,9 +140,48 @@
                 </template>
                 <template slot="content-3">
 
-                    <!-- Изменение конфигурации базы   -->
-                    <ChangeDbConfig></ChangeDbConfig>
-                    <!-- / Изменение конфигурации базы -->
+                    <div style="border-bottom:1px gainsboro solid;
+                                margin: -15px 0px 10px 0px; padding:2px 0px 2px 0px">
+
+                        <button @click="setDefaultConfig()"
+                                style="width:200px; margin:0px; border-radius: 0; "
+                                class="btn btn-success btn-sm px-2 waves-effect export-to-snippet">
+                            <i class="fa fa-cogs"></i> &nbsp; Установить конфигурацию по умолчанию
+                        </button>
+
+                        <!--<CustomButton-->
+                           <!--type="0"-->
+                           <!--attr=""-->
+                           <!--icon=""-->
+                           <!--param="tryrttr"-->
+                           <!--title="Выполнить"-->
+                           <!--@btn_click="testButton()"-->
+                        <!--&gt;</CustomButton>-->
+
+                        <!--<div class="bw" style="padding:0px">-->
+                            <!--<button @click="setDefaultConfig()" class="animeCustomBtn"-->
+                                    <!--style="padding:2px 5px 2px 5px; color:black; font-size:12px;">-->
+                                <!--Установить конфигурацию по умолчанию-->
+                            <!--</button>-->
+                        <!--</div><hr style="margin:0px 0px 15px 0px"/>-->
+
+                    </div>
+
+                    <div class="row1" style="display:flex; margin:0px; padding: 0px;">
+
+                        <!-- Изменение конфигурации базы   -->
+                        <div class="col-41" style="margin: 0px 10px 0px 0px; padding: 0px;" >
+                            <ChangeDbConfig ></ChangeDbConfig>
+                        </div>
+                        <!-- / Изменение конфигурации базы -->
+
+                        <!--  Управление правами пользователя  -->
+                        <div class="col-41" style="margin: 0px 0px 0px ; padding: 0px;" >
+                            <DelegateUserRole ></DelegateUserRole>
+                        </div>
+                        <!--  / Управление правами пользователя -->
+
+                    </div><div style="clear: both"></div>
 
                 </template>
 
@@ -161,6 +200,9 @@
     import TableFielsEdit  from '@/components/db-control/TableFieldsEdit'
     import ChangeDbConfig  from '@/components/db-control/ChangeDbConfig'
     import ContentSection  from '@/components/db-control/ContentSection'
+    import DelegateUserRole from '@/components/db-control/DelegateUserRole'
+
+    import BlueBtn  from '@/components/elements/BlueBtn'
 
     export default {
         name: 'BaseControl',
@@ -172,6 +214,8 @@
             TableFielsEdit,
             ChangeDbConfig,
             ContentSection,
+            DelegateUserRole,
+            BlueBtn,
         },
 
         computed: {
@@ -211,6 +255,10 @@
             getActionResponse(response) {},
 
             selectItemTest(data) {},
+
+            testButton(name) {
+               alert(name);
+            },
         }
     }
 </script>

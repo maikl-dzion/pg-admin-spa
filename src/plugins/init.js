@@ -17,6 +17,7 @@ import Checkbox from '@/components/elements/Checkbox'
 import UiSelect from '@/components/elements/UI-Select'
 import vInputText from '@/components/elements/v-input-text'
 import vSelect from '@/components/elements/v-select'
+import CustomButton from '@/components/elements/CustomButton'
 
 const InitApp = {
 
@@ -32,6 +33,7 @@ const InitApp = {
         Vue.component('ui-select', UiSelect)
         Vue.component('v-input-text', vInputText)
         Vue.component('v-select', vSelect)
+        Vue.component('CustomButton', CustomButton)
 
         Vue.mixin({
             // mixins: [Http, BaseMixin, DataFormMixin, DragMixin],

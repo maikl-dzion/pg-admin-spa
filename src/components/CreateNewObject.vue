@@ -54,22 +54,15 @@
         <!-- / Создание базы, изменение пароля пользователя  --->
 
         <!--  Добавление таблиц  -->
-        <div><CreateTableSetRow/></div><hr/>
+        <div>
+            <CreateTableSetRow/>
+        </div><hr/>
         <!--  / Добавление таблиц -->
 
         <div style="display: flex">
             <!-- Копирование объектов  --->
             <CopyObject></CopyObject>
             <!-- /Копирование объектов --->
-
-            <!--  Управление правами пользователя -->
-            <DelegateUserRole
-                    style="margin-left:10px"
-                    :db_list="getDbList"
-                    :user_list="getUserList"
-                    @delegate_action="delegateUserRoleAction"
-            ></DelegateUserRole>
-            <!--  /Управление правами пользователя -->
         </div><hr/>
 
         <div style="display: flex">
@@ -121,7 +114,6 @@
 
             </div>
             <!-----  / Добавление пользователя ---->
-
 
             <!-----  Добавление новых полей ------->
             <div class="create-form-container" style="margin-left:10px">
@@ -185,7 +177,7 @@
 
 <script>
 
-    import DelegateUserRole from '@/components/db-control/DelegateUserRole'
+    //import DelegateUserRole from '@/components/db-control/DelegateUserRole'
     import CopyObject from '@/components/db-control/CopyDbObject'
     import CreateTableSet from '@/components/db-control/CreateTableSet'
     import CreateTableSetRow from '@/components/db-control/CreateTableSetRow'
@@ -204,7 +196,7 @@
         }),
 
         components: {
-            DelegateUserRole,
+            // DelegateUserRole,
             CopyObject,
             CreateTableSet,
             CreateTableSetRow,
@@ -272,20 +264,20 @@
                 this.$emit('btn_click', param)
             },
 
-            delegateUserRoleAction(data) {
-                const userName = data.userName;
-                const dbName = data.dbName;
-                const action = data.action;
-
-                switch (action) {
-                    case 'set' :
-                        this.setUserPrivileges(userName, dbName)
-                        break;
-                    case 'delete' :
-                        this.delUserPrivileges(userName, dbName)
-                        break;
-                }
-            },
+            // delegateUserRoleAction(data) {
+            //     const userName = data.userName;
+            //     const dbName = data.dbName;
+            //     const action = data.action;
+            //
+            //     switch (action) {
+            //         case 'set' :
+            //             this.setUserPrivileges(userName, dbName)
+            //             break;
+            //         case 'delete' :
+            //             this.delUserPrivileges(userName, dbName)
+            //             break;
+            //     }
+            // },
 
         }
     }
