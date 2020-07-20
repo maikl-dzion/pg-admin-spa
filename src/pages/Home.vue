@@ -91,7 +91,7 @@
             <TabPanel style="margin:0px;"
                       :tabs="[{ label : 'Редактирование объектов', active : 1 },
                               { label : 'Создание объектов'},
-                              { label : 'Настройки / привилегии'}]">
+                              { label : 'Настройки / конфигурация'}]">
                 <!--:tabs="['Редактирование','Создание объектов']" >-->
                 <template slot="content-1">
 
@@ -141,7 +141,8 @@
                 <template slot="content-3">
 
                     <div style="border-bottom:1px gainsboro solid;
-                                margin: -15px 0px 10px 0px; padding:2px 0px 2px 0px">
+                                margin: -5px 0px 10px 0px;
+                                padding:2px 0px 10px 0px; display: flex">
 
                         <button @click="setDefaultConfig()"
                                 style="width:200px; margin:0px; border-radius: 0; "
@@ -149,21 +150,29 @@
                             <i class="fa fa-cogs"></i> &nbsp; Установить конфигурацию по умолчанию
                         </button>
 
-                        <!--<CustomButton-->
-                           <!--type="0"-->
-                           <!--attr=""-->
-                           <!--icon=""-->
-                           <!--param="tryrttr"-->
-                           <!--title="Выполнить"-->
-                           <!--@btn_click="testButton()"-->
-                        <!--&gt;</CustomButton>-->
-
-                        <!--<div class="bw" style="padding:0px">-->
-                            <!--<button @click="setDefaultConfig()" class="animeCustomBtn"-->
-                                    <!--style="padding:2px 5px 2px 5px; color:black; font-size:12px;">-->
-                                <!--Установить конфигурацию по умолчанию-->
-                            <!--</button>-->
-                        <!--</div><hr style="margin:0px 0px 15px 0px"/>-->
+                        <!-- Изменяем пароль пользователя -->
+                        <div style="width:460px; background: aliceblue; border:2px gainsboro solid;
+                                    padding:6px; display: flex; margin-left:40px;">
+                            <div class="vFieldContainer" style="width:45%; margin:0px;">
+                                <input v-model="newPassword" style="outline: none"
+                                       class="vInputText" type="text" required>
+                                <label>Новый пароль</label>
+                            </div>
+                            <v-select
+                                    style="width:32%; margin:0px 4px 0px 5px;"
+                                    title="Пользователи"
+                                    :named="{usename : 'usename'}"
+                                    :items="getUserList"
+                                    :param="{width: 140}"
+                                    @select_item="data => selectedUserName = data.value"
+                            ></v-select>
+                            <button @click="btnClick('change_user_password')"
+                                    style="width:37%; height: 34px; margin:0px; border-radius: 0; "
+                                    class="btn btn-success btn-sm px-2 waves-effect export-to-snippet">
+                                    <i class="fa fa-pencil"></i> &nbsp; Изменить пароль
+                            </button>
+                        </div>
+                        <!-- / Изменяем пароль пользователя -->
 
                     </div>
 
@@ -206,7 +215,10 @@
 
     export default {
         name: 'BaseControl',
-        data: () => ({t1: ''}),
+        data: () => ({
+            selectedUserName: '',
+            newPassword: '',
+        }),
         components: {
             LeftPanel,
             BaseSimpleForm,

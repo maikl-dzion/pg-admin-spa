@@ -166,11 +166,11 @@ const InitApp = {
 
             methods: {
 
-                createElemId() {
-                    let num = Math.random() + 's';
-                    let a = num.split('.')
-                    num = a[1]
-                    return num;
+                createElemId(name = '') {
+                    let num = Math.random() + 'i';
+                    let a   = num.split('.')
+                    let elemId = name + a[1] +'-'+ a[0]
+                    return elemId;
                 },
 
                 getRoutesNav() {
@@ -284,7 +284,14 @@ const InitApp = {
                                 elem.classList.add(className)
                             break;
                     }
+                },
 
+                htmlElementsRender(selector, fn) {
+                    let elements = document.querySelectorAll(selector)
+                    for(let i in elements) {
+                        let elem = elements[i];
+                        fn(elem);
+                    }
                 },
 
                 jqSetActiveElement(elemId, activeClass, listClass) {

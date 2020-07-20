@@ -1,6 +1,7 @@
+/************************/
+/****** INPUT TEXT  ****/
 
-
-/* -----  Выравнивание по середине  -----*/
+/* Выравнивание по середине */
 .dws-wrapper {
     display: flex;
     height: 100vh;
@@ -65,4 +66,68 @@
 .vFieldContainer input:valid {
     border-bottom:1px #4fa6d5 solid;
     transition: .5s;
+}
+
+
+
+/************************/
+/*******  SELECT ********/
+
+.v-select-ul-menu  {
+
+    width: 100%; /* Ширина меню */
+    /*height:100%;*/
+    list-style: none; /* Для списка убираем маркеры */
+    margin: 0; /* Нет отступов вокруг */
+    padding: 0; /* Убираем поля вокруг текста */
+    font-family: Arial, sans-serif; /* Рубленый шрифт для текста меню */
+    font-size: 10pt; /* Размер названий в пункте меню */
+    z-index:45;
+    border-bottom: 1px solid #ccc; /* Линия снизу */
+
+    position: absolute; /* Подменю позиционируются абсолютно */
+    display : none;      /* Скрываем подменю */
+    margin-left: 0px;   /* Сдвигаем подменю вправо */
+    margin-top: -1px;   /* Сдвигаем подменю вверх */
+    width: 300px;
+    border: 1px gainsboro solid;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.v-select-li-item {
+    background: aliceblue;
+    border: 0px #ccc solid;
+    padding:0px 5px 0px 5px;
+}
+
+.v-select-li-item a {
+    display: block; /* Ссылка как блочный элемент */
+    padding: 5px; /* Поля вокруг надписи */
+    text-decoration: none; /* Подчеркивание у ссылок убираем */
+    color: #666; /* Цвет текста */
+    border: 0px solid #ccc;/* Рамка вокруг пунктов меню */
+    background-color: aliceblue; /* Цвет фона */
+    border-bottom: none; /* Границу снизу не проводим */
+
+    height: 30px;
+    padding: 2px 2px 2px 4px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.brd {
+    border-bottom: 1px solid #ccc; /* Линия снизу */
+}
+
+.v-select-li-item a:hover {
+    color: white !important; /* Цвет текста активного пункта */
+    background-color: #5488af; /* Цвет фона активного пункта */
+    /*background: #777;*/
+    /*box-shadow:10px 10px 10px rgba(0,0,0,0.8);*/
+}
+
+
+.v-select-a-link-item:hover {
+    color: white; /* Цвет текста активного пункта */
+    background-color: #5488af; /* Цвет фона активного пункта */
 }
