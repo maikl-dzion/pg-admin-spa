@@ -148,18 +148,19 @@ const InitApp = {
 
             computed: {
 
-                /** ****
+                 /******
                  this.http('GET_TABLE_LIST').then(response => {
-            this.getTableListSheme();
-            this.tableList = response;;
-            for (var tabName in this.tableList) {
-                let item = this.tableList[tabName];
-                this.getTableFields(tabName);
-                this.commonForm(item, 'tables');
-                break;
-            }
-        });
-                 *******/
+                    this.getTableListSheme();
+                    this.tableList = response;;
+                    for (var tabName in this.tableList) {
+                        let item = this.tableList[tabName];
+                        this.getTableFields(tabName);
+                        this.commonForm(item, 'tables');
+                        break;
+                    }
+                });
+                *******/
+
                 // this.pushFieldToArray(true);
 
             },
